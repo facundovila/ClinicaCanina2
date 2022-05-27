@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=IM+Fell+English+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+*{
+
+    margin: 0;
+    padding: 0;
+}
+
+
+main{
+
+    width: 80%;
+    margin: auto;
+
+
+}
+.contenido{
+    background-image: url(../img/fondomain.jpg);
+    background-repeat: repeat;
+
+}
+
+.centrar{
+    margin: auto;
+
+}
+
+.padding{
+    padding:10%;
+}
+
+.contenedor{
+    opacity: 100%;
+}
+
+.encabezado{
+
+    background-color: #172940;
+    padding: 15px;
+    background-color: black;
+    border-bottom: 1px solid #FFF ;
+
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    color: #FFF;
+
+
+}
+.h2 {
+    color:#172940;
+}
+
+.menu ul {
+    background-color:  #111F30;
+    display: flex;
+    justify-content: center;
+
+}
+
+.menu li{
+
+    list-style: none;
+    text-align: center;
+
+}
+
+
+.menu a{
+
+    color: #FFF;
+    display: block;
+    text-decoration: none;
+    padding: 1em;
+
+
+}
+
+.menu a:hover{
+
+    background-color: #fff;
+    color: #065FA9;
+
+}
+
+
+.error {
+
+    color: rgb(255, 0, 0);
+}
