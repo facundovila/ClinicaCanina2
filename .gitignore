@@ -1,5 +1,8 @@
 *.class
 
+/src/main/resources/hibernateContext.xml
+
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -17,6 +20,10 @@ hs_err_pid*
 *.iml
 *.DS_Store
 /.java-version
+
+
+
+
 
 
 # target/
