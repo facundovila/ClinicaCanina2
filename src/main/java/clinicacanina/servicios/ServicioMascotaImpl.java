@@ -61,7 +61,12 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
     }
 
+    @Override
+    public List<Mascota> listarMascotas(){
 
+        return repositorioMascota.buscarTodasLasMascotas();
+
+    }
 
 
 

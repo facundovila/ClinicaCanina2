@@ -17,4 +17,5 @@ public interface ServicioMascota {
 
      Mascota buscarMascotaPorId(Long id);
 
+     List<Mascota> listarMascotas();
 }
