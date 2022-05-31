@@ -9,6 +9,7 @@ public class Mascota {
     private Long id;
     private String nombre;
     private Integer peso;
+    
     // para que no rompa test controlador
     public Mascota(String nombre, Integer peso){
         this.nombre = nombre;

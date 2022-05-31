@@ -14,7 +14,6 @@ public interface ServicioMascota {
 
      List<Mascota>buscarMascota(String nombreMascota, Integer peso);
 
-
      Mascota buscarMascotaPorId(Long id);
 
      List<Mascota> listarMascotas();

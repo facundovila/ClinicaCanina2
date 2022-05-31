@@ -27,7 +27,7 @@ public class ControladorMascota {
 
         Mascota resultado=servicioMascota.crearMascota(nombre,peso);
 
-       model.put("mascota", resultado);
+        model.put("mascota", resultado);
 
         return new ModelAndView("detalle-mascota", model);
 

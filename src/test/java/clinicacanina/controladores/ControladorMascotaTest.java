@@ -120,8 +120,6 @@ public class ControladorMascotaTest {
     }
 
 
-
-
     private void entoncesMeLlevaALaVista(String vistaEsperada, String vistaRecibida) {
 
         assertThat(vistaRecibida).isEqualTo(vistaEsperada);
