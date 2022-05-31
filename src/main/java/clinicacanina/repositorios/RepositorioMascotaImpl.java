@@ -32,6 +32,13 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
     }
 
+    public Mascota getById(Long idMascota) {
+        return (Mascota) sessionFactory.getCurrentSession()
+                .createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", idMascota))
+                .uniqueResult();
+    }
+
 
 
     @Override
