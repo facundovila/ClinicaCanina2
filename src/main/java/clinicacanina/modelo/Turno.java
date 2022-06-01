@@ -8,7 +8,7 @@ public class Turno {
 	private Mascota mascota;
 	
 
-	public Turno(String fecha, Boolean estado) {
+	public Turno(String fecha) {
 		this.fecha = fecha;
 		this.estado = false;
 		this.mascota=mascota;

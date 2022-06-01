@@ -18,33 +18,24 @@ public class ControladorTurnos {
 
 	@Autowired
 	public ControladorTurnos(ServicioTurnos servicioTurnos) {
-		this.servicioTurnos=servicioTurnos;
+		this.servicioTurnos = servicioTurnos;
 	}
-	
-	
-	public ModelAndView buscarTurno (String fecha, Boolean estado) {
 
-		ModelMap model= new ModelMap();
-		
-		String viewName= "turnoreservado";
+	@RequestMapping (path="/buscar-turno")
+	public ModelAndView buscarTurno(String fecha) {
 
-//		Turno nuevoTurno= servicioTurnos.buscarTurno(turno);
-		
-		Turno nuevoTurno= new Turno(fecha, estado);
-		
-		if(nuevoTurno.getEstado()==true) {
-			model.put("turno", nuevoTurno);
-			
-	    	return new ModelAndView(viewName, model);
+		ModelMap model = new ModelMap();
 
-		}else {
-			viewName = "turnodisponible";
-			model.put("msg", "TurnoDisponible");
-		}
-    	return new ModelAndView(viewName, model);
-	
-	  
-	  
+		String viewName = "turnoreservado";
+
+		List<Turno> turnos = servicioTurnos.buscarTurno(fecha);
+		
+		if (!turnos.isEmpty()) {
+			model.put("msg", turnos);
+			viewName= "turnodisponible"; //existen turnon disponibles
+		} 
+		return new ModelAndView(viewName, model); //todos los turnos estan reservados
+
 	}
 
 }

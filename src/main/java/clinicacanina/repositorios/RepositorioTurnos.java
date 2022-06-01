@@ -1,18 +1,14 @@
 package clinicacanina.repositorios;
 
+import java.util.List;
+
 import clinicacanina.modelo.Turno;
 
-public class RepositorioTurnos {
+public interface RepositorioTurnos {
 
-	public void guardarTurno(Turno turnoCreado) {
-		// TODO Auto-generated method stub
-		
-	}
+	void guardarTurno(Turno turnoCreado);
 
-	public Turno buscarTurnos(Turno turno) {
-		return turno;
-		// TODO Auto-generated method stub
-		
-	}
+	List<Turno> mostrarTurnoDisponible(String fecha);
+	
 
 }

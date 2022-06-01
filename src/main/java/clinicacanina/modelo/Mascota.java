@@ -21,9 +21,6 @@ public class Mascota {
     @Column(nullable = false)
     @NotNull
     private Integer peso;
-<<<<<<< HEAD
-    
-=======
 
     @Column(nullable = false)
     @NotNull
@@ -31,7 +28,6 @@ public class Mascota {
 
 
 
->>>>>>> main
     // para que no rompa test controlador
     public Mascota(String nombre, Integer peso, Integer edad){
         this.nombre = nombre;

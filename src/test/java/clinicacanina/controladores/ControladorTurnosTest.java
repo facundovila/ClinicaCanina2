@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,47 +27,37 @@ public class ControladorTurnosTest {
         controladorTurnos= new ControladorTurnos(servicioTurnos);
     }
 	
-	
-	
-//	@Test
-//	public void queSePuedaReservarUnTurno() {
-//		
-//		dadoQueExisteUnTurno("fecha", false);
-//		
-//		
-//	}
-//	
-	
-	
-	@Test 
-	public void cuandoReservoUnTurnoOcupadoMeLLevaALaVistaTurnoOcupado() {
+	@Test
+	public void siHayTurnosEnUnaFechaDeberiaListarlos() {
 		
-		String fecha="fecha";
-		Boolean estado= true;
+		dadoQueHayTurnosParaLaFecha("26-05-2022");
+		
+		ModelAndView mav  = cuandoBuscaUnTurnoDeLaFecha("26-05-2022");//aca llamas al metodo del controlador
+		
+		entoncesEncuentro(2, mav);
 				
-		dadoQueElTurnoEstaReservado("fecha", true);
-				
-		ModelAndView mav=cuandoBuscoElTurno(fecha, estado);
-		
-		entoncesMeDevuelveVistaTurnoReservado(VISTA_FECHA_ESPERADA, mav.getViewName());
-		
 	}
-
-
-	private void dadoQueElTurnoEstaReservado(String fecha, Boolean ocupado) {
-         Turno turnoReservado =new Turno(fecha, ocupado);
-		when(servicioTurnos.buscarTurno(turnoReservado)).thenReturn(turnoReservado);
-}
-
-
-	private ModelAndView cuandoBuscoElTurno(String fecha, Boolean estado) {
+			
+	private void dadoQueHayTurnosParaLaFecha(String fecha) {
 		
-		return controladorTurnos.buscarTurno(fecha, estado);
+		List<Turno>lista=new ArrayList<>();
+		for(int i=0; i<2;i++) {
+			lista.add(new Turno(fecha));
+		}
+
+		when(servicioTurnos.buscarTurno("26-05-2022")).thenReturn(lista); //donde lista tiene 2 turnos adentro		
 	}
 	
-	private void entoncesMeDevuelveVistaTurnoReservado(String VISTA_FECHA_ESPERADA, String vistaRecibida) {
+	private ModelAndView cuandoBuscaUnTurnoDeLaFecha(String fecha) {
 
-		assertThat(vistaRecibida).isEqualTo(VISTA_FECHA_ESPERADA);
+		return controladorTurnos.buscarTurno(fecha);
+	}
+
+	private void entoncesEncuentro(Integer cantidad, ModelAndView mav) {
+		
+		List<Turno>lista=(List<Turno>)mav.getModel().get("msg");
+		assertThat(lista).hasSize(cantidad);
+				
 	}
 
 }

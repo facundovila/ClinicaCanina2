@@ -25,27 +25,10 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 
 	@Override
-	public void crearTurno(String fecha, Boolean estado) {
+	public List<Turno> buscarTurno(String fecha) {
 		
-		Turno turnoCreado= new Turno(fecha, estado);
-		repositorioTurnos.guardarTurno(turnoCreado);
-		
+		return repositorioTurnos.mostrarTurnoDisponible(fecha);
 	}
-
-	@Override
-	public Turno buscarTurno(Turno turno) {
-		
-		Turno turnoAReservar = null;
-		
-		if(turno.getEstado()==false) {
-		
-			turnoAReservar=repositorioTurnos.buscarTurnos(turno);
-		}
-		return turnoAReservar;
-		
-			
-	}
-
 
 	public RepositorioTurnos getRepositorioTurnos() {
 		return repositorioTurnos;
@@ -55,5 +38,11 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	public void setRepositorioTurnos(RepositorioTurnos repositorioTurnos) {
 		this.repositorioTurnos = repositorioTurnos;
 	}
+
+
+	
+
+
+
 
 }
