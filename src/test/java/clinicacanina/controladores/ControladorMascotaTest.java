@@ -2,7 +2,6 @@ package clinicacanina.controladores;
 
 import clinicacanina.modelo.Mascota;
 import clinicacanina.servicios.ServicioMascota;
-import org.dom4j.rule.Mode;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +24,7 @@ public class ControladorMascotaTest {
     public static final Integer PESO = 50;
     public static final String VISTA_ESPERADA_DETALLE = "detalle-mascota";
     public static final Integer CANTIDAD_MASCOTA= 10;
-    public static final String VISTA_ESPERADA_LISTA = "listado-mascota";
+    public static final String VISTA_ESPERADA_LISTA = "listaDeMascotas";
     public static final String MENSAJE_TIPO_INVALIDO = "Lista de animal invalida";
 
     @Before
@@ -39,9 +38,9 @@ public class ControladorMascotaTest {
     @Test
     public void mostrarMascotaDetalle() { //crea un objeto mascota nuevo y lo lleva a su pantalla de descripcion.
         //preparacion
-        dadoQueExisteMascota(NOMBRE_MASCOTA, PESO);
+        dadoQueExisteMascota(NOMBRE_MASCOTA, PESO,15);
 
-        ModelAndView mav = cuandoCreoMascota(NOMBRE_MASCOTA, PESO);
+        ModelAndView mav = cuandoCreoMascota(NOMBRE_MASCOTA, PESO,15);
 
         //ejecucion
 
@@ -56,7 +55,7 @@ public class ControladorMascotaTest {
     public void AlPedirLaListaDeMascotasMeDevuelveLaListaCompleta(){ //ademas puede servir para listar sintomas
 
         //preparacion
-        dadoQueExisteCiertaCantidadDeMascota(NOMBRE_MASCOTA, PESO, CANTIDAD_MASCOTA);
+        dadoQueExisteCiertaCantidadDeMascota(NOMBRE_MASCOTA, PESO, CANTIDAD_MASCOTA,15);
 
         ModelAndView mav = cuandoBuscoMascota(NOMBRE_MASCOTA, PESO);
 
@@ -76,8 +75,9 @@ public class ControladorMascotaTest {
 
         String nombreInvalido= "numeros";
         Integer pesoInvalido= 888;
+        Integer edadInvalida= 888;
 
-        when(servicioMascota.buscarMascota(nombreInvalido,pesoInvalido)).thenThrow(new RuntimeException());
+        when(servicioMascota.buscarMascota(nombreInvalido,pesoInvalido, edadInvalida)).thenThrow(new RuntimeException());
 
         ModelAndView mav = cuandoBuscoMascota(nombreInvalido,pesoInvalido);
 
@@ -104,18 +104,18 @@ public class ControladorMascotaTest {
     }
 
     private ModelAndView cuandoBuscoMascota(String nombreMascota, Integer peso) {
-        return controladorMascota.listar(nombreMascota,peso);
+        return controladorMascota.listarMascotas();
     }
 
 
-    private void dadoQueExisteCiertaCantidadDeMascota(String nombreMascota, Integer peso, Integer cantidadMascota) {
+    private void dadoQueExisteCiertaCantidadDeMascota(String nombreMascota, Integer peso, Integer cantidadMascota, Integer edad) {
         List<Mascota> lista= new LinkedList<>();
 
         for(int i=0; i<cantidadMascota; i++){
-                lista.add(new Mascota(nombreMascota, peso));
-        }
+               lista.add(new Mascota(nombreMascota, peso, edad));
+       }
 
-        when(servicioMascota.buscarMascota(nombreMascota, peso)).thenReturn(lista);
+        when(servicioMascota.listarMascotas()).thenReturn(lista);
 
     }
 
@@ -132,14 +132,14 @@ public class ControladorMascotaTest {
         assertThat(mascota).isNotNull();
     }
 
-    private ModelAndView cuandoCreoMascota(String nombreMascota, Integer peso) {
+    private ModelAndView cuandoCreoMascota(String nombreMascota, Integer peso, Integer edad) {
 
-        return controladorMascota.mostrarMascotaCreada(nombreMascota,peso);
+        return controladorMascota.mostrarMascotaCreada(nombreMascota,peso,edad);
     }
 
-    private void dadoQueExisteMascota(String nombreMascota, Integer peso) {
+    private void dadoQueExisteMascota(String nombreMascota, Integer peso, Integer edad) {
 
-        when(servicioMascota.crearMascota(nombreMascota, peso)).thenReturn(new Mascota(nombreMascota,peso));
+        when(servicioMascota.crearMascota(nombreMascota, peso, edad)).thenReturn(new Mascota(nombreMascota,peso, edad));
         //cuando (pase todo esto) . tiene que devolver (esto)
     }
 
