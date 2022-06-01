@@ -14,9 +14,9 @@
 
 
     <bean id="viewResolver"
-        class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass"
-            value="org.springframework.web.servlet.view.JstlView" />
+                  value="org.springframework.web.servlet.view.JstlView" />
         <!--Con esto antepone /WEB-INF/vistas al nombre de vista recibido-->
         <property name="prefix" value="/WEB-INF/vistas/" />
         <!--Con esto agrega al final .jsp el nombre de vista recibido-->

@@ -33,18 +33,22 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
 
     @Override
-    public Mascota crearMascota(String nombreMascota, Integer peso){
+    public Mascota crearMascota(String nombreMascota, Integer peso, Integer edad){
 
-        return new Mascota(nombreMascota,peso);
+        Mascota mascotaGuardada = new Mascota(nombreMascota, peso, edad);
+
+       repositorioMascota.guardar(mascotaGuardada);
+
+        return mascotaGuardada;
 
     }
 
     @Override
-    public List<Mascota> buscarMascota(String nombreMascota, Integer peso){
+    public List<Mascota> buscarMascota(String nombreMascota, Integer peso, Integer edad){
         List<Mascota> lista= new LinkedList<>();
 
         for(int i=0; i<10; i++){
-            lista.add(new Mascota(nombreMascota, peso));
+            lista.add(new Mascota(nombreMascota, peso, edad));
         }
 
         return lista;
@@ -61,7 +65,12 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
     }
 
+    @Override
+    public List<Mascota> listarMascotas(){
 
+        return repositorioMascota.buscarTodasLasMascotas();
+
+    }
 
 
 
