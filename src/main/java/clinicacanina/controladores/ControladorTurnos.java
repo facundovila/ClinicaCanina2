@@ -26,13 +26,13 @@ public class ControladorTurnos {
 
 		ModelMap model = new ModelMap();
 
-		String viewName = "turnoreservado";
+		String viewName =  "turnodisponible";
 
 		List<Turno> turnos = servicioTurnos.buscarTurno(fecha);
 		
 		if (!turnos.isEmpty()) {
 			model.put("msg", turnos);
-			viewName= "turnodisponible"; //existen turnon disponibles
+			viewName= "turnoreservado"; //existen turnon disponibles
 		} 
 		return new ModelAndView(viewName, model); //todos los turnos estan reservados
 

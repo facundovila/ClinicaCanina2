@@ -5,11 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Turno;
 import clinicacanina.repositorios.RepositorioMascota;
 import clinicacanina.repositorios.RepositorioTurnos;
 
+@Service
+@Transactional 
 public class ServicioTurnosImpl implements ServicioTurnos {
 	
 	private RepositorioTurnos repositorioTurnos;

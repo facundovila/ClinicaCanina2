@@ -1,6 +1,8 @@
 package clinicacanina.modelo;
 
+import javax.persistence.Entity;
 
+@Entity
 public class Turno {
 	
 	private String fecha;
