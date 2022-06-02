@@ -5,9 +5,11 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import clinicacanina.modelo.Turno;
 
+@Repository
 public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	private SessionFactory sessionFactory;

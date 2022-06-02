@@ -8,4 +8,8 @@ public interface AmbulanciaRepository {
 
 	void reservarAmbulancia(Ambulancia ambulancia);
 
+	Ambulancia buscarPorPatente(String patente);
+
+	void actualizarEstado();
+
 }
