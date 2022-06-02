@@ -21,15 +21,22 @@ public class AmbulanciaController {
 
 	@RequestMapping(path="/pedir-ambulancia")
 	public ModelAndView pedirAmbulancia() {
+
 		ModelMap model = new ModelMap();
+
 		String viewName = "ambulancia-en-camino";
+
 		Ambulancia ambulanciaDisponible = ambulanciaService.buscarAmbulanciaDisponible();
+
 		if(ambulanciaDisponible != null) {
 			model.put("AmbulanciaDisponible", ambulanciaDisponible);
 			return new ModelAndView(viewName, model);
 		}
+
 		model.put("SinAmbulancias", "No hay ambulancias disponibles");
+
 		viewName = "no-hay-ambulancias";
+
 		return new ModelAndView(viewName, model);
 	}
 

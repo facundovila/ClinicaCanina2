@@ -26,10 +26,10 @@ public class Turno {
     @NotNull
     private Boolean estado;
 
-    @Column(nullable = false)
-    @NotNull
-    private Mascota mascota;
-    
+//    @Column(nullable = false)
+//    @NotNull
+//    private Mascota mascota;
+//
 //	private String fecha;
 //	private Boolean estado;
 //	private Mascota mascota;
@@ -38,7 +38,7 @@ public class Turno {
 	public Turno(String fecha) {
 		this.fecha = fecha;
 		this.estado = false;
-		this.mascota=mascota;
+		//this.mascota=mascota;
 	}
 
 	public Turno() {

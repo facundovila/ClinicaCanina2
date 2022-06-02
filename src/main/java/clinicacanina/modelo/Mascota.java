@@ -28,14 +28,14 @@ public class Mascota {
 
 
 
-    // para que no rompa test controlador
+
     public Mascota(String nombre, Integer peso, Integer edad){
         this.nombre = nombre;
         this.peso = peso;
         this.edad = edad;
     }
 
-    // para que no rompa test controlador
+
     public Mascota() {
 
     }
