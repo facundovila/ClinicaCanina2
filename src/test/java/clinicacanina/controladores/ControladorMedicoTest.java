@@ -8,12 +8,10 @@ import clinicacanina.modelo.Medico;
 import clinicacanina.servicios.ServicioMedico;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -42,7 +40,7 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
 		dadoQueExistaMedico(nombre,horarioEntrada,horarioSalida);//creo el medico
 		
 		//ejecucion
-		ModelAndView mav =cuandoCreoElMedico();//
+		ModelAndView mav =cuandoMuestroTodosLosMedicos();//
 
 		//validacion
 		entoncesMeLlevaALaVista(VISTA_ESPERADA,mav);
@@ -58,7 +56,7 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
 		when(servicioMedico.listarMedico()).thenReturn(listaDeMedicos);
 	}
 	
-	private ModelAndView cuandoCreoElMedico() {
+	private ModelAndView cuandoMuestroTodosLosMedicos() {
 		return controladorMedico.mostrarTodosLosMedicos();
 	
 	}
