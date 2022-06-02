@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import clinicacanina.modelo.Ambulancia;
+import clinicacanina.modelo.Estado;
 
 @Repository
 public class AmbulanciaRepositoryImpl implements AmbulanciaRepository{
@@ -25,8 +26,15 @@ public class AmbulanciaRepositoryImpl implements AmbulanciaRepository{
 	}
 
 	@Override
-	public void reservarAmbulancia(Ambulancia ambulancia) {
-		// TODO Auto-generated method stub
+	public void reservarAmbulancia(String patente) {
+		final Session session = sessionFactory.getCurrentSession();
+		Ambulancia ambulanciaAReservar = buscarPorPatente(patente);
+		
+		if(ambulanciaAReservar.getDisponible() == true && ambulanciaAReservar.getEstado().equals(Estado.EN_COCHERA)) {
+			ambulanciaAReservar.setDisponible(false);
+			ambulanciaAReservar.setEstado(Estado.EN_PREPARACION);
+			session.update(ambulanciaAReservar);
+		}
 		
 	}
 
@@ -40,8 +48,13 @@ public class AmbulanciaRepositoryImpl implements AmbulanciaRepository{
 	}
 
 	@Override
-	public void actualizarEstado() {
-		// TODO Auto-generated method stub
+	public void actualizarEstado(String patente) {
+		Ambulancia encontrada = buscarPorPatente(patente);
+		
+		//Esta validacion estaria de mas, ya que al reservar la ambulancia automaticamente el estado migraria a "EN_PREPARACION".
+		if(encontrada.getDisponible() == false && encontrada.getEstado().equals(Estado.EN_COCHERA)) {
+			encontrada.setEstado(Estado.EN_PREPARACION);
+		}
 		
 	}
 

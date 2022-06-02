@@ -15,6 +15,7 @@ import org.junit.Test;
 
 public class AmbulanciaRepositoryDeberia extends SpringTest{
 	private final Estado ESTADO_ESPERADO = Estado.EN_CAMINO;
+	private final Estado PRIMER_ESTADO_RESERVADA = Estado.EN_PREPARACION;
 	private final String PATENTE_ESPERADA = "abc123";
 	
 	
@@ -28,6 +29,36 @@ public class AmbulanciaRepositoryDeberia extends SpringTest{
 	}
 	
 	@Test @Transactional @Rollback
+	public void poderReservarUnaAmbulancia() {
+		dadoQueExisteAmbulanciaSinReservar();
+		Ambulancia reservada = cuandoReservoLaAmbulancia("def123");
+		entoncesLaMismaPoseeDisponibilidadYEstado(PRIMER_ESTADO_RESERVADA, reservada);
+		
+	}
+	
+	private void entoncesLaMismaPoseeDisponibilidadYEstado(Estado PRIMER_ESTADO_RESERVADA, Ambulancia reservada) {
+		assertThat(reservada.getDisponible()).isFalse();
+		assertThat(reservada.getEstado()).isEqualTo(PRIMER_ESTADO_RESERVADA);
+		
+	}
+
+	private Ambulancia cuandoReservoLaAmbulancia(String patente) {
+		ambulanciaRepository.reservarAmbulancia(patente);
+		return ambulanciaRepository.buscarPorPatente(patente);
+		
+	}
+
+	private void dadoQueExisteAmbulanciaSinReservar() {
+		Ambulancia ambulanciaCreada = new Ambulancia();
+		ambulanciaCreada.setDisponible(true);
+		ambulanciaCreada.setEstado(Estado.EN_COCHERA);
+		ambulanciaCreada.setPatente("def123");
+		
+		session().save(ambulanciaCreada);
+		
+	}
+
+	//@Test @Transactional @Rollback
 	public void poderActualizarElEstadoDeUnaAmbulanciaReservada() {
 		Ambulancia ambulanciaAActualizar = cuandoBuscoLaAmbulanciaReservada();
 		entoncesPuedoActualizarSuEstado(ambulanciaAActualizar);
@@ -41,7 +72,7 @@ public class AmbulanciaRepositoryDeberia extends SpringTest{
 	
 
 	private void entoncesPuedoActualizarSuEstado(Ambulancia ambulanciaAActualizar) {
-	   ambulanciaRepository.actualizarEstado();
+	   ambulanciaRepository.actualizarEstado("abc123");
 	   
 	   assertThat(ambulanciaAActualizar.getEstado()).isEqualTo(ESTADO_ESPERADO);
 	   

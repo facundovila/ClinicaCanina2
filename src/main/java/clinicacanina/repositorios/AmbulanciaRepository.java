@@ -6,10 +6,10 @@ public interface AmbulanciaRepository {
 
 	Ambulancia traerAmbulanciaDisponible();
 
-	void reservarAmbulancia(Ambulancia ambulancia);
+	void reservarAmbulancia(String patente);
 
 	Ambulancia buscarPorPatente(String patente);
 
-	void actualizarEstado();
+	void actualizarEstado(String patente);
 
 }

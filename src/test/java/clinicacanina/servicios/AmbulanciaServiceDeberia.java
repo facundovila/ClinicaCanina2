@@ -63,12 +63,12 @@ public class AmbulanciaServiceDeberia {
 	
 	
 	private void entoncesPuedoReservarla(Ambulancia ambulancia) {
-		verify(ambulanciaRepository, times(1)).reservarAmbulancia(any(Ambulancia.class));
+		verify(ambulanciaRepository, times(1)).reservarAmbulancia(anyString());
 		
 	}
 	
 	private void entoncesNoPuedoReservarla(Ambulancia ambulancia) {
-		verify(ambulanciaRepository, never()).reservarAmbulancia(any(Ambulancia.class));
+		verify(ambulanciaRepository, never()).reservarAmbulancia(anyString());
 		
 	}
 }

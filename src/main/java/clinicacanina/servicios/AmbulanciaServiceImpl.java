@@ -17,11 +17,12 @@ public class AmbulanciaServiceImpl implements AmbulanciaService{
 		this.ambulanciaRepository = ambulanciaRepository;
 	}
 
+	//busca ambulancia disponible, si la hay la reserva automaticamente.
 	@Override
 	public Ambulancia buscarAmbulanciaDisponible() {
 		Ambulancia encontrada = ambulanciaRepository.traerAmbulanciaDisponible();
 		if(encontrada != null) {
-			ambulanciaRepository.reservarAmbulancia(encontrada);
+			ambulanciaRepository.reservarAmbulancia(encontrada.getPatente());
 		}
 		return encontrada;
 	}
