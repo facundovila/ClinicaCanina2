@@ -12,8 +12,8 @@ import clinicacanina.modelo.Turno;
 import clinicacanina.repositorios.RepositorioMascota;
 import clinicacanina.repositorios.RepositorioTurnos;
 
-@Service
-@Transactional 
+
+@Service @Transactional 
 public class ServicioTurnosImpl implements ServicioTurnos {
 	
 	private RepositorioTurnos repositorioTurnos;
