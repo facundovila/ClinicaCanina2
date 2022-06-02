@@ -35,4 +35,11 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		
 	}
 
+
+	@Override
+	public Turno buscarPorId(String idTurno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
