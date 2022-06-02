@@ -23,13 +23,11 @@ public class ControladorMedico {
 	
 
 	@RequestMapping(path="/lista-medicos")
-	public ModelAndView mostrarTodosLosMedicos(String nombre, Integer horarioEntrada, Integer horarioSalida) {
+	public ModelAndView mostrarTodosLosMedicos() {
 		ModelMap model = new ModelMap();
-		List <Medico> medico = servicioMedico.traerMedicos();
+		List <Medico> medico = servicioMedico.listarMedico();
 		
-		for (int i = 0; i < medico.size(); i++) {
-			model.put("medico " + i , medico.get(i));
-		}
+		model.put("medico", medico);
 		
 		return new ModelAndView("medicos",model); //vista , modelo
 		

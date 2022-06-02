@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import clinicacanina.modelo.Medico;
 import clinicacanina.servicios.ServicioMedico;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,41 +30,36 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
 		controladorMedico = new ControladorMedico(servicioMedico);	
 	}
 	
-	private String nombre = "Marcelo";
-	private Integer horarioEntrada = 8;
-	private Integer horarioSalida = 20;
-	
     public static final String VISTA_ESPERADA = "medicos";
-    
-    
-	@Test
+   
+    @Test
 	public void mostrarMedicosExistentes() { //crea el medico y lo muestra en la pantalla
 		//preparacion
-		dadoQueExistaMedico(nombre,horarioEntrada,horarioSalida); //creo el medico
+		String nombre = "Marcelo";
+		Integer horarioEntrada = 8;
+		Integer horarioSalida = 20;
+		
+		dadoQueExistaMedico(nombre,horarioEntrada,horarioSalida);//creo el medico
 		
 		//ejecucion
-		ModelAndView mav =cuandoCreoElMedico(nombre,horarioEntrada,horarioSalida);
+		ModelAndView mav =cuandoCreoElMedico();//
 
 		//validacion
 		entoncesMeLlevaALaVista(VISTA_ESPERADA,mav);
 	}
-	
-	@Test
-	public void queElMedicoEsteDisponibleEntreLas8YLas20() {
-		
-	}
-	
-	@Test
-	public void siSeSolicitaAlMedicoFueraDeSuHorarioQueMuestreUnMensajeDeError() {
-		
-	}
+    
+
 
 	private void dadoQueExistaMedico(String nombre, Integer horarioEntrada, Integer horarioSalida) {
-		when(servicioMedico.crearMedico(nombre,horarioEntrada,horarioSalida)).thenReturn(new Medico(nombre, horarioEntrada, horarioSalida));
+		List <Medico> listaDeMedicos = new ArrayList<>();
+		for(int i = 0; i < 1 ; i++) {
+			listaDeMedicos.add(new Medico(nombre,horarioEntrada,horarioSalida));
+		}
+		when(servicioMedico.listarMedico()).thenReturn(listaDeMedicos);
 	}
 	
-	private ModelAndView cuandoCreoElMedico(String nombre, Integer horarioEntrada, Integer horarioSalida) {
-		return controladorMedico.mostrarTodosLosMedicos(nombre,horarioEntrada,horarioSalida);
+	private ModelAndView cuandoCreoElMedico() {
+		return controladorMedico.mostrarTodosLosMedicos();
 	
 	}
 

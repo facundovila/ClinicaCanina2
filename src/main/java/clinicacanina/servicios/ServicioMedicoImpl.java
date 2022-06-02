@@ -19,16 +19,13 @@ public class ServicioMedicoImpl implements ServicioMedico{
 		this.repositorioMedico = repositorioMedico;
 	}
 
-	@Override
-	public List<Medico> traerMedicos() {
-		List<Medico> listaMedico = repositorioMedico.traerTodosLosMedicos();
-		return listaMedico;
-	}
 
 	@Override
-	public Medico crearMedico(String nombre, Integer horarioEntrada, Integer horarioSalida) {
-		return new Medico(nombre,horarioEntrada, horarioSalida);
+	public List<Medico> listarMedico() {
+		return repositorioMedico.traerTodosLosMedicos();
 	}
+
+
 
 
 
