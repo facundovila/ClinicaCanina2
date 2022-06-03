@@ -1,5 +1,7 @@
 package clinicacanina.modelo;
 
+import javax.persistence.Enumerated;
+
 public enum Estado {
 	EN_COCHERA, EN_PREPARACION, EN_CAMINO, EN_PUERTA, REGRESANDO;
 	

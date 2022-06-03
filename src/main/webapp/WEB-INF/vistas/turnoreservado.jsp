@@ -1,5 +1,5 @@
 <jsp:include page="/partials/header.jsp"></jsp:include>
 <body>
-Usted ha encontrado un turno ${vacia}
+Los turnos estan reservados ${msg}
 </body>
 </html>
