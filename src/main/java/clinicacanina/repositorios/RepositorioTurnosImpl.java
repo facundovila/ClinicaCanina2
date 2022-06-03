@@ -31,15 +31,16 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	@Override
 	public void guardarTurno(Turno turnoCreado) {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().save(turnoCreado);
 	}
 
 
 	@Override
-	public Turno buscarPorId(String idTurno) {
+	public List<Turno> buscarPorFecha(String fecha) {
 		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createCriteria(Turno.class)
+				.add(Restrictions.eqOrIsNull("fecha", fecha))
+				.list();
 	}
 
 }

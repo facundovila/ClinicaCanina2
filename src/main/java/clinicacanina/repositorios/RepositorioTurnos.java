@@ -10,7 +10,7 @@ public interface RepositorioTurnos {
 
 	List<Turno> mostrarTurnoDisponible(String fecha);
 
-	Turno buscarPorId(String idTurno);
+	List<Turno> buscarPorFecha(String fecha);
 	
 
 }
