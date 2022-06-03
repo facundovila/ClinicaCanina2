@@ -50,7 +50,7 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
 
 	private void dadoQueExistaMedico(String nombre, Integer horarioEntrada, Integer horarioSalida) {
 		List <Medico> listaDeMedicos = new ArrayList<>();
-		for(int i = 0; i < 1 ; i++) {
+		for(int i = 0; i <= 1 ; i++) {
 			listaDeMedicos.add(new Medico(nombre,horarioEntrada,horarioSalida));
 		}
 		when(servicioMedico.listarMedico()).thenReturn(listaDeMedicos);
@@ -61,8 +61,8 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
 	
 	}
 
-	private void entoncesMeLlevaALaVista(String string, ModelAndView mav) {
-		assertThat(mav.getViewName()).isEqualTo(VISTA_ESPERADA);		
+	private void entoncesMeLlevaALaVista(String vista, ModelAndView mav) {
+		assertThat(mav.getViewName()).isEqualTo(vista);		
 	}
 	
 
