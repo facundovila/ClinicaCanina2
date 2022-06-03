@@ -15,8 +15,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ControladorMedicoTest { //no necesito que extienda de Spring Test porque no interctua con la BD
-	//voy a mockear el servicio
+public class ControladorMedicoTest { 
 
 	
 	private ControladorMedico controladorMedico;
@@ -31,7 +30,7 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
     public static final String VISTA_ESPERADA = "medicos";
    
     @Test
-	public void mostrarMedicosExistentes() { //crea el medico y lo muestra en la pantalla
+	public void mostrarMedicosExistentes() { 
 		//preparacion
 		String nombre = "Marcelo";
 		Integer horarioEntrada = 8;

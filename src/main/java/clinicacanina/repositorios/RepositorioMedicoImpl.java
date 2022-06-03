@@ -25,4 +25,10 @@ public class RepositorioMedicoImpl implements RepositorioMedico{
 		return sessionFactory.getCurrentSession().createCriteria(Medico.class).list();
 	}
 
+
+	@Override
+	public void guardarMedico(Medico medico) {
+		
+	}
+
 }

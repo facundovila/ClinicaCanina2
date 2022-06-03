@@ -8,4 +8,6 @@ public interface RepositorioMedico {
 
 	List<Medico> traerTodosLosMedicos();
 
+	void guardarMedico(Medico medico);
+
 }
