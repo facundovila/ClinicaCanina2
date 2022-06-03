@@ -15,8 +15,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ControladorMedicoTest { //no necesito que extienda de Spring Test porque no interctua con la BD
-	//voy a mockear el servicio
+public class ControladorMedicoTest { 
 
 	
 	private ControladorMedico controladorMedico;
@@ -31,7 +30,7 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
     public static final String VISTA_ESPERADA = "medicos";
    
     @Test
-	public void mostrarMedicosExistentes() { //crea el medico y lo muestra en la pantalla
+	public void mostrarMedicosExistentes() { 
 		//preparacion
 		String nombre = "Marcelo";
 		Integer horarioEntrada = 8;
@@ -50,7 +49,7 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
 
 	private void dadoQueExistaMedico(String nombre, Integer horarioEntrada, Integer horarioSalida) {
 		List <Medico> listaDeMedicos = new ArrayList<>();
-		for(int i = 0; i < 1 ; i++) {
+		for(int i = 0; i <= 1 ; i++) {
 			listaDeMedicos.add(new Medico(nombre,horarioEntrada,horarioSalida));
 		}
 		when(servicioMedico.listarMedico()).thenReturn(listaDeMedicos);
@@ -61,8 +60,8 @@ public class ControladorMedicoTest { //no necesito que extienda de Spring Test p
 	
 	}
 
-	private void entoncesMeLlevaALaVista(String string, ModelAndView mav) {
-		assertThat(mav.getViewName()).isEqualTo(VISTA_ESPERADA);		
+	private void entoncesMeLlevaALaVista(String vista, ModelAndView mav) {
+		assertThat(mav.getViewName()).isEqualTo(vista);		
 	}
 	
 
