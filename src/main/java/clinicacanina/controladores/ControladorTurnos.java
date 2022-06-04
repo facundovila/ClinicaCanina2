@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,8 +22,9 @@ public class ControladorTurnos {
 		this.servicioTurnos = servicioTurnos;
 	}
 
-	@RequestMapping (path="/buscar-turno")
-	public ModelAndView buscarTurno(String fecha) {
+
+	@RequestMapping (path="/buscar-turno/{fecha}")
+	public ModelAndView buscarTurno(@PathVariable("fecha") String fecha) { //este metodo deberia llamarse buscarTurnoRegistrado
 
 		ModelMap model = new ModelMap();
 
@@ -30,9 +32,11 @@ public class ControladorTurnos {
 		
 		if (!turnos.isEmpty()) {
 			model.put("msg", turnos);
-			return new ModelAndView("turnoreservado", model);
+
 		} 
 			model.put("vacia", "hay turnos disponibles");
+
+
 			return new ModelAndView("turnodisponible", model); //todos los turnos estan reservados
 
 	}

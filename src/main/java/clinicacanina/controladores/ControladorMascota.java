@@ -51,11 +51,14 @@ public class ControladorMascota {
 
         List<Mascota> listaDeMascotas = servicioMascota.listarMascotas();
 
-//        try{
-//            listaDeMascotas = servicioMascota.listarMascotas();
-//        } catch(ListaVaciaExcepcion e) {
-//            model.put("msg-error", "No hay registrado ningun animal");
-//        }
+        if(listaDeMascotas.isEmpty()){
+
+            model.put("sinMascotas", "no hay pacientes mascotas");
+
+
+
+        }
+
 
         model.put("listarmascotas", listaDeMascotas);
 

@@ -29,13 +29,14 @@ public class AmbulanciaController {
 		Ambulancia ambulanciaDisponible = ambulanciaService.buscarAmbulanciaDisponible();
 
 		if(ambulanciaDisponible != null) {
+
 			model.put("AmbulanciaDisponible", ambulanciaDisponible);
-			return new ModelAndView(viewName, model);
+
 		}
 
-		model.put("SinAmbulancias", "No hay ambulancias disponibles");
+		model.put("SinAmbulancias", "vuelva a intentarlo mas tarde");
 
-		viewName = "no-hay-ambulancias";
+
 
 		return new ModelAndView(viewName, model);
 	}

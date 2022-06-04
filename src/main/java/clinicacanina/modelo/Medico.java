@@ -20,8 +20,12 @@ public class Medico {
 		this.horarioEntrada = horarioEntrada;
 		this.horarioSalida = horarioSalida;
 	}
-	
-	
+
+	public Medico() {
+
+	}
+
+
 	public Long getId() {
 		return id;
 	}
