@@ -24,20 +24,16 @@
                 <table class="table user-list">
                     <thead>
                     <tr>
-                        <th class="d-none"></th>
                         <th class="text-center">Nombre</th>
-                        <th class="text-center">Peso</th>
-                        <th class="text-center">Edad</th>
-                        <th class="text-center">Acciones</th>
+                        <th class="text-center">Historia Clinica</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${listarmascotas}" var="mascota">
                         <tr>
-                            <td class="d-none">${mascota.id}</td>
                             <td class="text-center">${mascota.nombre}</td>
-                            <td class="text-center">${mascota.peso}</td>
-                            <td class="text-center">${mascota.edad}</td>
+                            <td class="text-center"><a href="historia-clinica?idMascota=${mascota.id}">Ver historia Clinica</a></td>
+
 
                             </a>
                             </td>

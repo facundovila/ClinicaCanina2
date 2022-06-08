@@ -1,9 +1,9 @@
 
 -- MASCOTAS
-
-insert into mascota(edad, nombre, peso)values
-                                                                         (15, 'hachi', 40),
-                                                                         (8,'firu', 8);
+use db;
+insert into mascota(peso, nombre, edad, sintomas, detalleTratamientos)values
+                                                                         (15, 'hachi', 40, 'resfrio', 'te con limon'),
+                                                                         (8,'firu', 8, 'gripe', 'optamox');
 
 
 

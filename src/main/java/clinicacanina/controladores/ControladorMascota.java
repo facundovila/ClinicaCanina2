@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
@@ -31,18 +32,7 @@ public class ControladorMascota {
     }
 
 
-    @RequestMapping(path="/mostrar-mascota/{nombre}/{peso}/{edad}/")
-    public ModelAndView mostrarMascotaCreada(@PathVariable("nombre") String nombre, @PathVariable("peso") Integer peso, @PathVariable("edad") Integer edad) {
 
-        ModelMap model = new ModelMap();
-
-        Mascota resultado=servicioMascota.crearMascota(nombre,peso, edad);
-
-        model.put("mascota", resultado);
-
-        return new ModelAndView("detalle-mascota", model);
-
-    }
 
     @RequestMapping(path = "/listar-mascotas" , method = RequestMethod.GET)
     public ModelAndView listarMascotas() {
@@ -52,17 +42,31 @@ public class ControladorMascota {
         List<Mascota> listaDeMascotas = servicioMascota.listarMascotas();
 
         if(listaDeMascotas.isEmpty()){
-
             model.put("sinMascotas", "no hay pacientes mascotas");
-
-
-
         }
 
 
         model.put("listarmascotas", listaDeMascotas);
 
         return new ModelAndView("listaMascotas", model);
+
+
+
+    }
+
+
+    @RequestMapping(path = "/historia-clinica", method = RequestMethod.GET)
+    public ModelAndView irAHistoriaClinica(@RequestParam("idMascota") Long idMascota) {
+
+        ModelMap model= new ModelMap();
+
+
+        Mascota mascota = servicioMascota.buscarMascotaPorId(idMascota);
+
+
+        model.put("historiaclinica", mascota);
+
+        return new ModelAndView("historiaClinica", model);
 
 
 

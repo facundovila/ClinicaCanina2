@@ -1,6 +1,7 @@
 package clinicacanina.servicios;
 
 
+import clinicacanina.controladores.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.repositorios.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,10 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
 
     @Override
-    public Mascota crearMascota(String nombreMascota, Integer peso, Integer edad){
+    public Mascota crearMascota(HistoriaClinica historiaClinica){
 
-        Mascota mascotaGuardada = new Mascota(nombreMascota, peso, edad);
+
+        Mascota mascotaGuardada = new Mascota(historiaClinica);
 
        repositorioMascota.guardar(mascotaGuardada);
 
@@ -43,17 +45,7 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
     }
 
-    @Override
-    public List<Mascota> buscarMascota(String nombreMascota, Integer peso, Integer edad){
-        List<Mascota> lista= new LinkedList<>();
 
-        for(int i=0; i<10; i++){
-            lista.add(new Mascota(nombreMascota, peso, edad));
-        }
-
-        return lista;
-
-    }
 
 
     @Override
@@ -64,6 +56,11 @@ public class ServicioMascotaImpl implements ServicioMascota {
         return mascotaBuscada;
 
     }
+
+
+
+
+
 
     @Override
     public List<Mascota> listarMascotas(){
