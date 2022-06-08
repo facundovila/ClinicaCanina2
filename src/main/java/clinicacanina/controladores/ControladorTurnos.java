@@ -24,20 +24,20 @@ public class ControladorTurnos {
 
 
 	@RequestMapping (path="/buscar-turno/{fecha}")
-	public ModelAndView buscarTurno(@PathVariable("fecha") String fecha) { //este metodo deberia llamarse buscarTurnoRegistrado
+	public ModelAndView buscarTurnoDisponible(@PathVariable("fecha") String fecha) { 
 
 		ModelMap model = new ModelMap();
 
 		List<Turno> turnos = servicioTurnos.buscarTurno(fecha);
 		
 		if (!turnos.isEmpty()) {
-			model.put("msg", turnos);
+			model.put("noHayTunosDisponibles", turnos);
 
 		} 
-			model.put("vacia", "hay turnos disponibles");
+			model.put("turnosDisponibles", "hay turnos disponibles");
 
 
-			return new ModelAndView("turnodisponible", model); //todos los turnos estan reservados
+			return new ModelAndView("turnodisponible", model);
 
 	}
 

@@ -1,4 +1,4 @@
-package clinicacanina.controladores;
+package clinicacanina.modelo;
 
 
 public class HistoriaClinica {

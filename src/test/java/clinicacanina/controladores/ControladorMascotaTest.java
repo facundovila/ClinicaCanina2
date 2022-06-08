@@ -1,5 +1,6 @@
 package clinicacanina.controladores;
 
+import clinicacanina.modelo.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.servicios.ServicioMascota;
 import org.junit.Before;

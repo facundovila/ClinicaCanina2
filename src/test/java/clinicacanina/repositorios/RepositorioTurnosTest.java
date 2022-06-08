@@ -43,15 +43,15 @@ public class RepositorioTurnosTest extends SpringTest{
 		public void creaUnTurnoYLoBuscaPorFecha() {
 			
 			
-			Turno turno1= dadoQueExisteTurno("fecha1");
-			Turno turno2= dadoQueExisteTurno("fecha1");
-			Turno turno3= dadoQueExisteTurno("fecha3");
+			Turno turno1= dadoQueExisteTurno("27-05-2022");
+			Turno turno2= dadoQueExisteTurno("26-05-2022");
+			Turno turno3= dadoQueExisteTurno("26-05-2022");
 			
 			cuandoGuardoTurno(turno1);
 			cuandoGuardoTurno(turno2);
 			cuandoGuardoTurno(turno3);
 			
-			List<Turno>turnoBuscado=cuandoBuscoTurnoPorFecha("fecha1");
+			List<Turno>turnoBuscado=cuandoBuscoTurnoPorFecha("25-02-2022");
 			
 			Integer cantidadEsperada=2;
 			
@@ -61,7 +61,6 @@ public class RepositorioTurnosTest extends SpringTest{
 		}
 
 	private void entoncesEncuentroTurno(List<Turno> turnoBuscado, Integer cantidadEsperada) {
-			// TODO Auto-generated method stub
 			assertThat(turnoBuscado).hasSize(cantidadEsperada);
 		}
 

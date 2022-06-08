@@ -5,7 +5,7 @@
 
 
 
-<c:if test="${not empty msg }">
+<c:if test="${not empty noHayTunosDisponibles }">
 
     <h2>Lista de turnos</h2>
     ${msg}
@@ -14,13 +14,13 @@
 
 
 
-<c:if test="${ empty msg}">
+<c:if test="${ empty noHayTunosDisponibles}">
 
     <h2>
         situacion de turnos:
     </h2>
     <h4>
-            ${vacia}
+            ${turnosDisponibles}
     </h4>
 </c:if>
 

@@ -16,7 +16,6 @@ import clinicacanina.servicios.ServicioTurnos;
 
 public class ControladorTurnosTest {
 
-	private static final String VISTA_FECHA_ESPERADA = "turnoreservado";
 	private ControladorTurnos controladorTurnos;
 	private ServicioTurnos servicioTurnos;
 	
@@ -34,7 +33,7 @@ public class ControladorTurnosTest {
 		
 		ModelAndView mav  = cuandoBuscaUnTurnoDeLaFecha("26-05-2022");//aca llamas al metodo del controlador
 		
-		entoncesEncuentro(2, mav);
+		entoncesEncuentro(1, mav);
 				
 	}
 			
@@ -45,17 +44,17 @@ public class ControladorTurnosTest {
 			lista.add(new Turno(fecha));
 		}
 
-		when(servicioTurnos.buscarTurno("26-05-2022")).thenReturn(lista); //donde lista tiene 2 turnos adentro		
+		when(servicioTurnos.buscarTurno("26-05-2022")).thenReturn(lista); 
 	}
 	
 	private ModelAndView cuandoBuscaUnTurnoDeLaFecha(String fecha) {
 
-		return controladorTurnos.buscarTurno(fecha);
+		return controladorTurnos.buscarTurnoDisponible(fecha);
 	}
 
 	private void entoncesEncuentro(Integer cantidad, ModelAndView mav) {
 		
-		List<Turno>lista=(List<Turno>)mav.getModel().get("msg");
+		List<Turno>lista=(List<Turno>)mav.getModel().get("turnodisponible");
 		assertThat(lista).hasSize(cantidad);
 				
 	}

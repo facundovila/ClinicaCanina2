@@ -1,6 +1,6 @@
 package clinicacanina.servicios;
 
-import clinicacanina.controladores.HistoriaClinica;
+import clinicacanina.modelo.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
 
 import java.util.List;

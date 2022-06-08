@@ -1,9 +1,9 @@
 package clinicacanina.servicios;
 
-import clinicacanina.controladores.HistoriaClinica;
 import org.junit.Before;
 import org.junit.Test;
 
+import clinicacanina.modelo.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.repositorios.RepositorioMascota;
 

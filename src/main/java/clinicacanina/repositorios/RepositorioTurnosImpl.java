@@ -37,7 +37,6 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	@Override
 	public List<Turno> buscarPorFecha(String fecha) {
-		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createCriteria(Turno.class)
 				.add(Restrictions.eqOrIsNull("fecha", fecha))
 				.list();

@@ -1,7 +1,7 @@
 package clinicacanina.servicios;
 
 
-import clinicacanina.controladores.HistoriaClinica;
+import clinicacanina.modelo.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.repositorios.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
