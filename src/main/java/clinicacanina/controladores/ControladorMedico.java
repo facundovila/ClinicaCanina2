@@ -36,6 +36,8 @@ public class ControladorMedico {
 			model.put("Existen Medicos", medico);
 			}
 		
+		//comentario
+		
 
 		
 		return new ModelAndView("medicos",model); //vista , modelo
