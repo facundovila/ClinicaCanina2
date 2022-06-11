@@ -1,5 +1,7 @@
 package clinicacanina.modelo;
 
+import clinicacanina.controladores.HistoriaClinica;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,19 +28,25 @@ public class Mascota {
     @NotNull
     private Integer edad;
 
+    @Column(nullable = false)
+    private String sintomas;
+
+    @Column(nullable = false)
+    private String detalleTratamientos;
 
 
 
-    public Mascota(String nombre, Integer peso, Integer edad){
-        this.nombre = nombre;
-        this.peso = peso;
-        this.edad = edad;
+
+    public Mascota(HistoriaClinica historiaClinica){
+        this.nombre = historiaClinica.getNombre();
+        this.peso = historiaClinica.getPeso();
+        this.edad = historiaClinica.getEdad();
+        this.sintomas = historiaClinica.getSintomas();
+        this.detalleTratamientos = historiaClinica.getDetalleTratamientos();
     }
 
 
-    public Mascota() {
-
-    }
+    public Mascota() {}
 
     public Integer getEdad() {
         return edad;
@@ -73,6 +81,17 @@ public class Mascota {
     public void setPeso(Integer peso) {
         this.peso = peso;
     }
+
+    public String getSintomas() {return sintomas;}
+
+    public void setSintomas(String medicamentos) {this.sintomas = medicamentos;}
+
+    public String getDetalleTratamientos() {return detalleTratamientos;}
+
+    public void setDetalleTratamientos(String detalleTratamientos) {this.detalleTratamientos = detalleTratamientos;}
+
+
+
 }
 
 

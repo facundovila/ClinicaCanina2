@@ -28,6 +28,8 @@ public class RepositorioMedicoImpl implements RepositorioMedico{
 
 	@Override
 	public void guardarMedico(Medico medico) {
+
+		 sessionFactory.getCurrentSession().save(medico);
 		
 	}
 

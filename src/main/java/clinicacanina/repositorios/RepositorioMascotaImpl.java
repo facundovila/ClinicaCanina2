@@ -25,7 +25,9 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
     @Override
     public Mascota buscarPorId(Long id) {
 
-        Mascota mascota = sessionFactory.getCurrentSession().get(Mascota.class, id);
+        Mascota mascota = sessionFactory.getCurrentSession()
+                .get(Mascota.class, id);
+
 
         return mascota;
 

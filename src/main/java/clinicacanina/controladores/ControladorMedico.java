@@ -25,7 +25,9 @@ public class ControladorMedico {
 	@RequestMapping(path="/lista-medicos")
 	public ModelAndView mostrarTodosLosMedicos() {
 		ModelMap model = new ModelMap();
+
 		List <Medico> medico = servicioMedico.listarMedico();
+
 		
 		if(medico.isEmpty()) {
 			model.put("No Existen Medicos",medico);
@@ -34,6 +36,7 @@ public class ControladorMedico {
 			model.put("Existen Medicos", medico);
 			}
 		
+
 		
 		return new ModelAndView("medicos",model); //vista , modelo
 		

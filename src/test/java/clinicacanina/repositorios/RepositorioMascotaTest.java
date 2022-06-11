@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class RepositorioMascotaTest extends SpringTest {
@@ -21,7 +21,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Test
     @Transactional
     @Rollback
-    public void guardarUnaMascotaDeberiaPersistirla(){
+    public void guardarUnaMascotaDeberiaPersistirla() {
 
         //preparacion
         Mascota mascota = dadoQueExisteMascota("goten", 15);
@@ -39,21 +39,21 @@ public class RepositorioMascotaTest extends SpringTest {
     @Test
     @Transactional
     @Rollback
-    public void puedoBuscarMascotaPorNombre(){
+    public void puedoBuscarMascotaPorNombre() {
 
         //preparacion
-        Mascota mascota1= dadoQueExisteMascota("goten", 15);
-        Mascota mascota2 =dadoQueExisteMascota("firu", 20);
-        Mascota mascota3= dadoQueExisteMascota("firu", 17);
+        Mascota mascota1 = dadoQueExisteMascota("goten", 15);
+        Mascota mascota2 = dadoQueExisteMascota("firu", 20);
+        Mascota mascota3 = dadoQueExisteMascota("firu", 17);
 
         dadoQueGuardoMascota(mascota1);
         dadoQueGuardoMascota(mascota2);
         dadoQueGuardoMascota(mascota3);
 
         //ejecucion
-        List<Mascota> mascotasBuscadas =  CuandoBuscoMascotaPorNombre("firu");
+        List<Mascota> mascotasBuscadas = CuandoBuscoMascotaPorNombre("firu");
 
-        Integer cantidadEsperada=2;
+        Integer cantidadEsperada = 2;
 
         //validacion
         entoncesEncuentroLaMascotaConNombre(mascotasBuscadas, cantidadEsperada);
@@ -62,12 +62,12 @@ public class RepositorioMascotaTest extends SpringTest {
     @Test
     @Transactional
     @Rollback
-    public void sePuedenBuscarTodasLasMascotas(){
+    public void sePuedenBuscarTodasLasMascotas() {
 
         //preparacion
-        Mascota mascota1= dadoQueExisteMascota("goten", 15);
-        Mascota mascota2 =dadoQueExisteMascota("firu", 20);
-        Mascota mascota3= dadoQueExisteMascota("firu", 17);
+        Mascota mascota1 = dadoQueExisteMascota("goten", 15);
+        Mascota mascota2 = dadoQueExisteMascota("firu", 20);
+        Mascota mascota3 = dadoQueExisteMascota("firu", 17);
 
         dadoQueGuardoMascota(mascota1);
         dadoQueGuardoMascota(mascota2);
@@ -76,14 +76,12 @@ public class RepositorioMascotaTest extends SpringTest {
         //ejecucion
         List<Mascota> todasLasMascotas = CuandoBuscoTodasLasMascotas();
 
-        Integer cantidadEsperada=3;
+        Integer cantidadEsperada = 3;
 
         //validacion
         entoncesEncuentroTodasLasMascota(todasLasMascotas, cantidadEsperada);
 
     }
-
-
 
 
     private void entoncesEncuentroTodasLasMascota(List<Mascota> todasLasMascotas, Integer cantidadEsperada) {
@@ -133,11 +131,12 @@ public class RepositorioMascotaTest extends SpringTest {
     }
 
     private Mascota dadoQueExisteMascota(String nombre, int peso) {
-            Mascota mascota = new Mascota();
-            mascota.setNombre(nombre);
-            mascota.setPeso(peso);
+        Mascota mascota = new Mascota();
+        mascota.setNombre(nombre);
+        mascota.setPeso(peso);
 
-            return mascota;
+
+        return mascota;
 
 
     }
