@@ -27,7 +27,13 @@ public class ControladorMedico {
 		ModelMap model = new ModelMap();
 		List <Medico> medico = servicioMedico.listarMedico();
 		
-		model.put("medico", medico);
+		if(medico.isEmpty()) {
+			model.put("No Existen Medicos",medico);
+		}
+		else {
+			model.put("Existen Medicos", medico);
+			}
+		
 		
 		return new ModelAndView("medicos",model); //vista , modelo
 		
