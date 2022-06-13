@@ -2,7 +2,7 @@ package clinicacanina.servicios;
 
 import clinicacanina.modelo.Ambulancia;
 
-public interface AmbulanciaService {
+public interface ServicioAmbulancia {
 
 	Ambulancia buscarAmbulanciaDisponible();
 

@@ -2,7 +2,7 @@ package clinicacanina.repositorios;
 
 import clinicacanina.modelo.Ambulancia;
 
-public interface AmbulanciaRepository {
+public interface RepositorioAmbulancia {
 
 	Ambulancia traerAmbulanciaDisponible();
 

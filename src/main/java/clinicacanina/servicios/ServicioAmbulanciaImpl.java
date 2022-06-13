@@ -5,24 +5,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Ambulancia;
-import clinicacanina.repositorios.AmbulanciaRepository;
+import clinicacanina.repositorios.RepositorioAmbulancia;
 
 @Service @Transactional
-public class AmbulanciaServiceImpl implements AmbulanciaService{
+public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 
-	private AmbulanciaRepository ambulanciaRepository;
+	private RepositorioAmbulancia repositorioAmbulancia;
 	
 	@Autowired
-	public AmbulanciaServiceImpl(AmbulanciaRepository ambulanciaRepository) {
-		this.ambulanciaRepository = ambulanciaRepository;
+	public ServicioAmbulanciaImpl(RepositorioAmbulancia ambulanciaRepository) {
+		this.repositorioAmbulancia = ambulanciaRepository;
 	}
 
 	//busca ambulancia disponible, si la hay la reserva automaticamente.
 	@Override
 	public Ambulancia buscarAmbulanciaDisponible() {
-		Ambulancia encontrada = ambulanciaRepository.traerAmbulanciaDisponible();
+		Ambulancia encontrada = repositorioAmbulancia.traerAmbulanciaDisponible();
 		if(encontrada != null) {
-			ambulanciaRepository.reservarAmbulancia(encontrada.getPatente());
+			repositorioAmbulancia.reservarAmbulancia(encontrada.getPatente());
 		}
 		return encontrada;
 	}

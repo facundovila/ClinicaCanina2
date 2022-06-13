@@ -7,20 +7,21 @@ import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import clinicacanina.modelo.Ambulancia;
-import clinicacanina.servicios.AmbulanciaService;
+import clinicacanina.servicios.ServicioAmbulancia;
 import static org.assertj.core.api.Assertions.*;
 
-public class ControladorAmbulanciaDeberia {
+public class ControladorAmbulanciaTest {
 	
-	private final String VISTA_AMBULANCIA_DISPONIBLE = "ambulancia-en-camino";
-	private final String VISTA_AMBULANCIA_NO_DISPONIBLE = "no-hay-ambulancias";
-	private AmbulanciaController ambulanciaController;
-	private AmbulanciaService ambulanciaService;
+	//Se unificaron las vistas por lo tanto hay que retocar este test.
+	private final String VISTA_AMBULANCIA_DISPONIBLE = "ver-ambulancias";
+	private final String VISTA_AMBULANCIA_NO_DISPONIBLE = "ver-ambulancias";
+	private ControladorAmbulancia controladorAmbulancia;
+	private ServicioAmbulancia servicioAmbulancia;
 	
 	@Before
 	public void init() {
-		ambulanciaService = mock(AmbulanciaService.class);
-		ambulanciaController = new AmbulanciaController(ambulanciaService);
+		servicioAmbulancia = mock(ServicioAmbulancia.class);
+		controladorAmbulancia = new ControladorAmbulancia(servicioAmbulancia);
 	}
 	
 	@Test
@@ -38,17 +39,17 @@ public class ControladorAmbulanciaDeberia {
 		}
 
 	private void dadoQueNoHayAmbulanciasDisponibles() {
-		when(ambulanciaService.buscarAmbulanciaDisponible()).thenReturn(null);
+		when(servicioAmbulancia.buscarAmbulanciaDisponible()).thenReturn(null);
 		
 	}
 
 	private void dadoQueHayAmbulanciasDisponibles() {
-		when(ambulanciaService.buscarAmbulanciaDisponible()).thenReturn(new Ambulancia());
+		when(servicioAmbulancia.buscarAmbulanciaDisponible()).thenReturn(new Ambulancia());
 		
 	}
 
 	private ModelAndView cuandoPidoUnaAmbulancia() {
-		return ambulanciaController.pedirAmbulancia();
+		return controladorAmbulancia.pedirAmbulancia();
 	}
 	
 	private void entoncesMeLlevaALaVistaDe(String VISTA_ESPERADA, String vistaRecibida) {
