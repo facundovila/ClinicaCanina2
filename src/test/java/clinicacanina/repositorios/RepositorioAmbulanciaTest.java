@@ -13,14 +13,14 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-public class AmbulanciaRepositoryDeberia extends SpringTest{
+public class RepositorioAmbulanciaTest extends SpringTest{
 	private final Estado ESTADO_ESPERADO = Estado.EN_CAMINO;
 	private final Estado PRIMER_ESTADO_RESERVADA = Estado.EN_PREPARACION;
 	private final String PATENTE_ESPERADA = "abc123";
 	
 	
 	@Autowired
-	private AmbulanciaRepository ambulanciaRepository;
+	private RepositorioAmbulancia repositorioAmbulancia;
 	
 	@Test @Transactional @Rollback
 	public void poderBuscarUnaAmbulanciaPorPatente() {
@@ -43,8 +43,8 @@ public class AmbulanciaRepositoryDeberia extends SpringTest{
 	}
 
 	private Ambulancia cuandoReservoLaAmbulancia(String patente) {
-		ambulanciaRepository.reservarAmbulancia(patente);
-		return ambulanciaRepository.buscarPorPatente(patente);
+		repositorioAmbulancia.reservarAmbulancia(patente);
+		return repositorioAmbulancia.buscarPorPatente(patente);
 		
 	}
 
@@ -72,7 +72,7 @@ public class AmbulanciaRepositoryDeberia extends SpringTest{
 	
 
 	private void entoncesPuedoActualizarSuEstado(Ambulancia ambulanciaAActualizar) {
-	   ambulanciaRepository.actualizarEstado("abc123");
+	   repositorioAmbulancia.actualizarEstado("abc123");
 	   
 	   assertThat(ambulanciaAActualizar.getEstado()).isEqualTo(ESTADO_ESPERADO);
 	   
@@ -87,7 +87,7 @@ public class AmbulanciaRepositoryDeberia extends SpringTest{
 		
 		session().save(ambulancia);
 		
-		return ambulanciaRepository.buscarPorPatente("abc123");
+		return repositorioAmbulancia.buscarPorPatente("abc123");
 		
 		
 	}

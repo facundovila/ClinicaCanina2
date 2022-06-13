@@ -12,18 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.*;
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.Estado;
-import clinicacanina.repositorios.AmbulanciaRepository;
+import clinicacanina.repositorios.RepositorioAmbulancia;
 
 
-public class AmbulanciaServiceDeberia {
+public class ServicioAmbulanciaTest {
   
-	private AmbulanciaRepository ambulanciaRepository;
-	private AmbulanciaService ambulanciaService;
+	private RepositorioAmbulancia repositorioAmbulancia;
+	private ServicioAmbulancia servicioAmbulancia;
 	
 	@Before
 	public void init() {
-		ambulanciaRepository = mock(AmbulanciaRepository.class);
-		ambulanciaService = new AmbulanciaServiceImpl(ambulanciaRepository);
+		repositorioAmbulancia = mock(RepositorioAmbulancia.class);
+		servicioAmbulancia = new ServicioAmbulanciaImpl(repositorioAmbulancia);
 	}
 	
 	@Test
@@ -44,31 +44,31 @@ public class AmbulanciaServiceDeberia {
 	}
 
 	private void dadoQueHayAmbulanciasDisponibles() {
-		when(ambulanciaRepository.traerAmbulanciaDisponible()).thenReturn(new Ambulancia());
+		when(repositorioAmbulancia.traerAmbulanciaDisponible()).thenReturn(new Ambulancia());
 		
 	}
 
 	private void dadoQueNoHayAmbulanciasDisponibles() {
-		when(ambulanciaRepository.traerAmbulanciaDisponible()).thenReturn(null);
+		when(repositorioAmbulancia.traerAmbulanciaDisponible()).thenReturn(null);
 		
 	}
 
 	
 
 	private Ambulancia cuandoBuscoUnaAmbulancia() {
-		return ambulanciaService.buscarAmbulanciaDisponible();
+		return servicioAmbulancia.buscarAmbulanciaDisponible();
 		
 	}
 
 	
 	
 	private void entoncesPuedoReservarla(Ambulancia ambulancia) {
-		verify(ambulanciaRepository, times(1)).reservarAmbulancia(anyString());
+		verify(repositorioAmbulancia, times(1)).reservarAmbulancia(anyString());
 		
 	}
 	
 	private void entoncesNoPuedoReservarla(Ambulancia ambulancia) {
-		verify(ambulanciaRepository, never()).reservarAmbulancia(anyString());
+		verify(repositorioAmbulancia, never()).reservarAmbulancia(anyString());
 		
 	}
 }

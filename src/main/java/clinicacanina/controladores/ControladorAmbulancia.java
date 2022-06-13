@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import clinicacanina.modelo.Ambulancia;
-import clinicacanina.servicios.AmbulanciaService;
+import clinicacanina.servicios.ServicioAmbulancia;
 
 @Controller
-public class AmbulanciaController {
+public class ControladorAmbulancia {
 	
-	private AmbulanciaService ambulanciaService;
+	private ServicioAmbulancia servicioAmbulancia;
 	
 	@Autowired
-	public AmbulanciaController(AmbulanciaService ambulanciaService) {
-		this.ambulanciaService = ambulanciaService;
+	public ControladorAmbulancia(ServicioAmbulancia servicioAmbulancia) {
+		this.servicioAmbulancia = servicioAmbulancia;
 	}
 
 	@RequestMapping(path="/pedir-ambulancia")
@@ -26,7 +26,7 @@ public class AmbulanciaController {
 
 		String viewName = "ambulancia-en-camino";
 
-		Ambulancia ambulanciaDisponible = ambulanciaService.buscarAmbulanciaDisponible();
+		Ambulancia ambulanciaDisponible = servicioAmbulancia.buscarAmbulanciaDisponible();
 
 		if(ambulanciaDisponible != null) {
 
