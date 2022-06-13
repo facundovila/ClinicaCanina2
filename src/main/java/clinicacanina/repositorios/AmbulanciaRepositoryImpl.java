@@ -10,12 +10,12 @@ import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.Estado;
 
 @Repository
-public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
+public class AmbulanciaRepositoryImpl implements AmbulanciaRepository{
 	
 	private SessionFactory sessionFactory;
 	
 	@Autowired
-	public RepositorioAmbulanciaImpl(SessionFactory sessionFactory) {
+	public AmbulanciaRepositoryImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
