@@ -9,4 +9,8 @@ public interface ServicioAmbulancia {
 
 	List <Ambulancia> buscarAmbulanciasDisponibles();
 
+	Ambulancia buscarAmbulanciaPorPatente(String patente);
+
+	void reservarAmbulancia(Ambulancia ambulancia);
+
 }
