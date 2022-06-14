@@ -28,10 +28,10 @@ public class Mascota {
     @NotNull
     private Integer edad;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String sintomas;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String detalleTratamientos;
 
 

@@ -8,4 +8,6 @@ public interface ServicioMedico {
 
 	List<Medico> listarMedico();
 
+	Medico buscarMedicoLogin(Integer dni, String password);
+
 }

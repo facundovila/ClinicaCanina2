@@ -8,21 +8,30 @@ public class Medico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	private String contrasenia;
+	private Integer dni;
 	private String nombre;
 	private Integer horarioEntrada; 
 	private Integer horarioSalida;
 	private Boolean disponibilidad;
-	
-	
+
+
 	public Medico(String nombre, Integer horarioEntrada, Integer horarioSalida) {
 		this.nombre = nombre;
 		this.horarioEntrada = horarioEntrada;
 		this.horarioSalida = horarioSalida;
 	}
 
+
 	public Medico() {
 
+	}
+
+	public Medico(Integer dni, String contrasenia) {
+
+		this.contrasenia = contrasenia;
+		this.dni = dni;
 	}
 
 
@@ -60,6 +69,21 @@ public class Medico {
 	public void setDisponibilidad(Boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
-	
 
+
+	public Integer getDni() {
+		return dni;
+	}
+
+	public void setDni(Integer dni) {
+		this.dni = dni;
+	}
+
+	public String getContrasenia() {
+		return contrasenia;
+	}
+
+	public void setContraseña(String contrasenia) {
+		this.contrasenia = contrasenia;
+	}
 }

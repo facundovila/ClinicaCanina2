@@ -16,4 +16,27 @@ insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre) VALUE 
 
 insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre) VALUE (false, 10,15,'jose');
 
+
+insert into medico(dni, contrasenia) values (10, 'admin');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- QUERYS
 select * from medico;

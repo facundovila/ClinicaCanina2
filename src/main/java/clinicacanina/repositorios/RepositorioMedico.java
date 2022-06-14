@@ -10,4 +10,5 @@ public interface RepositorioMedico {
 
 	void guardarMedico(Medico medico);
 
+	Medico buscarPorMailYPassword(Integer dni, String password);
 }

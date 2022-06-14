@@ -26,10 +26,6 @@ public class ControladorMascota {
     }
 
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public ModelAndView inicio() {
-        return new ModelAndView("redirect:/listar-mascotas");
-    }
 
 
 

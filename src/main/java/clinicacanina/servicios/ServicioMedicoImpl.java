@@ -28,6 +28,15 @@ public class ServicioMedicoImpl implements ServicioMedico{
 	}
 
 
+	@Override
+	public Medico buscarMedicoLogin(Integer dni, String password){
+
+		return repositorioMedico.buscarPorMailYPassword(dni, password);
+
+	};
+
+
+
 
 
 
