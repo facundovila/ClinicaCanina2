@@ -1,10 +1,14 @@
 package clinicacanina.repositorios;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.Estado;
@@ -20,11 +24,19 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 	}
 
 	@Override
-	public Ambulancia traerAmbulanciaDisponible() {
-		// TODO Auto-generated method stub
-		return null;
+	public List <Ambulancia> buscarAmbulancias() {
+      final Session session = sessionFactory.getCurrentSession();
+      List<Ambulancia> ambulancias = new LinkedList<Ambulancia>();
+		
+		ambulancias = (List<Ambulancia>) session.createCriteria(Ambulancia.class)
+				                               .list();
+		
+		return ambulancias;
+	
 	}
 
+	
+	/*
 	@Override
 	public void reservarAmbulancia(String patente) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -57,5 +69,5 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 		}
 		
 	}
-
+*/
 }

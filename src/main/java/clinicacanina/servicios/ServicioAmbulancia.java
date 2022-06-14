@@ -1,9 +1,12 @@
 package clinicacanina.servicios;
 
+
+import java.util.List;
+
 import clinicacanina.modelo.Ambulancia;
 
 public interface ServicioAmbulancia {
 
-	Ambulancia buscarAmbulanciaDisponible();
+	List <Ambulancia> buscarAmbulanciasDisponibles();
 
 }

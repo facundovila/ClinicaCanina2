@@ -1,10 +1,13 @@
 package clinicacanina.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.servicios.ServicioAmbulancia;
@@ -20,22 +23,23 @@ public class ControladorAmbulancia {
 	}
 
 	@RequestMapping(path="/pedir-ambulancia")
-	public ModelAndView pedirAmbulancia() {
+	public ModelAndView listarAmbulanciasDisponibles() {
 
 		ModelMap model = new ModelMap();
 
-		String viewName = "ambulancia-en-camino";
+		String viewName = "listaAmbulancias";
 
-		Ambulancia ambulanciaDisponible = servicioAmbulancia.buscarAmbulanciaDisponible();
+		List <Ambulancia> ambulanciasDisponibles = servicioAmbulancia.buscarAmbulanciasDisponibles();
 
-		if(ambulanciaDisponible != null) {
+		if(ambulanciasDisponibles.isEmpty()) {
+			model.put("SinAmbulancias", "vuelva a intentarlo mas tarde");
 
-			model.put("AmbulanciaDisponible", ambulanciaDisponible);
+			
 
+		}else {
+			model.put("AmbulanciaDisponible", ambulanciasDisponibles);
+		
 		}
-
-		model.put("SinAmbulancias", "vuelva a intentarlo mas tarde");
-
 
 
 		return new ModelAndView(viewName, model);

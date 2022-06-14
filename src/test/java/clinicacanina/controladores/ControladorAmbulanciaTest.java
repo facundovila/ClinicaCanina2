@@ -2,9 +2,13 @@ package clinicacanina.controladores;
 
 import static org.mockito.Mockito.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.servicios.ServicioAmbulancia;
@@ -12,8 +16,15 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ControladorAmbulanciaTest {
 	
-	private final String VISTA_AMBULANCIA_DISPONIBLE = "ambulancia-en-camino";
-	private final String VISTA_AMBULANCIA_NO_DISPONIBLE = "no-hay-ambulancias";
+	private Ambulancia ambulancia1 = new Ambulancia();
+	private Ambulancia ambulancia2 = new Ambulancia();
+	private Ambulancia ambulancia3 = new Ambulancia();
+	private final String PATENTE_1 = "abc123";
+	private final String PATENTE_2 = "def456";
+	private final String PATENTE_3 = "ghi789";
+	private final boolean DISPONIBLE = true;
+	private final boolean NO_DISPONIBLE = false;
+	private final String VISTA_LISTA_AMBULANCIAS = "listaAmbulancias";
 	private ControladorAmbulancia controladorAmbulancia;
 	private ServicioAmbulancia servicioAmbulancia;
 	
@@ -24,35 +35,43 @@ public class ControladorAmbulanciaTest {
 	}
 	
 	@Test
-	public void poderSolicitarUnaAmbulancia() {
-		dadoQueHayAmbulanciasDisponibles();
+	public void poderListarLasAmbulanciasDisponibles() {
+		List <Ambulancia> ambulanciasDisponibles = new LinkedList<Ambulancia>();
+		
+		dadoQueHayAmbulanciasDisponibles(ambulanciasDisponibles, 3);
 		ModelAndView mav = cuandoPidoUnaAmbulancia();
-		entoncesMeLlevaALaVistaDe(VISTA_AMBULANCIA_DISPONIBLE, mav.getViewName());
+		entoncesObtengoUnaListaDeAmbulanciasDisponibles((List<Ambulancia>)mav.getModel().get("AmbulanciaDisponible"), 3);
 	}
 	
-	@Test
-	public void noPoderSolicitarUnaAbulancia() {
-		dadoQueNoHayAmbulanciasDisponibles();
-		ModelAndView mav = cuandoPidoUnaAmbulancia();
-		entoncesMeLlevaALaVistaDe(VISTA_AMBULANCIA_NO_DISPONIBLE, mav.getViewName());
-		}
 
-	private void dadoQueNoHayAmbulanciasDisponibles() {
-		when(servicioAmbulancia.buscarAmbulanciaDisponible()).thenReturn(null);
+	private void dadoQueHayAmbulanciasDisponibles(List<Ambulancia> ambulanciasDisponibles, int cantidad) {
+		//Seteo valores de ambulancias
+		ambulancia1.setPatente(PATENTE_1);
+		ambulancia1.setDisponibilidad(DISPONIBLE);
+		ambulancia2.setPatente(PATENTE_2);
+		ambulancia2.setDisponibilidad(DISPONIBLE);
+		ambulancia3.setPatente(PATENTE_3);
+		ambulancia3.setDisponibilidad(DISPONIBLE);
+		//----------------------------------------------------
+		//Agrego ambulancias a la lista
+		ambulanciasDisponibles.add(ambulancia1);
+		ambulanciasDisponibles.add(ambulancia2);
+		ambulanciasDisponibles.add(ambulancia2);
 		
-	}
-
-	private void dadoQueHayAmbulanciasDisponibles() {
-		when(servicioAmbulancia.buscarAmbulanciaDisponible()).thenReturn(new Ambulancia());
+		
+		when(servicioAmbulancia.buscarAmbulanciasDisponibles()).thenReturn(ambulanciasDisponibles);
 		
 	}
 
 	private ModelAndView cuandoPidoUnaAmbulancia() {
-		return controladorAmbulancia.pedirAmbulancia();
+		return controladorAmbulancia.listarAmbulanciasDisponibles();
 	}
 	
-	private void entoncesMeLlevaALaVistaDe(String VISTA_ESPERADA, String vistaRecibida) {
-		assertThat(vistaRecibida).isEqualTo(VISTA_ESPERADA);
+	private void entoncesObtengoUnaListaDeAmbulanciasDisponibles(List<Ambulancia> ambulanciasRecibidas, int cantidadEsperada) {
+		assertThat(ambulanciasRecibidas.size()).isEqualTo(cantidadEsperada);
+		assertThat(ambulanciasRecibidas.get(0).getDisponibilidad()).isEqualTo(DISPONIBLE);
+		assertThat(ambulanciasRecibidas.get(1).getDisponibilidad()).isEqualTo(DISPONIBLE);
+		assertThat(ambulanciasRecibidas.get(2).getDisponibilidad()).isEqualTo(DISPONIBLE);
 		
 	}
 
