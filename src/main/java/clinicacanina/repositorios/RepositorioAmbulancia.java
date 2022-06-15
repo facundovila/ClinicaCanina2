@@ -15,4 +15,8 @@ public interface RepositorioAmbulancia {
 
 	void actualizarEstado(String patente);
 */
+
+	Ambulancia buscarAmbulanciaPorPatente(String patente);
+
+	void reservarAmbulancia();
 }

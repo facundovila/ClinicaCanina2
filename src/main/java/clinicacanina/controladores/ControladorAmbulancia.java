@@ -52,7 +52,7 @@ public class ControladorAmbulancia {
 		ModelMap model = new ModelMap();
 		String viewName = "reservaAmbulancia";
 		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(reservaDeAmbulancia.getAmbulancia().getPatente());
-		
+		//doble validacion, pero la ambulancia que nos trae deberia estar disponible.
 		if(ambulancia != null && ambulancia.getDisponibilidad() == true) {
 			servicioAmbulancia.reservarAmbulancia(ambulancia);
 			model.put("AmbulanciaReservada", ambulancia);

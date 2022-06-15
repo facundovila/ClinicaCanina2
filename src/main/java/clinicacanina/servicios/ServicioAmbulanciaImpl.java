@@ -16,8 +16,8 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 	private RepositorioAmbulancia repositorioAmbulancia;
 	
 	@Autowired
-	public ServicioAmbulanciaImpl(RepositorioAmbulancia ambulanciaRepository) {
-		this.repositorioAmbulancia = ambulanciaRepository;
+	public ServicioAmbulanciaImpl(RepositorioAmbulancia repositorioAmbulancia) {
+		this.repositorioAmbulancia = repositorioAmbulancia;
 	}
 
 	//busca ambulancia disponible, si la hay la reserva automaticamente.
@@ -35,6 +35,18 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		}
 		
 		return ambulanciasDisponibles;
+	}
+
+	@Override
+	public Ambulancia buscarAmbulanciaPorPatente(String patente) {
+		return repositorioAmbulancia.buscarAmbulanciaPorPatente(patente);
+	}
+
+	@Override
+	public void reservarAmbulancia(Ambulancia ambulancia) {
+		if(ambulancia !=null ) ambulancia.setDisponibilidad(false);
+		repositorioAmbulancia.reservarAmbulancia();
+		
 	}
   
 }
