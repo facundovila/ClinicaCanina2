@@ -46,7 +46,8 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 
 	@Override
 	public void reservarAmbulancia(Ambulancia ambulancia) {
-		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(ambulancia);
 		
 	}
 
