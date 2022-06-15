@@ -35,6 +35,25 @@ public class RepositorioAmbulanciaTest extends SpringTest{
 		List<Ambulancia> ambulanciasBuscadas = cuandoBuscoTodasLasAmbulancias();
 		entoncesObtengoUnaListaDeTodasLasAmbulanciasExistentes(ambulanciasBuscadas);
 	}
+	
+	@Test @Transactional @Rollback
+	public void queSePuedaBuscarUnaAmbulanciaPorPatente() {
+		dadoQueExistenAmbulancias();
+		Ambulancia ambulancia = cuandoBuscoUnaAmbulanciaPorPatente(PATENTE_1);
+		entoncesObtengoLaAmbulanciaCorrespondiente(ambulancia1,ambulancia);
+	}
+
+	private Ambulancia cuandoBuscoUnaAmbulanciaPorPatente(String patente) {
+		return repositorioAmbulancia.buscarAmbulanciaPorPatente(patente);
+		
+	}
+
+	private void entoncesObtengoLaAmbulanciaCorrespondiente(Ambulancia ambulanciaEsperada, Ambulancia ambulanciaRecibida) {
+		assertThat(ambulanciaEsperada).isEqualTo(ambulanciaRecibida);
+		assertThat(ambulanciaEsperada.getPatente()).isEqualTo(ambulanciaRecibida.getPatente());
+		//System.out.println(ambulanciaEsperada.getPatente()+ " === " + ambulanciaRecibida.getPatente());
+		
+	}
 
 	private void entoncesObtengoUnaListaDeTodasLasAmbulanciasExistentes(List<Ambulancia> ambulanciasBuscadas) {
 		assertThat(AMBULANCIAS_EXISTENTES).isEqualTo(ambulanciasBuscadas.size());

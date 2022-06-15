@@ -37,8 +37,11 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 
 	@Override
 	public Ambulancia buscarAmbulanciaPorPatente(String patente) {
-		// TODO Auto-generated method stub
-		return null;
+		final Session session = sessionFactory.getCurrentSession();
+		Ambulancia ambulancia = (Ambulancia)session.createCriteria(Ambulancia.class)
+				                                   .add(Restrictions.eq("patente", patente))
+				                                   .uniqueResult();
+		return ambulancia;
 	}
 
 	@Override
