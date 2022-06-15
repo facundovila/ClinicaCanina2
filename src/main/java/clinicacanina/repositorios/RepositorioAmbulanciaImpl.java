@@ -35,6 +35,18 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 	
 	}
 
+	@Override
+	public Ambulancia buscarAmbulanciaPorPatente(String patente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void reservarAmbulancia(Ambulancia ambulancia) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	/*
 	@Override

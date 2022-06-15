@@ -11,17 +11,59 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class RepositorioAmbulanciaTest extends SpringTest{
-	private final Estado ESTADO_ESPERADO = Estado.EN_CAMINO;
-	private final Estado PRIMER_ESTADO_RESERVADA = Estado.EN_PREPARACION;
-	private final String PATENTE_ESPERADA = "abc123";
-	
+	private Ambulancia ambulancia1 = new Ambulancia();
+	private Ambulancia ambulancia2 = new Ambulancia();
+	private Ambulancia ambulancia3 = new Ambulancia();
+	private final String PATENTE_1 = "abc123";
+	private final String PATENTE_2 = "def456";
+	private final String PATENTE_3 = "ghi789";
+	private final boolean DISPONIBLE = true;
+	private final boolean NO_DISPONIBLE = false;
+	private final int AMBULANCIAS_EXISTENTES = 3;
 	
 	@Autowired
 	private RepositorioAmbulancia repositorioAmbulancia;
 	
+	@Test @Transactional @Rollback
+	public void queSePuedaBuscarTodasLasAmbulanciasExistentes() {
+		dadoQueExistenAmbulancias();
+		List<Ambulancia> ambulanciasBuscadas = cuandoBuscoTodasLasAmbulancias();
+		entoncesObtengoUnaListaDeTodasLasAmbulanciasExistentes(ambulanciasBuscadas);
+	}
+
+	private void entoncesObtengoUnaListaDeTodasLasAmbulanciasExistentes(List<Ambulancia> ambulanciasBuscadas) {
+		assertThat(AMBULANCIAS_EXISTENTES).isEqualTo(ambulanciasBuscadas.size());
+		assertThat(PATENTE_1).isEqualTo(ambulanciasBuscadas.get(0).getPatente());
+		assertThat(PATENTE_2).isEqualTo(ambulanciasBuscadas.get(1).getPatente());
+		assertThat(PATENTE_3).isEqualTo(ambulanciasBuscadas.get(2).getPatente());
+		
+	}
+
+	private List<Ambulancia> cuandoBuscoTodasLasAmbulancias() {
+		
+		return repositorioAmbulancia.buscarAmbulancias();
+	}
+
+	private void dadoQueExistenAmbulancias() {
+		ambulancia1.setDisponibilidad(DISPONIBLE);
+		ambulancia1.setPatente(PATENTE_1);
+		ambulancia2.setDisponibilidad(NO_DISPONIBLE);
+		ambulancia2.setPatente(PATENTE_2);
+		ambulancia3.setDisponibilidad(NO_DISPONIBLE);
+		ambulancia3.setPatente(PATENTE_3);
+		
+		session().save(ambulancia1);
+		session().save(ambulancia2);
+		session().save(ambulancia3);
+	}
+	
+	
+	/*
 	@Test @Transactional @Rollback
 	public void poderBuscarUnaAmbulanciaPorPatente() {
 		Ambulancia ambulancia = cuandoBuscoLaAmbulanciaReservada();
@@ -92,6 +134,6 @@ public class RepositorioAmbulanciaTest extends SpringTest{
 		
 	}
 	
-	
+	*/
 
 }
