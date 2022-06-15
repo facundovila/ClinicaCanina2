@@ -47,12 +47,37 @@ public class ServicioAmbulanciaTest {
 		List<Ambulancia> ambulanciasDisponibles = cuandoBuscoLasAmbulanciasDisponibles();
 		entoncesMeTraeUnaListaSoloDeLasDisponibles(ambulanciasDisponibles);
 	}
+	
+	@Test
+	public void queSePuedaReservarUnaAmbulancia() {
+		Ambulancia ambulancia = new Ambulancia();
+		ambulancia.setDisponibilidad(true);
+		ambulancia.setPatente("ccc111");
+		
+		cuandoReservoUnaAmbulancia(ambulancia);
+		laMismaDejaDeEstarDisponible(ambulancia);
+	}
+
+
+	private void laMismaDejaDeEstarDisponible(Ambulancia ambulancia) {
+		assertThat(NO_DISPONIBLE).isEqualTo(ambulancia.getDisponibilidad());
+		
+	}
+
+
+	private void cuandoReservoUnaAmbulancia(Ambulancia ambulancia) {
+		servicioAmbulancia.reservarAmbulancia(ambulancia);
+		
+	}
+
 
 
 	private void entoncesMeTraeUnaListaSoloDeLasDisponibles(List<Ambulancia> ambulanciasDisponibles) {
 		assertThat(AMBULANCIAS_DISPONIBLES).isEqualTo(ambulanciasDisponibles.size());
 		assertThat(DISPONIBLE).isEqualTo(ambulanciasDisponibles.get(0).getDisponibilidad());
 		assertThat(DISPONIBLE).isEqualTo(ambulanciasDisponibles.get(1).getDisponibilidad());
+		assertThat(PATENTE_1).isEqualTo(ambulanciasDisponibles.get(0).getPatente());
+		assertThat(PATENTE_3).isEqualTo(ambulanciasDisponibles.get(1).getPatente());
 		
 	}
 

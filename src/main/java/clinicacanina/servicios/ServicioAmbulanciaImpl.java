@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Ambulancia;
+import clinicacanina.modelo.ErrorDeReserva;
 import clinicacanina.repositorios.RepositorioAmbulancia;
 
 @Service @Transactional
@@ -44,8 +45,13 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 
 	@Override
 	public void reservarAmbulancia(Ambulancia ambulancia) {
-		if(ambulancia !=null ) ambulancia.setDisponibilidad(false);
-		repositorioAmbulancia.reservarAmbulancia();
+		if(ambulancia !=null && ambulancia.getDisponibilidad() == true) {
+			ambulancia.setDisponibilidad(false);
+			repositorioAmbulancia.reservarAmbulancia(ambulancia);
+		}else {
+			throw new ErrorDeReserva();
+		}
+		
 		
 	}
   

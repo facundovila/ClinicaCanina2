@@ -53,11 +53,11 @@ public class ControladorAmbulancia {
 		String viewName = "reservaAmbulancia";
 		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(reservaDeAmbulancia.getAmbulancia().getPatente());
 		//doble validacion, pero la ambulancia que nos trae deberia estar disponible.
-		if(ambulancia != null && ambulancia.getDisponibilidad() == true) {
+		try {
 			servicioAmbulancia.reservarAmbulancia(ambulancia);
 			model.put("AmbulanciaReservada", ambulancia);
-		}else {
-			model.put("Error", "Ocurrio un error inesperado");
+		}catch(Exception e) {
+			model.put("Error", "Ocurrio un error inesperado al intentar reservar.");
 			viewName = "errorAlReservar";
 		}
 		
