@@ -46,9 +46,10 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 	}
 
 	@Override
-	public void reservarAmbulancia(ReservaDeAmbulancia reservaDeAmbulancia) {
+	public void reservarAmbulancia(ReservaDeAmbulancia reservaDeAmbulancia, Ambulancia ambulancia) {
 		final Session session = sessionFactory.getCurrentSession();
 		session.save(reservaDeAmbulancia);
+		session.update(ambulancia);
 		
 	}
 

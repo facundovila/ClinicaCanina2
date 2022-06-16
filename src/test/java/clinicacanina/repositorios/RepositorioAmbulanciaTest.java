@@ -63,7 +63,7 @@ public class RepositorioAmbulanciaTest extends SpringTest{
 		ambulanciaAReservar.setDisponibilidad(NO_DISPONIBLE);
 		reservaDeAmbulancia.setDireccion(DIRECCION);
 		reservaDeAmbulancia.setAmbulancia(ambulanciaAReservar);
-		repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia);
+		repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia, ambulanciaAReservar);
 		
 	}
 

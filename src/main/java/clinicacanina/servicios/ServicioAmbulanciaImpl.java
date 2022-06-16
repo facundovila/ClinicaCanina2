@@ -51,7 +51,7 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 			ReservaDeAmbulancia reservaDeAmbulancia = new ReservaDeAmbulancia();
 			reservaDeAmbulancia.setDireccion(direccion);
 			reservaDeAmbulancia.setAmbulancia(ambulancia);
-			repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia);
+			repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia, ambulancia);
 		}else {
 			throw new ErrorDeReserva();
 		}
