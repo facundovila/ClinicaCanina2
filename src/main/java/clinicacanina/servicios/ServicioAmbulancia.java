@@ -11,6 +11,6 @@ public interface ServicioAmbulancia {
 
 	Ambulancia buscarAmbulanciaPorPatente(String patente);
 
-	void reservarAmbulancia(Ambulancia ambulancia);
+	void reservarAmbulancia(String direccion, Ambulancia ambulancia);
 
 }

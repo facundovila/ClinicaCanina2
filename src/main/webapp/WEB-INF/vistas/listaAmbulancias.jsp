@@ -6,7 +6,7 @@
 <c:if test="${not empty AmbulanciaDisponible}">
     <h2>A continuacion se detallan la/s ambulancia/s disponible/s : </h2>
     <c:forEach items="${AmbulanciaDisponible}" var="each">
-    ${each.patente} <form:form action="reservar-ambulancia" method="POST" modelAttribute="reservaDeAmbulancia">
+    ${each.patente} <form:form action="reservar-ambulancia" method="POST" modelAttribute="datosReservaAmbulancia">
 			    	<h3 class="form-signin-heading">Reservar Ambulancia</h3>
 					<hr class="colorgraph"><br>
 

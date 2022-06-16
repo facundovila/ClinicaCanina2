@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ErrorDeReserva;
+import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.repositorios.RepositorioAmbulancia;
 
 @Service @Transactional
@@ -44,10 +45,13 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 	}
 
 	@Override
-	public void reservarAmbulancia(Ambulancia ambulancia) {
-		if(ambulancia !=null && ambulancia.getDisponibilidad() == true) {
+	public void reservarAmbulancia(String direccion, Ambulancia ambulancia) {
+		if((ambulancia !=null && ambulancia.getDisponibilidad() == true) && direccion != "") {
 			ambulancia.setDisponibilidad(false);
-			repositorioAmbulancia.reservarAmbulancia(ambulancia);
+			ReservaDeAmbulancia reservaDeAmbulancia = new ReservaDeAmbulancia();
+			reservaDeAmbulancia.setDireccion(direccion);
+			reservaDeAmbulancia.setAmbulancia(ambulancia);
+			repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia);
 		}else {
 			throw new ErrorDeReserva();
 		}

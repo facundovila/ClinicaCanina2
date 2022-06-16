@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.Estado;
+import clinicacanina.modelo.ReservaDeAmbulancia;
 
 @Repository
 public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
@@ -45,9 +46,9 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 	}
 
 	@Override
-	public void reservarAmbulancia(Ambulancia ambulancia) {
+	public void reservarAmbulancia(ReservaDeAmbulancia reservaDeAmbulancia) {
 		final Session session = sessionFactory.getCurrentSession();
-		session.update(ambulancia);
+		session.save(reservaDeAmbulancia);
 		
 	}
 

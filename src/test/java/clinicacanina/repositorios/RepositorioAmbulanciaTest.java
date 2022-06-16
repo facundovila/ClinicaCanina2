@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import clinicacanina.SpringTest;
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.Estado;
+import clinicacanina.modelo.ReservaDeAmbulancia;
 
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ public class RepositorioAmbulanciaTest extends SpringTest{
 	private final String PATENTE_1 = "abc123";
 	private final String PATENTE_2 = "def456";
 	private final String PATENTE_3 = "ghi789";
+	private final String DIRECCION = "Arana 283";
 	private final boolean DISPONIBLE = true;
 	private final boolean NO_DISPONIBLE = false;
 	private final int AMBULANCIAS_EXISTENTES = 3;
@@ -56,9 +58,12 @@ public class RepositorioAmbulanciaTest extends SpringTest{
 	}
 
 	private void cuandoReservoLaAmbulancia() {
+		ReservaDeAmbulancia reservaDeAmbulancia = new ReservaDeAmbulancia();
 		Ambulancia ambulanciaAReservar = repositorioAmbulancia.buscarAmbulanciaPorPatente(PATENTE_1);
 		ambulanciaAReservar.setDisponibilidad(NO_DISPONIBLE);
-		repositorioAmbulancia.reservarAmbulancia(ambulanciaAReservar);
+		reservaDeAmbulancia.setDireccion(DIRECCION);
+		reservaDeAmbulancia.setAmbulancia(ambulanciaAReservar);
+		repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia);
 		
 	}
 

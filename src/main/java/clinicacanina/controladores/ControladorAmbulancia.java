@@ -48,13 +48,13 @@ public class ControladorAmbulancia {
 	}
 
 	@RequestMapping(path = "/reservar-ambulancia", method = RequestMethod.POST)
-	public ModelAndView reservarAmbulancia(@ModelAttribute("reservaDeAmbulancia") ReservaDeAmbulancia reservaDeAmbulancia) {
+	public ModelAndView reservarAmbulancia(@ModelAttribute("datosReservaAmbulancia") DatosReservaAmbulancia datosReservaAmbulancia) {
 		ModelMap model = new ModelMap();
 		String viewName = "reservaAmbulancia";
-		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(reservaDeAmbulancia.getAmbulancia().getPatente());
+		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(datosReservaAmbulancia.getPatente());
 		//doble validacion, pero la ambulancia que nos trae deberia estar disponible.
 		try {
-			servicioAmbulancia.reservarAmbulancia(ambulancia);
+			servicioAmbulancia.reservarAmbulancia(datosReservaAmbulancia.getDireccion(), ambulancia);
 			model.put("AmbulanciaReservada", ambulancia);
 		}catch(Exception e) {
 			model.put("Error", "Ocurrio un error inesperado al intentar reservar.");
