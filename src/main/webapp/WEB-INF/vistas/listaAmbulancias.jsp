@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/partials/header.jsp"></jsp:include>
 <link rel="stylesheet" href="../css/estilos.css">
 <body>
@@ -19,14 +20,14 @@
                    
 					<%--Elementos de entrada de datos, el elemento path debe indicar en que atributo del objeto usuario se guardan los datos ingresados--%>
 					<div>
-					<%--<form:label path="direccion">Direccion</form:label>--%>
+					<form:label path="direccion">Ingrese Direccion : </form:label>
 					<br>
 					<form:input path="direccion" id="direccion" type="text" class="form-control" />
 					</div>
 					<div>
-					<%--<form:label path="patente">Patente</form:label>--%>
+					<form:label path="patente">Reservara la siguiente ambulancia con patente : </form:label>
 					<br>
-					<form:input path="patente" type="text" id="patente" class="form-control"/>    		  
+					<form:input path="patente" type="text" id="patente" value="${each.patente}" class="form-control"/>    		  
 					</div>
 					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Reservar</button>
 				
