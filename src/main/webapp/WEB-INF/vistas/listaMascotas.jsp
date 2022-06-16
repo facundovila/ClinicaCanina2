@@ -42,10 +42,9 @@
 </main>
 <footer>
     <div class="link">
-        <button class="btn btn-outline-primary" Type="Submit"/>
-        <a  href="cerrar-sesion">Cerrar sesion</a></button>
-    </div>
-
+        <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
+        <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
+</div>
 </footer>
 </body>
 </html>

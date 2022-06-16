@@ -22,7 +22,7 @@
 					<div>
 					<form:label path="direccion">Ingrese Direccion : </form:label>
 					<br>
-					<form:input path="direccion" id="direccion" type="text" class="form-control" />
+					<form:input path="direccion" id="direccion" type="text" class="form-control"  />
 					</div>
 					<div>
 					<form:label path="patente">Reservara la siguiente ambulancia con patente : </form:label>

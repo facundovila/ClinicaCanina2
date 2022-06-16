@@ -7,6 +7,8 @@
 }
 
 
+
+
 main{
 
     width: 80%;
@@ -15,6 +17,10 @@ main{
 
 }
 
+.fondo{
+    background-image: url(../img/FondoPerruno2.jpg);
+    background-repeat: repeat;
+}
 
 .centrar{
     margin: auto;
