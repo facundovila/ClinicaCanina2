@@ -66,7 +66,7 @@ public class ControladorMascotaTest {
 
        Medico medico= new Medico();
         medico.setId(1l);
-        medico.setContraseña(datosLogin.getContrasenia());
+        medico.setContrasenia(datosLogin.getContrasenia());
         medico.setDni(datosLogin.getDni());
 
       Medico medicomock = mock(Medico.class);

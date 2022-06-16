@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import clinicacanina.controladores.DatosMedicos;
 import clinicacanina.modelo.Medico;
 import clinicacanina.repositorios.RepositorioMedico;
 
@@ -53,6 +54,18 @@ public class ServicioMedicoImpl implements ServicioMedico{
 		repositorioMedico.guardarMedico(medico);
 
 		return medico.getId();
+	}
+
+
+
+
+	public void enviarMedico(Medico medico) {
+		medico.setDisponibilidad(false);
+		repositorioMedico.modificarDisponibilidadMedico(medico);
+	}
+	
+	public Medico buscarMedicosPorNombre(Integer dni) {
+		return repositorioMedico.buscarMedicoPorDni(dni);
 	}
 
 

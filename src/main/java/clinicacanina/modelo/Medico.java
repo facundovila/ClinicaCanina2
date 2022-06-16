@@ -2,31 +2,37 @@ package clinicacanina.modelo;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "medico")
 public class Medico {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
 	private String contrasenia;
 	private Integer dni;
+
+	
 	private String nombre;
-	private String apellido;
+
 	private Integer horarioEntrada; 
+	
 	private Integer horarioSalida;
+	
 	private Boolean disponibilidad;
 
+	
+	public Medico() {
+		
+	}
+	
 
 	public Medico(String nombre, Integer horarioEntrada, Integer horarioSalida) {
 		this.nombre = nombre;
 		this.horarioEntrada = horarioEntrada;
 		this.horarioSalida = horarioSalida;
-	}
-
-
-	public Medico() {
-
+		this.disponibilidad = true;
 	}
 
 	public Medico(Integer dni, String contrasenia) {
@@ -34,6 +40,8 @@ public class Medico {
 		this.contrasenia = contrasenia;
 		this.dni = dni;
 	}
+
+
 
 
 	public Long getId() {
@@ -61,16 +69,13 @@ public class Medico {
 		this.horarioSalida = horarioSalida;
 	}
 
-
 	public Boolean getDisponibilidad() {
 		return disponibilidad;
 	}
 
-
 	public void setDisponibilidad(Boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
-
 
 	public Integer getDni() {
 		return dni;
@@ -84,7 +89,7 @@ public class Medico {
 		return contrasenia;
 	}
 
-	public void setContraseña(String contrasenia) {
+	public void setContrasenia(String contrasenia) {
 		this.contrasenia = contrasenia;
 	}
 }
