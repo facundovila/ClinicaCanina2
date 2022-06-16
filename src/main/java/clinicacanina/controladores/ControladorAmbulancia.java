@@ -28,6 +28,7 @@ public class ControladorAmbulancia {
 	public ModelAndView listarAmbulanciasDisponibles() {
 
 		ModelMap model = new ModelMap();
+		model.put("datosReservaAmbulancia", new DatosReservaAmbulancia());
 
 		String viewName = "listaAmbulancias";
 

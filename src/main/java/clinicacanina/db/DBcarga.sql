@@ -17,3 +17,8 @@ insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre) VALUE 
 insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre) VALUE (false, 10,15,'jose');
 
 select * from medico;
+
+-- AMBULANCIA
+INSERT INTO ambulancia
+   (disponible, patente)
+   VALUES(true, 'ABC123'),(true, 'DEF456'),(true, 'GHI789'),(true, 'JKL012');
