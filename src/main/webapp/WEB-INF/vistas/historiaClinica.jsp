@@ -13,8 +13,8 @@
             <p>nombre: ${historiaclinica.nombre}</p>
             <p>peso: ${historiaclinica.peso}</p>
             <p>edad: ${historiaclinica.edad}</p>
-            <p>medicamentos: ${historiaclinica.sintomas}</p>
-            <p>tratamiento: ${historiaclinica.detalleTratamientos}</p>
+            <p>sintomas: ${historiaclinica.sintomas}</p>
+            <p>tratamiento dado: ${historiaclinica.detalleTratamientos}</p>
 
         </div>
 
@@ -24,6 +24,9 @@
 </main>
 
 
-
+<footer>
+    <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
+    <a  href="cerrar-sesion">Cerrar sesion</a></button>
+</footer>
 </body>
 </html>

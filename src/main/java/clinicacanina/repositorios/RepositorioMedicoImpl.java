@@ -48,4 +48,12 @@ public class RepositorioMedicoImpl implements RepositorioMedico{
 
 	}
 
+	@Override
+	public Medico getById(Long idUsuario) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Medico) session.createCriteria(Medico.class)
+				.add(Restrictions.eq("id",idUsuario))
+				.uniqueResult();	}
+
+
 }

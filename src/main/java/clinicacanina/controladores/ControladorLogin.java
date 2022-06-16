@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class ControladorLogin {
 
@@ -30,28 +33,48 @@ public class ControladorLogin {
 
 
     @RequestMapping("/login")
-    public ModelAndView irALogin() {
+    public ModelAndView irALogin(HttpSession session) {
+
+        Long idUsuario = (Long) session.getAttribute("usuarioId");
+
+        Medico medico = servicioMedico.getMedico(idUsuario);
 
         ModelMap modelo = new ModelMap();
+        if(medico==null){
+            modelo.put("datosLogin", new DatosLogin());
 
-        modelo.put("datosLogin", new DatosLogin());
+            return new ModelAndView("login", modelo);
+        }
 
-        return new ModelAndView("login", modelo);
+        return new ModelAndView("redirect:/listar-mascotas");
+
     }
 
 
     @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-    public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin ) {
+    public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request ) {
         ModelMap model = new ModelMap();
 
         Medico adminBuscado = servicioMedico.buscarMedicoLogin(datosLogin.getDni(), datosLogin.getContrasenia());
-        if (adminBuscado != null) {
 
+
+        if (adminBuscado != null) {
+            request.getSession(true).setAttribute("usuarioId", adminBuscado.getId());
             return new ModelAndView("redirect:/listar-mascotas");
-        } else {
+        }else {
             model.put("error", "Usuario o clave incorrecta");
         }
         return new ModelAndView("login", model);
+    }
+
+
+
+    @RequestMapping(path = "/cerrar-sesion", method = RequestMethod.GET)
+    public ModelAndView cerrarSesion(HttpSession httpSession) {
+        httpSession.setAttribute("usuarioId", null);
+
+
+        return new ModelAndView("redirect:/login");
     }
 
 }
