@@ -10,4 +10,7 @@ public interface ServicioMedico {
 
 	Medico buscarMedicoLogin(Integer dni, String password);
 
+	Medico getMedico(Long idUsuario);
+
+	Long guardarMedico(Medico medico);
 }

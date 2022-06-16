@@ -14,11 +14,7 @@ main{
 
 
 }
-.contenido{
-    background-image: url(../img/fondomain.jpg);
-    background-repeat: repeat;
 
-}
 
 .centrar{
     margin: auto;
@@ -29,8 +25,43 @@ main{
     padding:10%;
 }
 
+
+
 .contenedor{
-    opacity: 100%;
+    background-color: #2aabd2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+}
+.fotoLogin{
+    max-width: 100%;
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+.contenido1{
+
+    width: calc(60% - 2em);
+
+    margin-top: 2em;
+    margin-bottom: 1em;
+
+}
+
+.contenido2{
+
+    width: calc(40% - 2em);
+
+    margin-top: 2em;
+    margin-bottom: 1em;
+    max-width: 100%;
+    border-radius: 10px;
+    text-align: center;
+
 }
 
 .encabezado{
@@ -89,4 +120,16 @@ h1 {
 .error {
 
     color: rgb(255, 0, 0);
+}
+
+.link{
+    color: white;
+    text-align: right;
+    text-decoration: none;
+}
+
+a:link, a:visited , a:active{
+
+    text-decoration: none;
+
 }

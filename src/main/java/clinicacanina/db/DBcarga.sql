@@ -12,12 +12,11 @@ insert into mascota(peso, nombre, edad, sintomas, detalleTratamientos)values
 
 
 -- MEDICOS
-insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre) VALUE (true, 10,15,'carlos');
+insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre, dni, contrasenia) VALUE (true, 10,15,'carlos',10, 'admin');
 
-insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre) VALUE (false, 10,15,'jose');
+insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre, dni, contrasenia) VALUE (false, 10,15,'jose',11, 'admin2');
 
 
-insert into medico(dni, contrasenia) values (10, 'admin');
 
 
 
