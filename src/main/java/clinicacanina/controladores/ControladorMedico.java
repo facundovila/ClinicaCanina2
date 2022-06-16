@@ -28,11 +28,17 @@ public class ControladorMedico {
 
 		List <Medico> medico = servicioMedico.listarMedico();
 
-		if(medico.isEmpty()){
-			model.put("nohaymedicos", "todos los medicos estan ocupados");
+		
+		if(medico.isEmpty()) {
+			model.put("No Existen Medicos",medico);
 		}
+		else {
+			model.put("Existen Medicos", medico);
+			}
+		
+		//comentario
+		
 
-		model.put("medico", medico);
 		
 		return new ModelAndView("medicos",model); //vista , modelo
 		

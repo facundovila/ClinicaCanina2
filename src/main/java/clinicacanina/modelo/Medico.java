@@ -12,6 +12,7 @@ public class Medico {
 	private String contrasenia;
 	private Integer dni;
 	private String nombre;
+	private String apellido;
 	private Integer horarioEntrada; 
 	private Integer horarioSalida;
 	private Boolean disponibilidad;

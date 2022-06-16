@@ -40,3 +40,8 @@ insert into medico(dni, contrasenia) values (10, 'admin');
 
 -- QUERYS
 select * from medico;
+
+-- AMBULANCIA
+INSERT INTO ambulancia
+   (disponible, patente)
+   VALUES(true, 'ABC123'),(true, 'DEF456'),(true, 'GHI789'),(true, 'JKL012');

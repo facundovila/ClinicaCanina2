@@ -13,13 +13,8 @@ public class Ambulancia {
 	private Long id;
 	private String patente;
 	private Boolean disponible;
-	private Estado estado;
-	public Estado getEstado() {
-		return estado;
-	}
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -32,10 +27,10 @@ public class Ambulancia {
 	public void setPatente(String patente) {
 		this.patente = patente;
 	}
-	public Boolean getDisponible() {
+	public Boolean getDisponibilidad() {
 		return disponible;
 	}
-	public void setDisponible(Boolean disponible) {
+	public void setDisponibilidad(Boolean disponible) {
 		this.disponible = disponible;
 	}
 	

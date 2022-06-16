@@ -36,7 +36,7 @@ public class ControladorMedicoTest {
 		Integer horarioEntrada = 8;
 		Integer horarioSalida = 20;
 		
-		dadoQueExistaMedico(nombre,horarioEntrada,horarioSalida);//creo el medico
+		dadoQueExistaMedico(nombre,horarioEntrada,horarioSalida);
 		
 		//ejecucion
 		ModelAndView mav =cuandoMuestroTodosLosMedicos();//
