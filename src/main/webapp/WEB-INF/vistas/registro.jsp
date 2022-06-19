@@ -23,37 +23,33 @@
         <article class="contenido2">
             <h3>Iniciar sesion</h3>
             <div class="w3-col s9 w3-center">
-                <form:form action="validar-login" method="POST"
-                           modelAttribute="datosLogin">
-
+                <form:form action="validar-registro" method="POST"
+                           modelAttribute="datosRegistro">
                     <p class="w3-center w3-margin-top">
                         <form:input path="email" id="email" type="email" class="w3-input"
                                     placeholder="Email" />
                     </p>
                     <p class="w3-center w3-margin-top">
-                        <form:input path="password" type="password" id="password"
+                        <form:input path="contrasenia" type="password" id="contrasenia"
                                     class="w3-input" placeholder="Contraseña" />
                     </p>
+                    <p class="w3-center w3-margin-top">
+                        <form:input path="repetirContrasenia" type="password"
+                                    id="repetirContrasenia" class="w3-input"
+                                    placeholder="Repetir Contraseña" />
+                    </p>
                     <c:if test="${not empty error}">
-                        <div class="w3-panel w3-blue w3-padding-16">${error}</div>
+                        <div class="w3-panel w3-red w3-padding-16">${error}</div>
                     </c:if>
                     <p>
                         <button class="w3-btn w3-section w3-green w3-ripple w3-block"
-                                Type="Submit">Login</button>
+                                Type="Submit">Registarme</button>
                     </p>
-                    <p>
-                        <a href="registro" class="w3-text-white">Registrarme</a>
-                    </p>
+                    <a href="login" class="w3-text-white">Login</a>
                 </form:form>
             </div>
         </article>
     </section>
-
-
-
-
-
-
 
 </main>
 

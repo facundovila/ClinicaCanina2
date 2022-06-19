@@ -2,6 +2,8 @@ package clinicacanina.controladores;
 
 
 import clinicacanina.modelo.Medico;
+import clinicacanina.modelo.Usuario;
+import clinicacanina.servicios.ServicioLogin;
 import clinicacanina.servicios.ServicioMedico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +19,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ControladorLogin {
 
-    private ServicioMedico servicioMedico;
-
+    private ServicioLogin servicioLogin;
 
     @Autowired
-    public ControladorLogin(ServicioMedico servicioMedico){
-        this.servicioMedico = servicioMedico;
+    public ControladorLogin(ServicioLogin servicioLogin){
+        this.servicioLogin = servicioLogin;
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
@@ -30,50 +31,32 @@ public class ControladorLogin {
         return new ModelAndView("redirect:/login");}
 
 
-
-
     @RequestMapping("/login")
     public ModelAndView irALogin(HttpSession session) {
-
-        Long idUsuario = (Long) session.getAttribute("usuarioId");
-
-        Medico medico = servicioMedico.getMedico(idUsuario);
-
-        ModelMap modelo = new ModelMap();
-        if(medico==null){
-            modelo.put("datosLogin", new DatosLogin());
-
-            return new ModelAndView("login", modelo);
-        }
-
-        return new ModelAndView("redirect:/listar-mascotas");
-
+        ModelMap mapa = new ModelMap();
+        mapa.put("datosLogin", new DatosLogin());
+        return new ModelAndView("login",mapa);
     }
-
 
     @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
     public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request ) {
         ModelMap model = new ModelMap();
-
-        Medico adminBuscado = servicioMedico.buscarMedicoLogin(datosLogin.getDni(), datosLogin.getContrasenia());
-
-
-        if (adminBuscado != null) {
-            request.getSession(true).setAttribute("usuarioId", adminBuscado.getId());
-            return new ModelAndView("redirect:/listar-mascotas");
-        }else {
+        // invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
+        Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
+        if (usuarioBuscado != null) {
+            request.getSession().setAttribute("userId", usuarioBuscado.getId());
+            request.getSession().setAttribute("nombreUsuario", usuarioBuscado.getEmail());
+            return new ModelAndView("redirect:/usuarioHome");
+        } else {
+            // si el usuario no existe agrega un mensaje de error en el modelo.
             model.put("error", "Usuario o clave incorrecta");
         }
         return new ModelAndView("login", model);
     }
 
-
-
-    @RequestMapping(path = "/cerrar-sesion", method = RequestMethod.GET)
-    public ModelAndView cerrarSesion(HttpSession httpSession) {
-        httpSession.setAttribute("usuarioId", null);
-
-
+    @RequestMapping(path = "/cerrarSesion")
+    public ModelAndView cerrarSesion(HttpServletRequest request) {
+        request.getSession().removeAttribute("userId");
         return new ModelAndView("redirect:/login");
     }
 

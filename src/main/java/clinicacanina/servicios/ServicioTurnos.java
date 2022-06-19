@@ -8,8 +8,7 @@ public interface ServicioTurnos {
 
 
 	List<Turno> buscarTurno(String fecha);
-	
 
 
-
+    List<Turno> turnosDelUsuario(long l);
 }

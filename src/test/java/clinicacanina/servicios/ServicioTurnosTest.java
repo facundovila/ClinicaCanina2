@@ -27,10 +27,8 @@ public class ServicioTurnosTest {
 	
 	@Test
 	public void listarTodosLosTurnosDisponiblesEnFecha() {
-		
 		Integer cantidadTurnosEsperados=2;
 		Integer cantidadTurnos=2;
-		
 		dadoQueExisteTurnoEnFecha("fecha", cantidadTurnos);
 		
 		List<Turno>turnosEncontrados= cuandoBuscoTodosLosTurnos("fecha");
@@ -58,4 +56,37 @@ public class ServicioTurnosTest {
 
 		assertThat(turnosEncontrados).hasSize(cantidadTurnosEsperados);
 	}
+
+	@Test
+	public void CuandoBuscoLosTurnosPorUsuarioRegresanTodosLosTurnos(){
+		//preparacion
+		List<Turno> lista= new ArrayList<>();
+		Turno turno = new Turno();
+		lista.add(turno);
+		when(repositorioTurnos.mostarTurnosDelUsuario(1L)).thenReturn(lista);
+		// ejecucion
+		List<Turno> listaEsperada= repositorioTurnos.mostarTurnosDelUsuario(1L);
+		//copararacion
+		assertThat(lista).isEqualTo(listaEsperada);
+
+	}
+
+	@Test
+	public void CuandoBuscoLosTurnosDelUsuarioYnoTieneRegresaListaVacia() {
+		// preparacion
+		List<Turno> lista = new ArrayList<>();
+		when(repositorioTurnos.mostarTurnosDelUsuario(1L)).thenReturn(lista);
+		List listaEsperada = new ArrayList();
+		// ejecucion
+		listaEsperada = servicioTurnos.turnosDelUsuario(1L);
+		//comparacion
+		assertThat(listaEsperada.isEmpty()).isTrue();
+		assertThat(listaEsperada.size()).isEqualTo(0);
+		assertThat(listaEsperada).isNotNull();
+	}
+
+
+
+
+
 }

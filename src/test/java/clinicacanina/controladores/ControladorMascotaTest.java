@@ -4,6 +4,7 @@ import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Medico;
 import clinicacanina.repositorios.RepositorioMascota;
 import clinicacanina.repositorios.RepositorioMascotaImpl;
+import clinicacanina.servicios.ServicioLogin;
 import clinicacanina.servicios.ServicioMascota;
 import clinicacanina.servicios.ServicioMedico;
 import org.junit.Before;
@@ -37,6 +38,7 @@ public class ControladorMascotaTest {
     private HistoriaClinica historiaClinica;
     private RepositorioMascota repositorioMascota;
     private ControladorLogin controladorLogin;
+    private  ServicioLogin servicioLogin;
 
     //private HttpSession session = mock(HttpSession.class);
     //  HttpServletRequest request = mock(HttpServletRequest.class);
@@ -45,9 +47,8 @@ public class ControladorMascotaTest {
         repositorioMascota = mock(RepositorioMascota.class);
         servicioMascota = mock(ServicioMascota.class);
         servicioMedico = mock(ServicioMedico.class);
-        controladorLogin = new ControladorLogin(servicioMedico);
+        controladorLogin = new ControladorLogin(servicioLogin);
         controladorMascota = new ControladorMascota(servicioMascota,servicioMedico);
-
 
         historiaClinica = new HistoriaClinica();
         historiaClinica.setDetalleTratamientos("tratamientos");
@@ -56,7 +57,7 @@ public class ControladorMascotaTest {
         historiaClinica.setPeso(PESO);
         historiaClinica.setSintomas("medicamentos");
     }
-
+/* esto lo comento porque va a estar en e el serviciode Login
     @Test
     public void queMePermitaLoguearUnUsuario() {
 
@@ -81,18 +82,12 @@ public class ControladorMascotaTest {
      //   when(request.getSession().getAttribute("usuarioId")).thenReturn(1l);
 
 
-
-
         ModelAndView mav = controladorLogin.validarLogin(datosLogin, request);
 
 
         entoncesMeLlevaALaVista(VISTA_ESPERADA_LISTA, mav.getViewName());
 
-
-
-
-
-    }
+    }*/
 
 
 

@@ -11,6 +11,6 @@ public interface RepositorioTurnos {
 	List<Turno> mostrarTurnoDisponible(String fecha);
 
 	List<Turno> buscarPorFecha(String fecha);
-	
 
+	List<Turno> mostarTurnosDelUsuario(long usuarioId);
 }

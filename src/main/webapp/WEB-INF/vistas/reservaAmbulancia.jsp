@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="/partials/header.jsp"></jsp:include>
+<jsp:include page="/partials/head.jsp"></jsp:include>
 <link rel="stylesheet" href="../css/estilos.css">
 <body>
 
