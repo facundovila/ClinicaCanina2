@@ -16,10 +16,14 @@
                 <p><c:out value="${Turno.mascota.nombre}" /> Tiene Turno</p>
                 <p>el dia <c:out value="${Turno.fechaTurno}" />  a las  <c:out value="${Turno.horaTurno}" /></p>
                 <p>Con el medico: <c:out value="${Turno.medico.nombre}" /></p>
+                ${Turno.id}
 
             </div>
             <div class="w3-col m4 l3">
-                <p>aca poner un boton cancelar turno</p>
+            <form:form action="cancelarTurno/${Turno.id}" method="POST" modelAtributte="turno">
+            	<button class="w3-button w3-black w3-round w3-small w3-border w3-margin-top"
+           		 type="submit">Cancelar Turno</button>
+			</form:form>
             </div>
         </div>
         <p></p>

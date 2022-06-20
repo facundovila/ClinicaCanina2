@@ -41,6 +41,21 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	public void setRepositorioTurnos(RepositorioTurnos repositorioTurnos) {
 		this.repositorioTurnos = repositorioTurnos;
 	}
+	
+	public Boolean cancelarTurnoPorId(Long id) {
+		
+		Turno turno = buscarTurnoPorId(id);
+		if(turno != null) {
+			repositorioTurnos.cancelarTurnoPorId(id);
+			return true;
+		}
+		return false;
+		}
+
+	@Override
+	public Turno buscarTurnoPorId(Long id) {
+		return repositorioTurnos.buscarTurnoPorId(id);
+	}
 
 
 

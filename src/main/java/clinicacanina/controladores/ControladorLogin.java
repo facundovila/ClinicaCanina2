@@ -2,6 +2,7 @@ package clinicacanina.controladores;
 
 
 import clinicacanina.modelo.Medico;
+import clinicacanina.modelo.Turno;
 import clinicacanina.modelo.Usuario;
 import clinicacanina.servicios.ServicioLogin;
 import clinicacanina.servicios.ServicioMedico;
@@ -46,6 +47,7 @@ public class ControladorLogin {
         if (usuarioBuscado != null) {
             request.getSession().setAttribute("userId", usuarioBuscado.getId());
             request.getSession().setAttribute("nombreUsuario", usuarioBuscado.getEmail());
+            model.put("turno", new Turno());
             return new ModelAndView("redirect:/usuarioHome");
         } else {
             // si el usuario no existe agrega un mensaje de error en el modelo.

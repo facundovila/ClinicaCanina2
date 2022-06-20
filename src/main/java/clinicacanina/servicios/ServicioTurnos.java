@@ -11,4 +11,8 @@ public interface ServicioTurnos {
 
 
     List<Turno> turnosDelUsuario(long l);
+    
+    Turno buscarTurnoPorId(Long id);
+
+	Boolean cancelarTurnoPorId(Long idTurno);
 }

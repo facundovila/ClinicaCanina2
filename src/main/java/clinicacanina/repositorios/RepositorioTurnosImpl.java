@@ -50,4 +50,31 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 	return sessionFactory.getCurrentSession().createCriteria(Turno.class).createAlias("usuario","u").add(Restrictions.eq("u.id",usuarioId)).list();
 	}
 
+
+	@Override
+	public Turno buscarTurnoPorId(Long id) {
+		return (Turno) sessionFactory.getCurrentSession().createCriteria(Turno.class)
+				.add(Restrictions.eq("id",id)).uniqueResult();
+	}
+
+
+	@Override
+	public Boolean cancelarTurnoPorId(Long id) {
+		Turno turno = new Turno();
+		turno.setId(id);
+		turno.setEstado(false);
+		turno.setUsuario(null);
+		turno.setMascota(null);
+		turno.setMedico(null);
+		
+		sessionFactory.getCurrentSession().update(turno);
+		
+		Turno turnoADevolver =(Turno) sessionFactory.getCurrentSession()
+									  .createCriteria(Turno.class)
+				                      .add(Restrictions.eq("id",id)).uniqueResult();
+		
+		return turnoADevolver.getEstado();
+		
+	}
+
 }

@@ -22,7 +22,7 @@ public class Turno {
 	private Date FechaTurno;
 	private Time HoraTurno;
     private String fecha;
-    private Boolean estado;
+    private Boolean estado; // true = disponible
 
 
 	@ManyToOne
@@ -34,6 +34,17 @@ public class Turno {
 	@ManyToOne
 	@JoinColumn(name = "medico_id")
 	private Medico medico;
+	
+	
+	
+	public Turno(String fecha) {
+		this.fecha = fecha;
+		this.estado = false;
+	}
+	
+	public Turno() {
+		
+	}
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -43,14 +54,6 @@ public class Turno {
 		this.usuario = usuario;
 	}
 
-	public Turno(String fecha) {
-		this.fecha = fecha;
-		this.estado = false;
-	}
-
-	public Turno() {
-		
-	}
 	public String getFecha() {
 		return fecha;
 	}
