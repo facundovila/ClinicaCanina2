@@ -5,9 +5,11 @@ import org.hibernate.annotations.Cascade;
 import org.hsqldb.HsqlDateTime;
 
 import javax.persistence.*;
-import java.util.Calendar;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.GregorianCalendar;
+
 
 @Entity (name = "turno")
 public class Turno {
@@ -17,7 +19,8 @@ public class Turno {
     private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date FechaTurno;//se esta guardando como AAAA-MM-DD, falta la hora
+	private Date FechaTurno;
+	private Time HoraTurno;
     private String fecha;
     private Boolean estado;
 
@@ -74,11 +77,11 @@ public class Turno {
 
 
 
-	public Date getFechaTurno() {
+	public Date   getFechaTurno() {
 		return FechaTurno;
 	}
 
-	public void setFechaTurno(Date fechaTurno) {
+	public void setFechaTurno(Date   fechaTurno) {
 		FechaTurno = fechaTurno;
 	}
 
@@ -96,5 +99,13 @@ public class Turno {
 
 	public void setMedico(Medico medico) {
 		this.medico = medico;
+	}
+
+	public Time getHoraTurno() {
+		return HoraTurno;
+	}
+
+	public void setHoraTurno(Time horaTurno) {
+		HoraTurno = horaTurno;
 	}
 }

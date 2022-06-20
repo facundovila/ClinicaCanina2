@@ -22,7 +22,6 @@ public class RepositorioMascotaTest extends SpringTest {
     @Transactional
     @Rollback
     public void guardarUnaMascotaDeberiaPersistirla() {
-
         //preparacion
         Mascota mascota = dadoQueExisteMascota("goten", 15);
         //ejecucion
@@ -31,7 +30,6 @@ public class RepositorioMascotaTest extends SpringTest {
         entoncesEncuentroLaMascota(idMascota);
 
     }
-
 
     @Test
     @Transactional

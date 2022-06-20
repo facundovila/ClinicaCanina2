@@ -14,9 +14,8 @@
         <div class="w3-row w3-panel w3-border-top w3-border-bottom w3-border-blue">
             <div class="w3-col m8 l9">
                 <p><c:out value="${Turno.mascota.nombre}" /> Tiene Turno</p>
-                <c:out value="${Turno.id}" />
-                <p>Turno N°:<c:out value="${Turno.id}" /></p>
-                <p>Con <c:out value="${Turno.medico.nombre}" /></p>
+                <p>el dia <c:out value="${Turno.fechaTurno}" />  a las  <c:out value="${Turno.horaTurno}" /></p>
+                <p>Con el medico: <c:out value="${Turno.medico.nombre}" /></p>
 
             </div>
             <div class="w3-col m4 l3">
