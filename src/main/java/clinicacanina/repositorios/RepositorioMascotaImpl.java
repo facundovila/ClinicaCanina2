@@ -71,7 +71,10 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
     }
 
-
+    @Override
+    public Long guardarYRegresarID(Mascota mascota) {
+        return null;
+    }
 
 
 }

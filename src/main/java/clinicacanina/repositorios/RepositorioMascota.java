@@ -13,4 +13,6 @@ public interface RepositorioMascota {
     List<Mascota> buscarPor(String nombre);
 
     List<Mascota> buscarTodasLasMascotas();
+
+    Long guardarYRegresarID(Mascota mascota);
 }

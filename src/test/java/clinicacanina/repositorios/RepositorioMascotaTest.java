@@ -25,11 +25,8 @@ public class RepositorioMascotaTest extends SpringTest {
 
         //preparacion
         Mascota mascota = dadoQueExisteMascota("goten", 15);
-
         //ejecucion
         Long idMascota = cuandoGuardoMascota(mascota);
-
-
         //validacion
         entoncesEncuentroLaMascota(idMascota);
 
@@ -40,7 +37,6 @@ public class RepositorioMascotaTest extends SpringTest {
     @Transactional
     @Rollback
     public void puedoBuscarMascotaPorNombre() {
-
         //preparacion
         Mascota mascota1 = dadoQueExisteMascota("goten", 15);
         Mascota mascota2 = dadoQueExisteMascota("firu", 20);
@@ -58,12 +54,10 @@ public class RepositorioMascotaTest extends SpringTest {
         //validacion
         entoncesEncuentroLaMascotaConNombre(mascotasBuscadas, cantidadEsperada);
     }
-
     @Test
     @Transactional
     @Rollback
     public void sePuedenBuscarTodasLasMascotas() {
-
         //preparacion
         Mascota mascota1 = dadoQueExisteMascota("goten", 15);
         Mascota mascota2 = dadoQueExisteMascota("firu", 20);
@@ -108,7 +102,6 @@ public class RepositorioMascotaTest extends SpringTest {
     }
 
     private void dadoQueGuardoMascota(Mascota mascota) {
-
         repositorioMascota.guardar(mascota);
     }
 
@@ -122,22 +115,17 @@ public class RepositorioMascotaTest extends SpringTest {
     }
 
     private Long cuandoGuardoMascota(Mascota mascota) {
-
-        repositorioMascota.guardar(mascota);
-
-        return mascota.getId();
-
-
+       // repositorioMascota.guardar(mascota);
+        // no tendria que llamar al repo para preguntarle cual es el id?
+        // return mascota.getId();
+        return repositorioMascota.guardarYRegresarID(mascota);
     }
 
     private Mascota dadoQueExisteMascota(String nombre, int peso) {
         Mascota mascota = new Mascota();
         mascota.setNombre(nombre);
         mascota.setPeso(peso);
-
-
         return mascota;
-
 
     }
 

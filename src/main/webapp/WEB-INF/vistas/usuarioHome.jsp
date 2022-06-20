@@ -9,17 +9,23 @@
 <body>
     <%@ include file="partials/usuarioMenu.jsp"%>
 <main>
+
     <c:forEach var="Turno" items="${listaTurnosUsuario}">
-        <tr>
-            <td class="w3-center"><c:out value="${Turno.id}" /></td>
-            <td class="w3-center"><c:out value="${Turno.fecha}" /></td>
-            <td class="w3-center"><c:out value="${Turno.estado}" /></td>
-        </tr>
+        <div class="w3-row w3-panel w3-border-top w3-border-bottom w3-border-blue">
+            <div class="w3-col m8 l9">
+                <p><c:out value="${Turno.mascota.nombre}" />Tiene Turno</p>
+                <p>Turno N°:<c:out value="${Turno.id}" /></p>
+                <p>Con <c:out value="${Turno.medico.nombre}" /></p>
+                <p>En La Sucursal<c:out value="${Turno.sucursal}" /></p>
+            </div>w3-col m4 l3
+            <div class="w3-col m4 l3">
+                <p>aca poner un boton cancelar turno</p>
+            </div>
+        </div>
+        <p></p>
     </c:forEach>
 
-
 </main>
-
 
 </body>
 </html>

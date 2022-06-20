@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import clinicacanina.modelo.Usuario;
 import org.hibernate.Session;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,12 +90,11 @@ public class RepositorioTurnosTest extends SpringTest {
 	@Test
 	@Transactional
 	@Rollback
-	public void GuardoTurnosYBuscoPorIdDelUsuario(){
+	public void GuardoTurnosYBuscoPorIdDeUnUsuarioRegresaListaDETurnos(){
 		long idUsuario=1L;
 		CuandoCArgoDosTurnosAUnUsuario(idUsuario);
 		List<Turno> lista = cuandoBuscoAlUsuarioConDosTurnos(idUsuario);
 		testeoQueREgresenDosTurnos(lista);
-
 	}
 
 	private void testeoQueREgresenDosTurnos(List<Turno> lista) {
@@ -102,11 +102,23 @@ public class RepositorioTurnosTest extends SpringTest {
 	}
 
 	private void CuandoCArgoDosTurnosAUnUsuario(long idUsuario) {
+		Usuario usuario1= new Usuario();
+		usuario1.setId(idUsuario);
+		Usuario usuario2= new Usuario();
+		usuario1.setId(2L);
+		session().save(usuario1);
+		session().save(usuario2);
+
 		Turno turno1 = new Turno();
-		turno1.setUsuarioID(idUsuario);
+		turno1.setUsuario(usuario1);
+		turno1.setId(1L);
 		Turno turno2 = new Turno();
+		turno2.setId(2L);
+		turno2.setUsuario(usuario2);
 		Turno turno3 = new Turno();
-		turno3.setUsuarioID(1L);
+		turno3.setId(3L);
+		turno3.setUsuario(usuario1);
+
 		session().save(turno1);
 		session().save(turno2);
 		session().save(turno3);

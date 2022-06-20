@@ -1,13 +1,7 @@
-<div class="container">
-    <header class="d-flex justify-content-center py-3">
-        <ul class="nav nav-pills">
-            <li class="nav-item">Bienvenido ${nombreUsuario}</li>
-            <li class="nav-item"><a href="usuarioHome" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Turnos</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Mis Mascotas</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="cerrarSesion" class="nav-link">cerrar-sesion</a></li>
-        </ul>
-    </header>
-    <div class="b-example-divider"></div>
+
+<div class="w3-bar w3-blue">
+    <a href="#" class="w3-bar-item w3-button w3-mobile"> Hola ${nombreUsuario}</a>
+    <a href="usuarioHome" class="w3-bar-item w3-button w3-mobile">Home</a>
+    <a href="#" class="w3-bar-item w3-button w3-mobile">Turnos</a>
+    <a href="cerrarSesion" class="w3-bar-item w3-button w3-mobile">cerrar-sesion</a>
 </div>

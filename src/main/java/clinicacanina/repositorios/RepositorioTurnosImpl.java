@@ -47,10 +47,7 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	@Override
 	public List<Turno> mostarTurnosDelUsuario(long usuarioId) {
-
-	return sessionFactory.getCurrentSession().createCriteria(Turno.class)
-				.add(Restrictions.eq("usuarioID", usuarioId))
-				.list();
+	return sessionFactory.getCurrentSession().createCriteria(Turno.class).createAlias("usuario","u").add(Restrictions.eq("u.id",usuarioId)).list();
 	}
 
 }

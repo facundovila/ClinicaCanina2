@@ -36,7 +36,6 @@ public class ControladorTurnos {
 		} 
 			model.put("vacia", "hay turnos disponibles");
 
-
 			return new ModelAndView("turnodisponible", model); //todos los turnos estan reservados
 
 	}
