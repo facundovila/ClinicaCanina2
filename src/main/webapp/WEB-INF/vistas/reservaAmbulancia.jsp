@@ -1,7 +1,12 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="/partials/head.jsp"></jsp:include>
-<link rel="stylesheet" href="../css/estilos.css">
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <%@ include file="partials/head.jsp"%>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
 <body>
 
 <main>
