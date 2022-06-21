@@ -43,17 +43,18 @@ public class ControladorTurnos {
 
 	}
 	
-	@RequestMapping(path="/cancelar-turno/{idTurno}")
-	public ModelAndView cancelarTurno(@PathVariable("idTurno") Long idTurno, HttpServletRequest request, @ModelAttribute("turno") Turno turno) {
-		
-//		if (request.getSession().getAttribute("userId") == null) {
-//		    return new ModelAndView("redirect:/login");
-//		}
-		
-		servicioTurnos.cancelarTurnoPorId(turno.getId());
-		
-		return new ModelAndView("redirect:/usuarioHome");
-	}
-	
+	@RequestMapping(path="/cancelarTurno/{idTurno}")
+	public ModelAndView cancelarTurno(@PathVariable("idTurno") Long idTurno, HttpServletRequest request) {
+		ModelMap mapa = new ModelMap();
+		/*
+		if (request.getSession().getAttribute("userId") == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		mapa.put("userID", request.getSession().getAttribute("userId"));
+		*/
+		Boolean estado = servicioTurnos.cancelarTurnoPorId(idTurno);
 
-}
+			return new ModelAndView("redirect:/usuarioHome",mapa);
+
+
+	}}

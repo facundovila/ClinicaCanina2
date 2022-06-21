@@ -14,9 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorRegistro {
 
-    private final String TEXTO_EMAIL_REGISTRO = "Bienvenido a Rent-Lock. Registro exitoso. "
-            + "Su cuenta ya esta activada. " + "Ya puede ingresar a su cuenta y contratar nuestros servicios";
-
     private ServicioRegistro servicioRegistro;
 
     @Autowired
@@ -55,8 +52,6 @@ public class ControladorRegistro {
             model.put("datosRegistro", datosRegistro);
             viewName = "registro";
         }
-        // FALTAN LA PARTE DE VALIDAR SI YA EXISTE EL USUARIO
-
         return new ModelAndView(viewName, model);
 
     }

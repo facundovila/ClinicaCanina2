@@ -60,21 +60,35 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	@Override
 	public Boolean cancelarTurnoPorId(Long id) {
-		Turno turno = new Turno();
-		turno.setId(id);
-		turno.setEstado(false);
-		turno.setUsuario(null);
-		turno.setMascota(null);
-		turno.setMedico(null);
+
+
+		/*
+		Turno turno=buscarTurnoPorId(id);
+		turno.setId(0L);
+		Turno turnoNuevo = new Turno();
+		turnoNuevo.setId(id);
+		turnoNuevo.setEstado(false);
+		turnoNuevo.setUsuario(null);
+		turnoNuevo.setMascota(null);
+		turnoNuevo.setMedico(null);
+		turnoNuevo.setFecha(turno.getFecha());
+		turnoNuevo.setFechaTurno(turno.getFechaTurno());
+		turnoNuevo.setHoraTurno(turno.getHoraTurno());
+		*/
+		Turno turnoNuevo= new Turno();
+		turnoNuevo.setId(id);
+		turnoNuevo.setEstado(false);
+		turnoNuevo.setUsuario(null);
+		turnoNuevo.setMascota(null);
+		turnoNuevo.setMedico(null);
+
+		sessionFactory.getCurrentSession().update(turnoNuevo);
 		
-		sessionFactory.getCurrentSession().update(turno);
-		
-		Turno turnoADevolver =(Turno) sessionFactory.getCurrentSession()
+		Turno turnoADevolver = (Turno) sessionFactory.getCurrentSession()
 									  .createCriteria(Turno.class)
 				                      .add(Restrictions.eq("id",id)).uniqueResult();
-		
 		return turnoADevolver.getEstado();
-		
+
 	}
 
 }
