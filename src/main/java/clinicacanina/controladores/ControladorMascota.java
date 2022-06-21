@@ -46,7 +46,7 @@ public class ControladorMascota {
 
         ModelMap model= new ModelMap();
 
-        Medico medico = servicioMedico.getMedico(idUsuario);
+  //      Medico medico = servicioMedico.getMedico(idUsuario);
 
         if(session.getSession().getAttribute("usuarioId") != null){
 

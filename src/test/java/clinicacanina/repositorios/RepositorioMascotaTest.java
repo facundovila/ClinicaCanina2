@@ -18,6 +18,34 @@ public class RepositorioMascotaTest extends SpringTest {
     private RepositorioMascota repositorioMascota;
 
 
+
+    @Test
+    @Transactional
+    @Rollback
+    public void puedoBuscarMascotaPorId() {
+
+        //preparacion
+        Mascota mascota1 = dadoQueExisteMascota("goten", 15);
+        Mascota mascota2 = dadoQueExisteMascota("firu", 20);
+        Mascota mascota3 = dadoQueExisteMascota("firu", 17);
+
+        dadoQueGuardoMascota(mascota1);
+        dadoQueGuardoMascota(mascota2);
+        dadoQueGuardoMascota(mascota3);
+
+
+
+
+        //ejecucion
+        Mascota  mascotaBuscada = CuandoBuscoMascotaPorid(mascota1.getId());
+
+
+        Long id = 1l;
+
+        //validacion
+        entoncesEncuentroLaMascotaporId(mascotaBuscada.getId(), mascota1.getId());
+    }
+
     @Test
     @Transactional
     @Rollback
@@ -58,6 +86,20 @@ public class RepositorioMascotaTest extends SpringTest {
         //validacion
         entoncesEncuentroLaMascotaConNombre(mascotasBuscadas, cantidadEsperada);
     }
+
+
+
+    private void entoncesEncuentroLaMascotaporId(Long idMascotaBuscada, Long id) {
+
+        assertThat(idMascotaBuscada).isEqualTo(id);
+
+    }
+
+    private Mascota CuandoBuscoMascotaPorid(Long id) {
+
+        return repositorioMascota.buscarPorId(id );
+    }
+
 
     @Test
     @Transactional

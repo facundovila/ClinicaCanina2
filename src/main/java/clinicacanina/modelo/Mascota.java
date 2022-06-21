@@ -24,14 +24,13 @@ public class Mascota {
     @NotNull
     private Integer peso;
 
-    @Column(nullable = false)
-    @NotNull
+
     private Integer edad;
 
-    @Column(nullable = true)
+
     private String sintomas;
 
-    @Column(nullable = true)
+
     private String detalleTratamientos;
 
 
