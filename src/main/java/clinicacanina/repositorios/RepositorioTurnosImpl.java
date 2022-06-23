@@ -80,7 +80,6 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		turnoNuevo.setEstado(false);
 		turnoNuevo.setUsuario(null);
 		turnoNuevo.setMascota(null);
-		turnoNuevo.setMedico(null);
 
 		sessionFactory.getCurrentSession().update(turnoNuevo);
 		
