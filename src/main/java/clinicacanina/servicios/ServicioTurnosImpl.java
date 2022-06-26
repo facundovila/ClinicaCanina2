@@ -47,14 +47,14 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	}
 	
 	public Boolean cancelarTurnoPorId(Long id) {
-		
+		/*
 		Turno turno = repositorioTurnos.buscarTurnoPorId(id);
 		if(turno != null) {
 			repositorioTurnos.cancelarTurnoPorId(id);
 			return true;
 		}
-		return false;
-		//return repositorioTurnos.cancelarTurnoPorId(id);
+		return false;*/
+		return repositorioTurnos.cancelarTurnoPorId(id);
 		}
 
 	@Override
