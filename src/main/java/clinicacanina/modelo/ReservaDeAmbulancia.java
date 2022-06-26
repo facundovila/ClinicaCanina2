@@ -13,11 +13,25 @@ public class ReservaDeAmbulancia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String direccion;
-	 @OneToOne
+	private String telefono;
+	private String motivo;
+	 public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	public String getMotivo() {
+		return motivo;
+	}
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
+	}
+	@OneToOne
 	 @JoinColumn(name = "ambulancia_id")
 	private Ambulancia ambulancia;
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 	public void setId(Long id) {
 		this.id = id;
