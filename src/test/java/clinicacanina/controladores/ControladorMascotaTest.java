@@ -57,37 +57,6 @@ public class ControladorMascotaTest {
         historiaClinica.setPeso(PESO);
         historiaClinica.setSintomas("medicamentos");
     }
-/* esto lo comento porque va a estar en e el serviciode Login
-    @Test
-    public void queMePermitaLoguearUnUsuario() {
-
-        DatosLogin datosLogin = new DatosLogin();
-        datosLogin.setContrasenia("admin");
-        datosLogin.setDni(10);
-
-       Medico medico= new Medico();
-        medico.setId(1l);
-        medico.setContrasenia(datosLogin.getContrasenia());
-        medico.setDni(datosLogin.getDni());
-
-      Medico medicomock = mock(Medico.class);
-        when(servicioMedico.buscarMedicoLogin(datosLogin.getDni(), datosLogin.getContrasenia())).thenReturn(medicomock);// mock el medico usuario
-      //  when(servicioMedico.getMedico(medico.getId())).thenReturn(medico);
-
-        HttpSession session = mock(HttpSession.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getSession()).thenReturn(session);
-//
-  //       when(request.getSession().getAttribute("usuarioId")).thenReturn(medico.getId());
-     //   when(request.getSession().getAttribute("usuarioId")).thenReturn(1l);
-
-
-        ModelAndView mav = controladorLogin.validarLogin(datosLogin, request);
-
-
-        entoncesMeLlevaALaVista(VISTA_ESPERADA_LISTA, mav.getViewName());
-
-    }*/
 
 
 

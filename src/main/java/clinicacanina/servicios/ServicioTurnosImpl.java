@@ -21,12 +21,15 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
     @Autowired
     public ServicioTurnosImpl(RepositorioTurnos repositorioTurnos){
-        this.setRepositorioTurnos(repositorioTurnos);
+
+		this.setRepositorioTurnos(repositorioTurnos);
     }
 
 	@Override
 	public List<Turno> buscarTurno(String fecha) {
+
 		return repositorioTurnos.mostrarTurnoDisponible(fecha);
+
 	}
 
 	@Override
@@ -39,6 +42,7 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	}
 
 	public void setRepositorioTurnos(RepositorioTurnos repositorioTurnos) {
+
 		this.repositorioTurnos = repositorioTurnos;
 	}
 	
