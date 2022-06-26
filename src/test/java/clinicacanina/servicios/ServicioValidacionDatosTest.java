@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ServicioValidacionDatosTest {
 	private ServicioValidacionDatos servicioValidacionDatos;
-	private String regex = "";
+	
 	private final String TELEFONO_VALIDO = "1133804973";
 	private final String TELEFONO_INVALIDO = "1133S804973";
 	private final String DIRECCION_VALIDA_1 = "Arana 283";
@@ -24,6 +24,9 @@ public class ServicioValidacionDatosTest {
 	private final String DIRECCION_INVALIDA_1 = "Calle Incorrecta No Valida 123";
 	private final String DIRECCION_INVALIDA_2 = "777 calle";
 	private final String DIRECCION_INVALIDA_3 = "C C";
+	private final String MOTIVO_VALIDO = "Fiebre y malestar general";
+	private final String MOTIVO_INVALIDO = "Malestar con dolor de cabeza y vomitos";
+	
 	
 	@Before
 	public void init() {
@@ -48,6 +51,29 @@ public class ServicioValidacionDatosTest {
 	public void queSePuedaValidarUnaDireccionCorrecta() {
 		boolean resultado = cuandoValidoDirecciones(DIRECCION_VALIDA_1,DIRECCION_VALIDA_2,DIRECCION_VALIDA_3);
 		entoncesObtengoUnaValidacionCorrecta(resultado);
+	}
+	
+	@Test
+	public void queSePuedaValidarUnaDireccionIncorrecta() {
+		boolean resultado = cuandoValidoDirecciones(DIRECCION_INVALIDA_1,DIRECCION_INVALIDA_2,DIRECCION_INVALIDA_3);
+		entoncesObtengoUnaValidacionIncorrecta(resultado);
+	}
+	
+	@Test
+	public void queSePuedaValidarUnMotivoValido() {
+		boolean resultado = cuandoValidoUnMotivo(MOTIVO_VALIDO);
+		entoncesObtengoUnaValidacionCorrecta(resultado);
+	}
+	
+	@Test
+	public void queSePuedaValidarUnMotivoInvalido() {
+		boolean resultado = cuandoValidoUnMotivo(MOTIVO_INVALIDO);
+		entoncesObtengoUnaValidacionIncorrecta(resultado);
+	}
+
+	private boolean cuandoValidoUnMotivo(String motivo) {
+		return servicioValidacionDatos.validarMotivo(motivo);
+		
 	}
 
 	private boolean cuandoValidoDirecciones(String direccion1, String direccion2,

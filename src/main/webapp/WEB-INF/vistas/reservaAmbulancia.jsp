@@ -44,10 +44,15 @@
 					<form:input path="patente" type="text"  value="${AmbulanciaDisponible.get(0).getPatente()}" class="form-control"/>  
 					</div>
 					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Reservar</button>
+					<!--<c:if test="${not empty ErrorDatos}">
+					 <span> ${ErrorDatos} </span>
+					</c:if>-->
 				</form:form>
 
 </c:if>
-
+<c:if test="${not empty ErrorDatos}">
+					 <span> ${ErrorDatos} </span>
+					</c:if>
 <h2>
     ${SinAmbulancias}
 </h2>

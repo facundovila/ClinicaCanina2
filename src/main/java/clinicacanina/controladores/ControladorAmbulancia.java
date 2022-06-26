@@ -13,15 +13,19 @@ import org.springframework.web.servlet.ModelAndView;
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.servicios.ServicioAmbulancia;
+import clinicacanina.servicios.ServicioValidacionDatos;
+import clinicacanina.servicios.ServicioValidacionDatosImpl;
 
 @Controller
 public class ControladorAmbulancia {
 	
 	private ServicioAmbulancia servicioAmbulancia;
+	private ServicioValidacionDatosImpl servicioValidacionDatos = new ServicioValidacionDatosImpl();
 	
 	@Autowired
 	public ControladorAmbulancia(ServicioAmbulancia servicioAmbulancia) {
 		this.servicioAmbulancia = servicioAmbulancia;
+		//this.servicioValidacionDatos = servicioValidacionDatos;
 	}
 
 	@RequestMapping(path="/pedir-ambulancia")
@@ -54,8 +58,21 @@ public class ControladorAmbulancia {
 		//String viewName = "reservaAmbulancia";
 		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(datosReservaAmbulancia.getPatente());
 		//doble validacion, pero la ambulancia que nos trae deberia estar disponible.
+		String direccion = datosReservaAmbulancia.getDireccionCalle() + " " + datosReservaAmbulancia.getDireccionNumero();
+		if(servicioValidacionDatos.validarDireccion(direccion) == false) {
+			model.put("ErrorDatos", "La direccion no cumple con el formato esperado.");
+			return new ModelAndView("reservaAmbulancia", model);
+		}
+		if(!servicioValidacionDatos.validarTelefono(datosReservaAmbulancia.getTelefono())) {
+			model.put("ErrorDatos", "El telefono ingresado es invalido.");
+			return new ModelAndView("reservaAmbulancia", model);
+		}
+		if(!servicioValidacionDatos.validarMotivo(datosReservaAmbulancia.getMotivo())) {
+			model.put("ErrorDatos", "El motivo indicado no es valido.");
+			return new ModelAndView("reservaAmbulancia", model);
+		}
 		try {
-			String direccion = datosReservaAmbulancia.getDireccionCalle() + ", " + datosReservaAmbulancia.getDireccionNumero();
+			
 			servicioAmbulancia.reservarAmbulancia(direccion, datosReservaAmbulancia.getTelefono(), datosReservaAmbulancia.getMotivo(), ambulancia);
 			ReservaDeAmbulancia reserva = servicioAmbulancia.buscarReserva(ambulancia);
 			model.put("ReservaRealizada", reserva);

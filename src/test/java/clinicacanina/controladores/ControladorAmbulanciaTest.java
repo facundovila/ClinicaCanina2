@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.servicios.ServicioAmbulancia;
+import clinicacanina.servicios.ServicioValidacionDatos;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class ControladorAmbulanciaTest {
@@ -30,10 +32,13 @@ public class ControladorAmbulanciaTest {
 	private final String VISTA_ERROR_AL_RESERVAR = "errorAlReservar"; 
 	private ControladorAmbulancia controladorAmbulancia;
 	private ServicioAmbulancia servicioAmbulancia;
+	//private ServicioValidacionDatos servicioValidacionDatos;
 	
 	@Before
 	public void init() {
 		servicioAmbulancia = mock(ServicioAmbulancia.class);
+		//servicioValidacionDatos = mock(ServicioValidacionDatos.class);
+		//controladorAmbulancia = new ControladorAmbulancia(servicioAmbulancia, servicioValidacionDatos);
 		controladorAmbulancia = new ControladorAmbulancia(servicioAmbulancia);
 	}
 	
