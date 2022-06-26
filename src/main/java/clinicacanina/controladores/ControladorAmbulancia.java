@@ -55,7 +55,8 @@ public class ControladorAmbulancia {
 		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(datosReservaAmbulancia.getPatente());
 		//doble validacion, pero la ambulancia que nos trae deberia estar disponible.
 		try {
-			servicioAmbulancia.reservarAmbulancia(datosReservaAmbulancia.getDireccion(), datosReservaAmbulancia.getTelefono(), datosReservaAmbulancia.getMotivo(), ambulancia);
+			String direccion = datosReservaAmbulancia.getDireccionCalle() + ", " + datosReservaAmbulancia.getDireccionNumero();
+			servicioAmbulancia.reservarAmbulancia(direccion, datosReservaAmbulancia.getTelefono(), datosReservaAmbulancia.getMotivo(), ambulancia);
 			ReservaDeAmbulancia reserva = servicioAmbulancia.buscarReserva(ambulancia);
 			model.put("ReservaRealizada", reserva);
 		}catch(Exception e) {

@@ -17,11 +17,16 @@
 					<hr class="colorgraph"><br>
 					
                    
-					<%--Elementos de entrada de datos, el elemento path debe indicar en que atributo del objeto usuario se guardan los datos ingresados--%>
+					<%--Elementos de entrada de datos, el elemento path debe indicar en que atributo del objeto datosReservaAmbulancia se guardan los datos ingresados--%>
 					<div>
-					<form:label path="direccion">Ingrese Direccion : </form:label>
+					<form:label path="direccionCalle">Ingrese una Calle : </form:label>
 					<br>
-					<form:input path="direccion" id="direccion" type="text" class="form-control"  />
+					<form:input path="direccionCalle" id="direccionCalle" type="text" class="form-control"  />
+					</div>
+					<div>
+					<form:label path="direccionNumero">Ingrese un Numero de Calle : </form:label>
+					<br>
+					<form:input path="direccionNumero" id="direccionNumero" type="number" class="form-control"  />
 					</div>
 					<div>
 					<form:label path="telefono">Ingrese Numero de Telefono : </form:label>

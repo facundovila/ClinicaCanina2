@@ -68,7 +68,8 @@ public class ControladorAmbulanciaTest {
 	private ModelAndView cuandoReservoUnaAmbulancia() {
 		DatosReservaAmbulancia reservaDeAmbulancia = new DatosReservaAmbulancia();
 		reservaDeAmbulancia.setPatente(setearAmbulanciasEnDisponible().get(0).getPatente());
-		reservaDeAmbulancia.setDireccion("Independencia 1245 CABA");
+		reservaDeAmbulancia.setDireccionCalle("Independencia");
+		reservaDeAmbulancia.setDireccionNumero(333);
 		return controladorAmbulancia.reservarAmbulancia(reservaDeAmbulancia);
 		
 	}
