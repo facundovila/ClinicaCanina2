@@ -75,6 +75,8 @@ public class ControladorAmbulanciaTest {
 		reservaDeAmbulancia.setPatente(setearAmbulanciasEnDisponible().get(0).getPatente());
 		reservaDeAmbulancia.setDireccionCalle("Independencia");
 		reservaDeAmbulancia.setDireccionNumero(333);
+		reservaDeAmbulancia.setTelefono("1133804973");
+		reservaDeAmbulancia.setMotivo("Fiebre y vomitos");
 		return controladorAmbulancia.reservarAmbulancia(reservaDeAmbulancia);
 		
 	}

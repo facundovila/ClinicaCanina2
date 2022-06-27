@@ -9,7 +9,7 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 	
     @Override
 	public boolean validarTelefono(String telefono) {
-		regex = "[0-9]{10}";
+		regex = "[0-9]{8,10}";
 		return telefono.matches(regex);
 	}
 

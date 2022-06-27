@@ -39,7 +39,7 @@ public class ControladorAmbulancia {
 		List <Ambulancia> ambulanciasDisponibles = servicioAmbulancia.buscarAmbulanciasDisponibles();
 
 		if(ambulanciasDisponibles.isEmpty()) {
-			model.put("SinAmbulancias", "vuelva a intentarlo mas tarde");
+			model.put("SinAmbulancias", "Actualmente no contamos con ambulancias disponibles, vuelva a intentarlo mas tarde. Muchas gracias!");
 
 			
 
@@ -59,6 +59,7 @@ public class ControladorAmbulancia {
 		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(datosReservaAmbulancia.getPatente());
 		//doble validacion, pero la ambulancia que nos trae deberia estar disponible.
 		String direccion = datosReservaAmbulancia.getDireccionCalle() + " " + datosReservaAmbulancia.getDireccionNumero();
+		//String telefono = datosReservaAmbulancia.getTelefono().toString();
 		if(servicioValidacionDatos.validarDireccion(direccion) == false) {
 			model.put("ErrorDatos", "La direccion no cumple con el formato esperado.");
 			return new ModelAndView("reservaAmbulancia", model);
