@@ -18,6 +18,7 @@ public class ServicioMascotaImpl implements ServicioMascota {
     private RepositorioMascota repositorioMascota;
 
 
+
     @Autowired
     public ServicioMascotaImpl(RepositorioMascota repositorioMascota){
 
@@ -75,8 +76,19 @@ public class ServicioMascotaImpl implements ServicioMascota {
         Mascota mascotaAModificar = buscarMascotaPorId(mascota.getId());
 
 
+        if(mascotaAModificar != null){
+            mascotaAModificar.setDetalleTratamientos("pipeta anti pulgas");
 
-        mascotaAModificar.setDetalleTratamientos("pipeta anti pulgas");
+            repositorioMascota.modificarMascota(mascotaAModificar);
+
+        }else{
+
+           throw new MascotaInexistenteException();
+
+
+        }
+
+
 
 
         return mascotaAModificar;

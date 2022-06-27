@@ -1,6 +1,7 @@
 package clinicacanina.repositorios;
 
 import clinicacanina.SpringTest;
+import clinicacanina.controladores.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +76,60 @@ public class RepositorioMascotaTest extends SpringTest {
 
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void sePuedeModificarUnaMascota(){
+
+        String nombre = "lupe";
+        Integer peso = 10;
+        Integer edad=10;
+        String sintomas = "tratamiento";
+        String detalle="detalle";
+
+        HistoriaClinica historiaClinica = new HistoriaClinica();
+
+        historiaClinica.setEdad(edad);
+        historiaClinica.setPeso(peso);
+        historiaClinica.setNombre(nombre);
+        historiaClinica.setSintomas(sintomas);
+        historiaClinica.setDetalleTratamientos(detalle);
+
+
+
+        Mascota mascota = dadoQueExisteMascotaConHistoriaClinica(historiaClinica);
+
+        dadoQueGuardoMascota(mascota);
+
+        cuandoModificoMascota(mascota);
+
+        entoncesLaHistoriaClinicaCambio(mascota);
+
+
+
+
+
+
+
+
+    }
+
+    private void entoncesLaHistoriaClinicaCambio(Mascota mascota) {
+
+        assertThat(mascota.getSintomas()).isEqualTo("los sintomas fueron cambiados");
+        assertThat(mascota.getNombre()).isEqualTo("goten");
+
+    }
+
+    private void cuandoModificoMascota(Mascota mascota) {
+
+        mascota.setNombre("goten");
+        mascota.setSintomas("los sintomas fueron cambiados");
+
+        repositorioMascota.modificarMascota(mascota);
+
+    }
+
 
     private void entoncesEncuentroTodasLasMascota(List<Mascota> todasLasMascotas, Integer cantidadEsperada) {
 
@@ -127,5 +182,8 @@ public class RepositorioMascotaTest extends SpringTest {
 
     }
 
+    private Mascota dadoQueExisteMascotaConHistoriaClinica(HistoriaClinica historiaClinica){
+        return new Mascota(historiaClinica);
+    }
 
 }

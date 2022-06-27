@@ -76,5 +76,11 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
         return null;
     }
 
+    @Override
+    public void modificarMascota(Mascota mascota) {
+
+        sessionFactory.getCurrentSession().update(mascota);
+    }
+
 
 }

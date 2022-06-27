@@ -15,4 +15,6 @@ public interface RepositorioMascota {
     List<Mascota> buscarTodasLasMascotas();
 
     Long guardarYRegresarID(Mascota mascota);
+
+    void modificarMascota(Mascota mascota);
 }

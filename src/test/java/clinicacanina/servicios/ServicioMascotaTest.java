@@ -80,8 +80,6 @@ public class ServicioMascotaTest {
 
 		String nombre = "lupe";
 		Integer peso = 10;
-
-
 		Integer edad=10;
 		String medicamentos = "tratamiento";
 		String detalle="detalle";
