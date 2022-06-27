@@ -64,17 +64,58 @@ public class ServicioMascotaTest {
 		Integer edad=10;
 		String medicamentos = "tratamiento";
 		String detalle="detalle";
-		Long id= Long.valueOf(1);
-		Mascota mascota = dadoQueExistenMascota( nombre,  peso,  edad,  medicamentos,  detalle);
+
+		Mascota mascota = dadoQueExisteMascota( nombre,  peso,  edad,  medicamentos,  detalle);
 
 
-		when(repositorioMascota.buscarPorId(id)).thenReturn(mascota);
-
-		Mascota mascotaBuscada = cuandoBuscoMascota(id);
+		Mascota mascotaBuscada = cuandoBuscoMascota(mascota.getId());
 
 		entoncesObtengoLaMascota(mascotaBuscada.getNombre(), "lupe" );
 
 	}
+
+	@Test
+	public void sePuedeModificarLaHistoriaClinicaDeUnamascota(){
+
+
+		String nombre = "lupe";
+		Integer peso = 10;
+
+
+		Integer edad=10;
+		String medicamentos = "tratamiento";
+		String detalle="detalle";
+
+
+
+		Mascota mascota = dadoQueExisteMascota( nombre,  peso,  edad,  medicamentos,  detalle);
+
+		Mascota mascotaModificada = cuandoModificoHistoriaClinica(mascota);
+
+		String detalleTratamientoCambiado = "pipeta anti pulgas";
+
+		entoncesSeModificoLaHistoriaClinicaDeLaMascota(mascotaModificada.getDetalleTratamientos(),detalleTratamientoCambiado );
+
+
+
+
+
+
+	}
+
+	private void entoncesSeModificoLaHistoriaClinicaDeLaMascota(String detalleTratamientos, String detalleTratamientoCambiado) {
+
+		assertThat(detalleTratamientos).isEqualTo(detalleTratamientoCambiado);
+
+	}
+
+	private Mascota cuandoModificoHistoriaClinica(Mascota mascota) {
+
+		return servicioMascota.modificarMascota(mascota);
+
+
+	}
+
 
 	private void entoncesObtengoLaMascota(String mascotaBuscada, String mascotaEsperada) {
 
@@ -87,7 +128,7 @@ public class ServicioMascotaTest {
 	}
 
 
-	private Mascota dadoQueExistenMascota(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
+	private Mascota dadoQueExisteMascota(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
 		HistoriaClinica historiaClinica= new HistoriaClinica();
 
 		historiaClinica.setDetalleTratamientos(detalle);
@@ -96,7 +137,13 @@ public class ServicioMascotaTest {
 		historiaClinica.setPeso(peso);
 		historiaClinica.setSintomas(medicamentos);
 
-		return new Mascota(historiaClinica);
+		Mascota mascota = new Mascota(historiaClinica);
+
+		mascota.setId(1L);
+
+		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
+
+		return mascota;
 
 
 	}

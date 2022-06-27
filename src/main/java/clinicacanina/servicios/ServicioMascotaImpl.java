@@ -69,6 +69,19 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
     }
 
+    @Override
+    public Mascota modificarMascota(Mascota mascota) {
+
+        Mascota mascotaAModificar = buscarMascotaPorId(mascota.getId());
+
+
+
+        mascotaAModificar.setDetalleTratamientos("pipeta anti pulgas");
+
+
+        return mascotaAModificar;
+
+    }
 
 
 }
