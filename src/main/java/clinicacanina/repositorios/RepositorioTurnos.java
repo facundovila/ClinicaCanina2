@@ -12,9 +12,11 @@ public interface RepositorioTurnos {
 
 	List<Turno> buscarPorFecha(String fecha);
 
-	List<Turno> mostarTurnosDelUsuario(long usuarioId);
+	List<Turno> mostrarTurnoUsuarioDesdeHoy(long usuarioId);
 
-	Turno buscarTurnoPorId(Long id);
+    List<Turno> mostarTodosTurnosDelUsuario(long usuarioId);
+
+    Turno buscarTurnoPorId(Long id);
 
 	Boolean cancelarTurnoPorId(Long id);
 }

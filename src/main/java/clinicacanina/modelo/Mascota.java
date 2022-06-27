@@ -14,23 +14,23 @@ public class Mascota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    @NotNull
+
+
    //@Size(min = 3, message = "nombre invalido")
     private String nombre;
 
-    @Column(nullable = false)
-    @NotNull
+
+
     private Integer peso;
 
-    @Column(nullable = false)
-    @NotNull
+
+
     private Integer edad;
 
-    @Column(nullable = true)
+
     private String sintomas;
 
-    @Column(nullable = true)
+
     private String detalleTratamientos;
 
 

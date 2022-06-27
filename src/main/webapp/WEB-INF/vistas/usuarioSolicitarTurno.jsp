@@ -7,25 +7,16 @@
     <%@ include file="partials/head.jsp"%>
 </head>
 <body>
+    <%@ include file="partials/usuarioMenu.jsp"%>
+<main>
 
-<c:if test="${not empty msg }">
-
-    <h2>Lista de turnos</h2>
-    ${msg}
-
-</c:if>
+    <form:form action="usuarioSoliciarTurno"  modelAttribute="datosSolicitarTurno" method="POST">
+        <input type="date" id="fecha" name="fecha">
+        <input type="submit">
+    </form:form>
 
 
-
-<c:if test="${ empty msg}">
-
-    <h2>
-        situacion de turnos:
-    </h2>
-    <h4>
-            ${vacia}
-    </h4>
-</c:if>
+</main>
 
 </body>
 </html>

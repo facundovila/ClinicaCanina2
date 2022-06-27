@@ -1,5 +1,6 @@
 package clinicacanina.repositorios;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -43,12 +44,19 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 				.list();
 	}
 
-
-
 	@Override
-	public List<Turno> mostarTurnosDelUsuario(long usuarioId) {
-	return sessionFactory.getCurrentSession().createCriteria(Turno.class).createAlias("usuario","u").add(Restrictions.eq("u.id",usuarioId)).list();
+	public List<Turno> mostrarTurnoUsuarioDesdeHoy(long usuarioId) {
+		Calendar fechaActual= Calendar.getInstance();
+		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.fechaTurno >= :fecha and t.usuario.id= :usu" )
+				.setDate("fecha",new java.util.Date()).setLong("usu",usuarioId).list();
 	}
+	@Override
+	public List<Turno> mostarTodosTurnosDelUsuario(long usuarioId) {
+
+		return sessionFactory.getCurrentSession().createCriteria(Turno.class).createAlias("usuario","u")
+				.add(Restrictions.eq("u.id",usuarioId)).list();
+	}
+
 
 
 	@Override
@@ -60,29 +68,13 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	@Override
 	public Boolean cancelarTurnoPorId(Long id) {
-
-
-		/*
-		Turno turno=buscarTurnoPorId(id);
-		turno.setId(0L);
-		Turno turnoNuevo = new Turno();
-		turnoNuevo.setId(id);
-		turnoNuevo.setEstado(false);
-		turnoNuevo.setUsuario(null);
-		turnoNuevo.setMascota(null);
-		turnoNuevo.setMedico(null);
-		turnoNuevo.setFecha(turno.getFecha());
-		turnoNuevo.setFechaTurno(turno.getFechaTurno());
-		turnoNuevo.setHoraTurno(turno.getHoraTurno());
-		*/
-		Turno turnoNuevo= new Turno();
-		turnoNuevo.setId(id);
+		Turno turnoNuevo= buscarTurnoPorId(id);
 		turnoNuevo.setEstado(false);
 		turnoNuevo.setUsuario(null);
 		turnoNuevo.setMascota(null);
 
 		sessionFactory.getCurrentSession().update(turnoNuevo);
-		
+
 		Turno turnoADevolver = (Turno) sessionFactory.getCurrentSession()
 									  .createCriteria(Turno.class)
 				                      .add(Restrictions.eq("id",id)).uniqueResult();
