@@ -74,5 +74,21 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		}
 		return null;
 	}
+
+	@Override//falta test
+	public ReservaDeAmbulancia buscarReservaPorTelefono(String telefono) {
+		List <ReservaDeAmbulancia> reservasAmbulancias = repositorioAmbulancia.buscarReservas();
+		if(reservasAmbulancias.isEmpty()) {
+			throw new ErrorDeReserva();
+		}
+		for(ReservaDeAmbulancia reserva : reservasAmbulancias) {
+			if(reserva.getTelefono().equals(telefono)) {
+				return reserva;
+			}
+		}
+		return null;
+	}
+	
+	
   
 }

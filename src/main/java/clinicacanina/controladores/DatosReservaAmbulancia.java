@@ -1,8 +1,8 @@
 package clinicacanina.controladores;
 
 public class DatosReservaAmbulancia {
-    private String direccionCalle;
-    private Integer direccionNumero;
+    private String direccion;
+    private String localidad;
     private String patente;
     private String telefono;
     private String motivo;
@@ -19,17 +19,18 @@ public class DatosReservaAmbulancia {
 		this.telefono = telefono;
 	}
 
-	public String getDireccionCalle() {
-		return direccionCalle;
+	
+	public String getDireccion() {
+		return direccion;
 	}
-	public void setDireccionCalle(String direccionCalle) {
-		this.direccionCalle = direccionCalle;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
-	public Integer getDireccionNumero() {
-		return direccionNumero;
+	public String getLocalidad() {
+		return localidad;
 	}
-	public void setDireccionNumero(Integer direccionNumero) {
-		this.direccionNumero = direccionNumero;
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
 	}
 	public String getPatente() {
 		return patente;

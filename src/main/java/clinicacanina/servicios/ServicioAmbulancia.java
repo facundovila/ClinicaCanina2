@@ -15,5 +15,7 @@ public interface ServicioAmbulancia {
 	void reservarAmbulancia(String direccion, String telefono, String motivo, Ambulancia ambulancia);
 
 	ReservaDeAmbulancia buscarReserva(Ambulancia ambulancia);
+	
+	ReservaDeAmbulancia buscarReservaPorTelefono(String telefono);
 
 }

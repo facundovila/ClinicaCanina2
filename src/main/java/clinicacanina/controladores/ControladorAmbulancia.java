@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.servicios.ServicioAmbulancia;
+import clinicacanina.servicios.ServicioGoogleDistanceMatrixAPI;
 import clinicacanina.servicios.ServicioValidacionDatos;
 import clinicacanina.servicios.ServicioValidacionDatosImpl;
 
@@ -21,6 +22,7 @@ public class ControladorAmbulancia {
 	
 	private ServicioAmbulancia servicioAmbulancia;
 	private ServicioValidacionDatosImpl servicioValidacionDatos = new ServicioValidacionDatosImpl();
+	private ServicioGoogleDistanceMatrixAPI servicioGoogleDistanceMatrixAPI = new ServicioGoogleDistanceMatrixAPI();
 	
 	@Autowired
 	public ControladorAmbulancia(ServicioAmbulancia servicioAmbulancia) {
@@ -58,10 +60,14 @@ public class ControladorAmbulancia {
 		//String viewName = "reservaAmbulancia";
 		Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(datosReservaAmbulancia.getPatente());
 		//doble validacion, pero la ambulancia que nos trae deberia estar disponible.
-		String direccion = datosReservaAmbulancia.getDireccionCalle() + " " + datosReservaAmbulancia.getDireccionNumero();
+		String direccion="";
 		//String telefono = datosReservaAmbulancia.getTelefono().toString();
-		if(servicioValidacionDatos.validarDireccion(direccion) == false) {
+		if(servicioValidacionDatos.validarDireccion(datosReservaAmbulancia.getDireccion()) == false) {
 			model.put("ErrorDatos", "La direccion no cumple con el formato esperado.");
+			return new ModelAndView("reservaAmbulancia", model);
+		}
+		if(servicioValidacionDatos.validarLocalidad(datosReservaAmbulancia.getLocalidad()) == false) {
+			model.put("ErrorDatos", "La localidad no cumple con el formato esperado.");
 			return new ModelAndView("reservaAmbulancia", model);
 		}
 		if(!servicioValidacionDatos.validarTelefono(datosReservaAmbulancia.getTelefono())) {
@@ -72,9 +78,11 @@ public class ControladorAmbulancia {
 			model.put("ErrorDatos", "El motivo indicado no es valido.");
 			return new ModelAndView("reservaAmbulancia", model);
 		}
+		direccion = datosReservaAmbulancia.getDireccion() + " " +datosReservaAmbulancia.getLocalidad();
+		//direccion = servicioValidacionDatos.quitarEspaciosEnBlanco(direccion);
 		try {
 			
-			servicioAmbulancia.reservarAmbulancia(direccion, datosReservaAmbulancia.getTelefono(), datosReservaAmbulancia.getMotivo(), ambulancia);
+			servicioAmbulancia.reservarAmbulancia(direccion.toLowerCase(), datosReservaAmbulancia.getTelefono(), datosReservaAmbulancia.getMotivo().toLowerCase(), ambulancia);
 			ReservaDeAmbulancia reserva = servicioAmbulancia.buscarReserva(ambulancia);
 			model.put("ReservaRealizada", reserva);
 		}catch(Exception e) {
@@ -86,5 +94,68 @@ public class ControladorAmbulancia {
 		
 		return new ModelAndView("reservaAmbulancia", model);
 	}
+	
+	
+	@RequestMapping(path="/ver-seguimiento")
+	public ModelAndView verSeguimiento() {
+
+		ModelMap model = new ModelMap();
+		model.put("datosParaSeguimiento", new DatosParaSeguimiento());
+
+
+		return new ModelAndView("reservaAmbulancia", model);
+	}
+	
+	@RequestMapping(path="/ver-seguimiento-reserva")
+	public ModelAndView verSeguimientoReserva(@ModelAttribute("datosParaSeguimiento") DatosParaSeguimiento datosParaSeguimiento) {
+		ModelMap model = new ModelMap();
+		String patente;//datosParaSeguimiento.getPatente();
+		String telefono;//datosParaSeguimiento.getTelefono();
+		String direccion = "";
+		ReservaDeAmbulancia reserva = null;
+		String[] seguimiento;
+		//------------------------------------------------------------------
+		if(datosParaSeguimiento.getPatente() !=null) {
+		  if(!servicioValidacionDatos.validarPatente(datosParaSeguimiento.getPatente().toUpperCase())) {
+			model.put("ErrorDatos", "La patente debe contener el siguiente formato : ABC123");
+			return new ModelAndView("reservaAmbulancia", model);
+		  }
+		}
+		if(datosParaSeguimiento.getTelefono() != null) {
+		  if(!servicioValidacionDatos.validarTelefono(datosParaSeguimiento.getTelefono())) {
+			model.put("ErrorDatos", "El telefono debe contener caracteres numericos entre 8 y 10 digitos.");
+			return new ModelAndView("reservaAmbulancia", model);
+		  }
+		}	
+		patente = datosParaSeguimiento.getPatente().toUpperCase();
+		telefono = datosParaSeguimiento.getTelefono();
+		
+		if(patente != "" && telefono == null) {
+			Ambulancia ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(patente);
+			reserva = servicioAmbulancia.buscarReserva(ambulancia);
+			direccion = servicioValidacionDatos.quitarEspaciosEnBlanco(reserva.getDireccion());
+		}if(patente =="" && telefono !=null) {
+			reserva = servicioAmbulancia.buscarReservaPorTelefono(telefono);
+			direccion = servicioValidacionDatos.quitarEspaciosEnBlanco(reserva.getDireccion());
+		}if(patente != "" && telefono != null) {
+			reserva = servicioAmbulancia.buscarReservaPorTelefono(telefono);
+			direccion = servicioValidacionDatos.quitarEspaciosEnBlanco(reserva.getDireccion());
+		}if(patente == "" && telefono == null) {
+			model.put("ErrorDatos", "Debe llenar almenos uno de los campos.");
+			return new ModelAndView("reservaAmbulancia", model);
+		}if(reserva == null) {
+			model.put("ErrorDatos", "LA RESERVA POR LA CUAL CONSULTA, NO EXISTE!");
+			return new ModelAndView("reservaAmbulancia", model);
+		}
+        try {
+        seguimiento = servicioGoogleDistanceMatrixAPI.getData(direccion);
+        model.put("Seguimiento", seguimiento);
+        model.put("Reserva", reserva);
+        }catch(Exception e) {
+        	model.put("Error", "No se pudo obtener los datos de seguimiento.");
+        }
+		return new ModelAndView("reservaAmbulancia", model);
+	}
+	
 
 }
