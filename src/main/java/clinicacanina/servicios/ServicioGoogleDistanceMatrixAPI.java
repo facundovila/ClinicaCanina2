@@ -25,7 +25,7 @@ import com.google.maps.model.GeocodingResult;
 
 public class ServicioGoogleDistanceMatrixAPI {
 	
-	private static final String API_KEY ="AIzaSyC4PX1vl-hZ74DHO2FL2utNfA0-VrdO6kM";
+	private static final String API_KEY ="";
 	
 	
 	
