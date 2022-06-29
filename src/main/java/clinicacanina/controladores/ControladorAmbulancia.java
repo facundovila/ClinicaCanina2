@@ -23,6 +23,7 @@ public class ControladorAmbulancia {
 	private ServicioAmbulancia servicioAmbulancia;
 	private ServicioValidacionDatosImpl servicioValidacionDatos = new ServicioValidacionDatosImpl();
 	private ServicioGoogleDistanceMatrixAPI servicioGoogleDistanceMatrixAPI = new ServicioGoogleDistanceMatrixAPI();
+	private String patente ="";
 	
 	@Autowired
 	public ControladorAmbulancia(ServicioAmbulancia servicioAmbulancia) {
@@ -47,6 +48,7 @@ public class ControladorAmbulancia {
 
 		}else {
 			model.put("AmbulanciaDisponible", ambulanciasDisponibles);
+			this.patente = ambulanciasDisponibles.get(0).getPatente();
 		
 		}
 
@@ -95,7 +97,32 @@ public class ControladorAmbulancia {
 		return new ModelAndView("reservaAmbulancia", model);
 	}
 	
+	@RequestMapping(path="/ver-seguimiento")
+	public ModelAndView verSeguimiento() {
+        Ambulancia ambulancia = null;
+        ReservaDeAmbulancia reserva = null;
+        String direccion = "";
+        String[] seguimiento = null;
+		ModelMap model = new ModelMap();
+		//model.put("datosParaSeguimiento", new DatosParaSeguimiento());
+        if(patente == "") {
+        	model.put("Error", "No se puede visualizar el seguimiento.");
+        	return new ModelAndView("reservaAmbulancia", model);
+        }
+        ambulancia = servicioAmbulancia.buscarAmbulanciaPorPatente(patente);
+    	reserva = servicioAmbulancia.buscarReserva(ambulancia);
+        direccion = servicioValidacionDatos.quitarEspaciosEnBlanco(reserva.getDireccion());
+        try {
+        seguimiento = servicioGoogleDistanceMatrixAPI.getData(direccion);
+        model.put("Seguimiento", seguimiento);
+        model.put("Reserva", reserva);
+        }catch(Exception e) {
+        	model.put("Error", "Ocurrio un error al intentar consultar el seguimiento.");
+        }
+		return new ModelAndView("reservaAmbulancia", model);
+	}
 	
+	/*
 	@RequestMapping(path="/ver-seguimiento")
 	public ModelAndView verSeguimiento() {
 
@@ -157,5 +184,5 @@ public class ControladorAmbulancia {
 		return new ModelAndView("reservaAmbulancia", model);
 	}
 	
-
+*/
 }

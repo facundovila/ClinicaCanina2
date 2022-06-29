@@ -79,9 +79,10 @@
         <a href="http://localhost:8080/ClinicaCanina2/ver-seguimiento">Ver seguimiento</a>
         </div>
         </div>
-       <h1> ${AmbulanciaDisponible.get(1).getPatente()}</h1>
+       
     </c:if>
     <h2>${Error}</h2>
+    <!--  
     <c:if test="${not empty datosParaSeguimiento}">
         <form:form action="ver-seguimiento-reserva" method="POST" modelAttribute="datosParaSeguimiento" id="formulario">
 			    	
@@ -102,22 +103,21 @@
 					<div id = "boton">
 					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>buscar</button>
 					</div>
-					<!--<c:if test="${not empty ErrorDatos}">
-					 <span> ${ErrorDatos} </span>
-					</c:if>-->
+					
 				</form:form>
     </c:if>
+      -->
      <c:if test="${not empty Seguimiento}">
     <div id="reserva">
-        <span>Su reserva de patente : * ${Reserva.getAmbulancia().getPatente()} * </span>
+        <span>Su reserva de patente :<strong>* ${Reserva.getAmbulancia().getPatente()} * </strong></span>
         <br>
-        <span>Sale de nuestra clinica ubicada en : ${Seguimiento[0]}</span>
+        <span>Sale de nuestra clinica ubicada en :<strong> ${Seguimiento[0]} </strong></span>
         <br>
-        <span>Hacia la direccion que nos indico : ${Seguimiento[1]}</span>
+        <span>Hacia la direccion que nos indico :<strong> ${Seguimiento[1]} </strong></span>
          <br>
-        <span>La distancia del recorrido son : ${Seguimiento[2]}</span>
+        <span>La distancia del recorrido son :<strong> ${Seguimiento[2]} </strong></span>
         <br>
-        <span>El tiempo estimado de llegada es de : ${Seguimiento[3]}</span>
+        <span>El tiempo estimado de llegada es de :<strong> ${Seguimiento[3]} </strong></span>
         <br>
         </div>
        
