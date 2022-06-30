@@ -11,8 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import clinicacanina.modelo.Ambulancia;
+import clinicacanina.modelo.ErrorDeReserva;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.servicios.ServicioAmbulancia;
+import clinicacanina.servicios.ServicioGoogleDistanceMatrixAPI;
 import clinicacanina.servicios.ServicioValidacionDatos;
 
 import static org.assertj.core.api.Assertions.*;
@@ -27,12 +29,12 @@ public class ControladorAmbulanciaTest {
 	private final String PATENTE_3 = "ghi789";
 	private final boolean DISPONIBLE = true;
 	private final boolean NO_DISPONIBLE = false;
-	private final String VISTA_LISTA_AMBULANCIAS = "listaAmbulancias";
 	private final String VISTA_AMBULANCIA_RESERVADA = "reservaAmbulancia"; 
-	private final String VISTA_ERROR_AL_RESERVAR = "errorAlReservar"; 
+	private final String MODEL_ERROR = "Ocurrio un error inesperado al intentar reservar."; 
 	private ControladorAmbulancia controladorAmbulancia;
 	private ServicioAmbulancia servicioAmbulancia;
 	//private ServicioValidacionDatos servicioValidacionDatos;
+	//private ServicioGoogleDistanceMatrixAPI servicioGoogleDistanceMatrixAPI = new ServicioGoogleDistanceMatrixAPI();
 	
 	@Before
 	public void init() {
@@ -116,5 +118,22 @@ public class ControladorAmbulanciaTest {
 				//retorno
 				return ambulanciasDisponibles;
 	}
-
+    
+	private List <Ambulancia> setearAmbulanciasEnNoDisponible() {
+		List <Ambulancia> ambulanciasDisponibles = new LinkedList<Ambulancia>();
+		//Seteo valores de ambulancias
+				ambulancia1.setPatente(PATENTE_1);
+				ambulancia1.setDisponibilidad(NO_DISPONIBLE);
+				ambulancia2.setPatente(PATENTE_2);
+				ambulancia2.setDisponibilidad(NO_DISPONIBLE);
+				ambulancia3.setPatente(PATENTE_3);
+				ambulancia3.setDisponibilidad(NO_DISPONIBLE);
+				//----------------------------------------------------
+				//Agrego ambulancias a la lista
+				ambulanciasDisponibles.add(ambulancia1);
+				ambulanciasDisponibles.add(ambulancia2);
+				ambulanciasDisponibles.add(ambulancia2);
+				//retorno
+				return ambulanciasDisponibles;
+	}
 }
