@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -128,17 +130,38 @@ public class ControladorTurnosTest {
 	public void CuandVoyaTurnosMeRegresaLaVistaSelecionaRTurno(){
 		when(request.getSession()).thenReturn(session);
 		when(request.getSession().getAttribute("userId")).thenReturn(1L);
-		//when(controladorTurnos.irSoliciarTurno(request)).thenReturn(new ModelAndView("usuarioSolicitarTurno"));
+		when(controladorTurnos.irSoliciarTurno(request)).thenReturn(new ModelAndView("usuarioSolicitarTurno"));
 	}
 	@Test
 	public void CuandVoyASeleccionarTurnoMeRegresaUnaVistaCoonListaTurnos(){
 		when(request.getSession()).thenReturn(session);
 		when(request.getSession().getAttribute("userId")).thenReturn(1L);
 		List <Turno> lista= new ArrayList<Turno>();
+		Turno turno1= new Turno();
+		turno1.setId(1L);
+		lista.add(turno1);
+		when(servicioTurnos.buscarTurnoPorFechaDeHoy()).thenReturn(lista);
 
-
-
+		ModelAndView modelo = controladorTurnos.irSoliciarTurno(request);
+		verify(servicioTurnos, times(1)).buscarTurnoPorFechaDeHoy();
+		assertThat(modelo.getModel().get("listaTurnosDisponibles")).isNotNull();
+		List<Turno> turno2= (List<Turno>) modelo.getModel().get("listaTurnosDisponibles");
+		assertThat(turno2.size()).isEqualTo(1);
 	}
+	@Test
+	public void CuandVoyASeleccionarTurnoMeRegresaMensajeSiNoEcuentraTurnos(){
+		when(request.getSession()).thenReturn(session);
+		when(request.getSession().getAttribute("userId")).thenReturn(1L);
+		List <Turno> lista= new ArrayList<Turno>();
+		when(servicioTurnos.buscarTurnoPorFechaDeHoy()).thenReturn(lista);
+		ModelAndView modelo = controladorTurnos.irSoliciarTurno(request);
+		verify(servicioTurnos, times(1)).buscarTurnoPorFechaDeHoy();
+		List<Turno> turno2= (List<Turno>) modelo.getModel().get("listaTurnosDisponibles");
+		assertThat(turno2).isNull();
+		assertThat(modelo.getModel().get("mensaje")).isEqualTo("Sin Turnos Disponibles");
+
+}
+
 
 
 }

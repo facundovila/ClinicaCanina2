@@ -4,7 +4,7 @@ package clinicacanina.servicios;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
+//import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class ServicioTurnosTest {
 	
 	@Before
 	public void init() {
-		mockStatic(Calendar.class);
+		//mockStatic(Calendar.class);
 		calendar= Mockito.mock(Calendar.class);
 		servicioFechaYhora=mock(ServicioFechaYhora.class);
 		repositorioTurnos = mock(RepositorioTurnos.class);
@@ -132,6 +132,18 @@ public class ServicioTurnosTest {
 		assertThat(listaEsperada.size()).isEqualTo(0);
 		assertThat(listaEsperada).isNotNull();
 	}
+	@Test
+	public void puedoBuscarLosTurnosDisponiblesElDiaDedeHoyNoNULL(){
+		// preparacion
+		List<Turno> lista = new ArrayList<>();
+		when(repositorioTurnos.mostarTurnosDisponiblesFechaHoy()).thenReturn(lista);
+		List <Turno>listaEsperada = new ArrayList();
+		// ejecucion
+		listaEsperada = servicioTurnos.buscarTurnoPorFechaDeHoy();
+		// comparacion
+		assertThat(listaEsperada).isNotNull();
+	}
+
 
 
 	/*@Test

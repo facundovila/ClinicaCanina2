@@ -1,5 +1,10 @@
 package clinicacanina.servicios;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +58,25 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 		//return repositorioTurnos.cancelarTurnoPorId(id);
 		}
+
+	@Override
+	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
+		return null;
+	}
+
+	@Override
+	public List<Turno> buscarTurnoPorFechaDeHoy() {
+
+Calendar fecha = new GregorianCalendar().get;
+
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Calendar date = dt.parse(date_s);
+		List<Turno> turno = new ArrayList<>();
+		if(turno.isEmpty()){
+			return turno;
+		}
+		return null;
+	}
 
 	@Override
 	public Turno buscarTurnoPorId(Long id) {

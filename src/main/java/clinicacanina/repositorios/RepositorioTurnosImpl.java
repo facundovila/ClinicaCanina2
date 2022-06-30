@@ -82,4 +82,9 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	}
 
+	@Override
+	public List<Turno> mostarTurnosDisponiblesFechaHoy() {
+		return null;
+	}
+
 }

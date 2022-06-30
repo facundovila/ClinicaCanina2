@@ -19,4 +19,6 @@ public interface RepositorioTurnos {
     Turno buscarTurnoPorId(Long id);
 
 	Boolean cancelarTurnoPorId(Long id);
+
+	List<Turno> mostarTurnosDisponiblesFechaHoy();
 }

@@ -1,5 +1,6 @@
 package clinicacanina.controladores;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +69,13 @@ public class ControladorTurnos {
 			return new ModelAndView("redirect:/login");
 		}
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
+		List<Turno> turnos= servicioTurnos.buscarTurnoPorFechaDeHoy();
+		if(turnos.isEmpty()){
+			mapa.put("mensaje","Sin Turnos Disponibles");
+			return new ModelAndView("usuarioSolicitarTurno", mapa);
+		}
+		mapa.put("listaTurnosDisponibles", turnos );
+
 		return new ModelAndView("usuarioSolicitarTurno", mapa);
 	}
 
@@ -77,8 +85,15 @@ public class ControladorTurnos {
 			if (request.getSession().getAttribute("userId") == null) {
 			return new ModelAndView("redirect:/login");
 			}
-			mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 
+		Calendar fecha = datosSolicitarTurno.getCalendario();
+		List<Turno> turnos= servicioTurnos.buscarTurnoPorFecha(fecha);
+		if(turnos.isEmpty()){
+			mapa.put("mensaje","Sin Turnos Disponibles");
+			return new ModelAndView("usuarioSolicitarTurno", mapa);
+		}
+		//mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
+		mapa.put("listaTurnosDisponibles", turnos );
 		return new ModelAndView("usuarioSolicitarTurno",mapa);
 }
 }
