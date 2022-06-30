@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -136,6 +137,7 @@ public class ServicioTurnosTest {
 	public void puedoBuscarLosTurnosDisponiblesElDiaDedeHoyNoNULL(){
 		// preparacion
 		List<Turno> lista = new ArrayList<>();
+		Calendar fecha = new GregorianCalendar();
 		when(repositorioTurnos.mostarTurnosDisponiblesFechaHoy()).thenReturn(lista);
 		List <Turno>listaEsperada = new ArrayList();
 		// ejecucion

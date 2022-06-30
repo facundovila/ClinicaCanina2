@@ -9,14 +9,12 @@
 <body>
     <%@ include file="partials/usuarioMenu.jsp"%>
 <main>
-
     <c:forEach var="Turno" items="${listaTurnosUsuario}">
         <div class="w3-row w3-panel w3-border-top w3-border-bottom w3-border-blue">
             <div class="w3-col m8 l9">
                 <p><c:out value="${Turno.mascota.nombre}" /> Tiene Turno</p>
                 <p>el dia <c:out value="${Turno.fecha}" />  a las <c:out value="${Turno.hora}" /></p>
                 <p>Con el medico: <c:out value="${Turno.medico.nombre}" /></p>
-
             </div>
 
                 <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-blue">Cancelar Turno</button>

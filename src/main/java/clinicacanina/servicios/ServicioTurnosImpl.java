@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import clinicacanina.modelo.Turno;
 import clinicacanina.repositorios.RepositorioTurnos;
 
+import static java.util.Calendar.YEAR;
+
 
 @Service @Transactional 
 public class ServicioTurnosImpl implements ServicioTurnos {
@@ -67,11 +69,9 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	@Override
 	public List<Turno> buscarTurnoPorFechaDeHoy() {
 
-Calendar fecha = new GregorianCalendar().get;
 
-		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		Calendar date = dt.parse(date_s);
 		List<Turno> turno = new ArrayList<>();
+		repositorioTurnos.mostarTurnosDisponiblesFechaHoy();
 		if(turno.isEmpty()){
 			return turno;
 		}

@@ -82,9 +82,14 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	}
 
+
+
 	@Override
 	public List<Turno> mostarTurnosDisponiblesFechaHoy() {
-		return null;
+		Calendar fechaActual= Calendar.getInstance();
+		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.fechaTurno = :fecha" )
+				.setDate("fecha",new java.util.Date()).list();
+
 	}
 
 }

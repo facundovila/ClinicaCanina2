@@ -68,6 +68,7 @@ public class ControladorTurnos {
 		if (request.getSession().getAttribute("userId") == null) {
 			return new ModelAndView("redirect:/login");
 		}
+
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 		List<Turno> turnos= servicioTurnos.buscarTurnoPorFechaDeHoy();
 		if(turnos.isEmpty()){
