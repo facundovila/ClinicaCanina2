@@ -83,7 +83,9 @@ public class Mascota {
 
     public String getSintomas() {return sintomas;}
 
-    public void setSintomas(String medicamentos) {this.sintomas = medicamentos;}
+    public Object setSintomas(String medicamentos) {this.sintomas = medicamentos;
+        return null;
+    }
 
     public String getDetalleTratamientos() {return detalleTratamientos;}
 

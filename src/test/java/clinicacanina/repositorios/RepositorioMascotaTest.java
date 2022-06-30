@@ -118,6 +118,7 @@ public class RepositorioMascotaTest extends SpringTest {
 
         assertThat(mascota.getSintomas()).isEqualTo("los sintomas fueron cambiados");
         assertThat(mascota.getNombre()).isEqualTo("goten");
+        assertThat(mascota.getDetalleTratamientos()).isEqualTo("sada");
 
     }
 
@@ -125,8 +126,8 @@ public class RepositorioMascotaTest extends SpringTest {
 
         mascota.setNombre("goten");
         mascota.setSintomas("los sintomas fueron cambiados");
-
-        repositorioMascota.modificarMascota(mascota);
+        String detalleTratamientoCambiado = "sada";
+        repositorioMascota.modificarMascota(mascota.getId(),detalleTratamientoCambiado, mascota.getSintomas(),  mascota.getPeso(), mascota.getEdad(), mascota.getNombre());
 
     }
 

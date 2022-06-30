@@ -10,10 +10,10 @@
     <div class="container">
         <c:if test="${empty sinMascotas}">
             <h4 class="mb-3 text-center">Lista De Mascotas</h4>
-            <div class="col-6">
+            <div class="col-6 center-block centrar">
 
 
-                <table class="table table-bordered">
+                <table class="table table-bordered centrar">
                     <thead>
                     <tr>
                         <th scope="col" class="text-center">Nombre</th>
@@ -47,7 +47,7 @@
     <div class="link">
         <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
         <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
-</div>
+    </div>
 </footer>
 </body>
 </html>

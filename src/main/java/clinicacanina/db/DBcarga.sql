@@ -24,3 +24,9 @@ select * from medico;
 INSERT INTO ambulancia
    (disponible, patente)
    VALUES(true, 'ABC123'),(true, 'DEF456'),(true, 'GHI789'),(true, 'JKL012');
+
+
+
+select * from usuario;
+
+select * from mascota;

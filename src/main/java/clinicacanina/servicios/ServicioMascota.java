@@ -19,5 +19,5 @@ public interface ServicioMascota {
 
      List<Mascota> listarMascotas();
 
-     Mascota modificarMascota(Mascota mascota);
+     Mascota modificarMascota(Long id, String detalleTratamientos, String detalleTratamientoCambiado, Integer edad, Integer peso, String nombre);
 }

@@ -6,6 +6,7 @@ import clinicacanina.servicios.ServicioMedico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,15 +35,12 @@ public class ControladorMascota {
 
 
     @RequestMapping(path = "/listar-mascotas" , method = RequestMethod.GET)
-    public ModelAndView listarMascotas() {
+    public ModelAndView listarMascotas(HttpSession session) {
 
-//        Long idUsuario = (Long) session.getSession().getAttribute("usuarioId");
-//
         ModelMap model= new ModelMap();
-//
-//        Medico medico = servicioMedico.getMedico(idUsuario);
 
-//        if(session.getSession().getAttribute("usuarioId") != null){
+
+        if(session.getAttribute("userId") != null){
 
 
             List<Mascota> listaDeMascotas = servicioMascota.listarMascotas();
@@ -56,7 +54,7 @@ public class ControladorMascota {
             }
             else if(!listaDeMascotas.isEmpty()){
                 model.put("listarmascotas", listaDeMascotas);
-           // }
+            }
 
                 return new ModelAndView("listaMascotas", model);
                 }
@@ -83,10 +81,9 @@ public class ControladorMascota {
             Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(idMascota);
 
 
-            model.put("historiaclinica", mascotaBuscada);
+            model.put("mascota", mascotaBuscada);
 
             return new ModelAndView("historiaClinica", model);
-
         }else{
             model.put("error", "Usted debe estar registrado para acceder");
 
@@ -97,25 +94,46 @@ public class ControladorMascota {
     }
 
 
-    public ModelAndView modificarHistoriaClinica(Mascota mascota, HttpSession session){
+
+    @RequestMapping(path = "/modificar-mascota", method = RequestMethod.GET)
+    public ModelAndView irAModificarMascota(@RequestParam("idMascota") Long idMascota, HttpSession session) {
+
+        ModelMap model= new ModelMap();
+
+
+        Mascota mascotaAModificar = servicioMascota.buscarMascotaPorId(idMascota);
+
+
+        if(session.getAttribute("userId") != null && mascotaAModificar!=null ){
+            model.put("mascota", mascotaAModificar );
+
+            return new ModelAndView("modificarMascota", model);
+
+        }else{
+            model.put("error", "Usted debe estar registrado para acceder");
+
+            return new ModelAndView("error", model);
+        }
+
+    }
+
+
+
+    @RequestMapping(path = "/modificar-historia-clinica",  method = RequestMethod.POST)
+    public ModelAndView modificarHistoriaClinica(  @ModelAttribute("mascota") Mascota mascota, HttpSession session){
+
 
         ModelMap model= new ModelMap();
         Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(mascota.getId());
 
-        if(session.getAttribute("userId") != null && mascotaBuscada!= null){
+        if( session.getAttribute("userId") != null && mascotaBuscada!= null){
 
-            //hacer un switch para cada tipo de dato a modificar y un for para recorrer todos los tipos de modificaciones
+       servicioMascota.modificarMascota(mascotaBuscada.getId(), mascota.getDetalleTratamientos(), mascota.getSintomas(), mascota.getEdad(), mascota.getPeso(), mascota.getNombre());
 
-            mascotaBuscada.setSintomas("Los sintomas se cambiarion");
-
-            mascotaBuscada.setDetalleTratamientos("los medicamentos se cambiaron");
-
-           // servicioMascota.modificarMascota(mascotaBuscada);   se manda la mascota con los datos a cambiar que vienen de la vista.
-
-
-            model.put("modificarHistoriaClinica", mascotaBuscada);
 
             return new ModelAndView("historiaClinica", model);
+
+
         }else{
             model.put("error", "Usted debe estar registrado para acceder");
 

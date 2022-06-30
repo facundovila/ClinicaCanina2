@@ -16,5 +16,5 @@ public interface RepositorioMascota {
 
     Long guardarYRegresarID(Mascota mascota);
 
-    void modificarMascota(Mascota mascota);
+    Mascota modificarMascota(Long id, String detalleTratamientos, String sintomas, Integer peso, Integer edad, String nombre);
 }

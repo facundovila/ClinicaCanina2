@@ -84,15 +84,21 @@ public class ServicioMascotaTest {
 		String medicamentos = "tratamiento";
 		String detalle="detalle";
 
-
-
-		Mascota mascota = dadoQueExisteMascota( nombre,  peso,  edad,  medicamentos,  detalle);
-
-		Mascota mascotaModificada = cuandoModificoHistoriaClinica(mascota);
+		Mascota mascota = dadoQueExisteMascotaParaModificar( nombre,  peso,  edad,  medicamentos,  detalle);
 
 		String detalleTratamientoCambiado = "pipeta anti pulgas";
 
-		entoncesSeModificoLaHistoriaClinicaDeLaMascota(mascotaModificada.getDetalleTratamientos(),detalleTratamientoCambiado );
+
+		Mascota mascotaModificada = dadoQueExisteMascotaParaModificar(nombre,  peso,  edad,  medicamentos,  detalleTratamientoCambiado);
+
+
+		when(repositorioMascota.modificarMascota(mascota.getId(), mascota.getSintomas(), detalleTratamientoCambiado, mascota.getPeso(), mascota.getEdad(), mascota.getNombre())).thenReturn(mascotaModificada);
+
+
+		servicioMascota.modificarMascota(mascota.getId(),  detalleTratamientoCambiado, medicamentos,edad, peso, nombre );
+
+
+		entoncesSeModificoLaHistoriaClinicaDeLaMascota(mascotaModificada.getDetalleTratamientos(),"pipeta anti pulgas" );
 
 
 
@@ -107,12 +113,7 @@ public class ServicioMascotaTest {
 
 	}
 
-	private Mascota cuandoModificoHistoriaClinica(Mascota mascota) {
 
-		return servicioMascota.modificarMascota(mascota);
-
-
-	}
 
 
 	private void entoncesObtengoLaMascota(String mascotaBuscada, String mascotaEsperada) {
@@ -139,6 +140,26 @@ public class ServicioMascotaTest {
 
 		mascota.setId(1L);
 
+		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
+
+		return mascota;
+
+
+	}
+	private Mascota dadoQueExisteMascotaParaModificar(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
+		HistoriaClinica historiaClinica= new HistoriaClinica();
+
+		historiaClinica.setDetalleTratamientos(detalle);
+		historiaClinica.setEdad(edad);
+		historiaClinica.setNombre(nombre);
+		historiaClinica.setPeso(peso);
+		historiaClinica.setSintomas(medicamentos);
+
+		Mascota mascota = new Mascota(historiaClinica);
+
+		mascota.setId(1L);
+
+		String detalleTratamientoCambiado = "pipeta anti pulgas";
 		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
 
 		return mascota;
