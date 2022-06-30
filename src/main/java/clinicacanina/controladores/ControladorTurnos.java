@@ -71,15 +71,16 @@ public class ControladorTurnos {
 
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 		List<Turno> turnos= servicioTurnos.buscarTurnoPorFechaDeHoy();
-		if(turnos.isEmpty()){
+		if(turnos==null){
 			mapa.put("mensaje","Sin Turnos Disponibles");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);
 		}
+
 		mapa.put("listaTurnosDisponibles", turnos );
 
 		return new ModelAndView("usuarioSolicitarTurno", mapa);
 	}
-
+/*
 	@RequestMapping(path="/usuarioSolicitarTurno/{fecha}")
 		public ModelAndView irSoliciarTurno(@ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno, HttpServletRequest request) {
 			ModelMap mapa = new ModelMap();
@@ -96,7 +97,8 @@ public class ControladorTurnos {
 		//mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 		mapa.put("listaTurnosDisponibles", turnos );
 		return new ModelAndView("usuarioSolicitarTurno",mapa);
-}
+
+}*/
 }
 
 

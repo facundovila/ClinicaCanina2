@@ -68,21 +68,18 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 	@Override
 	public List<Turno> buscarTurnoPorFechaDeHoy() {
-
-
+		/*
 		List<Turno> turno = new ArrayList<>();
 		repositorioTurnos.mostarTurnosDisponiblesFechaHoy();
 		if(turno.isEmpty()){
 			return turno;
-		}
-		return null;
+		}*/
+		return repositorioTurnos.mostarTurnosDisponiblesFechaHoy();
 	}
 
 	@Override
 	public Turno buscarTurnoPorId(Long id) {
 		return repositorioTurnos.buscarTurnoPorId(id);
 	}
-
-
 
 }

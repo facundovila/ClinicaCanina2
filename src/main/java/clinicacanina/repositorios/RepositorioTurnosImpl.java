@@ -1,6 +1,7 @@
 package clinicacanina.repositorios;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -86,9 +87,16 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	@Override
 	public List<Turno> mostarTurnosDisponiblesFechaHoy() {
+
+		//  sessionFactory.getCurrentSession().createQuery("from turno t where t.fechaTurno >= :fecha and t.estado= true" )
+		//	.setDate("fecha",new java.util.Date()).list();
 		Calendar fechaActual= Calendar.getInstance();
-		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.fechaTurno = :fecha" )
-				.setDate("fecha",new java.util.Date()).list();
+		fechaActual.set(Calendar.HOUR,23);
+		fechaActual.set(Calendar.MINUTE,59);
+		fechaActual.set(Calendar.SECOND,59);
+		Calendar fechaInicio= Calendar.getInstance();
+		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true  and t.fechaTurno between :fechaInicio and :fechaFin")
+				.setParameter("fechaInicio",fechaInicio).setParameter("fechaFin",fechaActual).list();
 
 	}
 
