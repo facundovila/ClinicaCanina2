@@ -61,6 +61,7 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		
 	}
 
+	// nuevo metodo review 3
 	@Override
 	public ReservaDeAmbulancia buscarReserva(Ambulancia ambulancia) {
 		List <ReservaDeAmbulancia> reservasAmbulancias = repositorioAmbulancia.buscarReservas();

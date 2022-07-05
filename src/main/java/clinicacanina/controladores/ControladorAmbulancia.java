@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ReservaDeAmbulancia;
+import clinicacanina.repositorios.Trayecto;
 import clinicacanina.servicios.ServicioAmbulancia;
 import clinicacanina.servicios.ServicioGoogleDistanceMatrixAPI;
 import clinicacanina.servicios.ServicioValidacionDatos;
@@ -56,6 +57,7 @@ public class ControladorAmbulancia {
 		return new ModelAndView(viewName, model);
 	}
 
+	// Se agregan validaciones de datos y se cambia la manera en que se muestran las ambulancias.
 	@RequestMapping(path = "/reservar-ambulancia", method = RequestMethod.POST)
 	public ModelAndView reservarAmbulancia(@ModelAttribute("datosReservaAmbulancia") DatosReservaAmbulancia datosReservaAmbulancia) {
 		ModelMap model = new ModelMap();
@@ -97,12 +99,13 @@ public class ControladorAmbulancia {
 		return new ModelAndView("reservaAmbulancia", model);
 	}
 	
+	//Se agrega metodo para consultar seguiemiento.
 	@RequestMapping(path="/ver-seguimiento")
 	public ModelAndView verSeguimiento() {
         Ambulancia ambulancia = null;
         ReservaDeAmbulancia reserva = null;
         String direccion = "";
-        String[] seguimiento = null;
+        Trayecto trayecto = null;
 		ModelMap model = new ModelMap();
 		//model.put("datosParaSeguimiento", new DatosParaSeguimiento());
         if(patente == "") {
@@ -113,8 +116,8 @@ public class ControladorAmbulancia {
     	reserva = servicioAmbulancia.buscarReserva(ambulancia);
         direccion = servicioValidacionDatos.quitarEspaciosEnBlanco(reserva.getDireccion());
         try {
-        seguimiento = servicioGoogleDistanceMatrixAPI.getData(direccion);
-        model.put("Seguimiento", seguimiento);
+        trayecto = servicioGoogleDistanceMatrixAPI.getDistance(direccion);
+        model.put("Seguimiento", trayecto);
         model.put("Reserva", reserva);
         }catch(Exception e) {
         	model.put("Error", "Ocurrio un error al intentar consultar el seguimiento.");

@@ -53,6 +53,7 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 		
 	}
 
+	//nuevo metodo review 3
 	@Override
 	public List<ReservaDeAmbulancia> buscarReservas() {
 		 final Session session = sessionFactory.getCurrentSession();

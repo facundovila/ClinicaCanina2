@@ -68,6 +68,7 @@ public class ServicioAmbulanciaTest {
 		laMismaDejaDeEstarDisponible(ambulancia);
 	}
 	
+	//nuevo metodo-test
 	@Test
 	public void queSePuedaConsultarUnaReserva() {
 		dadoQueHayReservasRealizadas();

@@ -62,7 +62,7 @@ public class RepositorioAmbulanciaTest extends SpringTest{
 		cuandoReservoLaAmbulancia();
 		entoncesLaBuscoEnLaBDYNoEstaDisponible(PATENTE_1);
 	}
-	
+	// nuevo metodo-test review 3
 	@Test @Transactional @Rollback
 	public void queSePuedaConsultarTodasLasReservas() {
 		dadoQueHayAmbulanciasReservadas();

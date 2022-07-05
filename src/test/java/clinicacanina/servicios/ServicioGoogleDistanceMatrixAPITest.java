@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import clinicacanina.controladores.ControladorAmbulancia;
+import clinicacanina.repositorios.Trayecto;
 
 public class ServicioGoogleDistanceMatrixAPITest {
 
@@ -20,23 +21,23 @@ public class ServicioGoogleDistanceMatrixAPITest {
 	
 	@Test
 	public void queSePuedaConsultarLaDistanciaYTiempoDeUnPuntoEspecifico() {
-		String[] respuesta = cuandoConsultoPorUnDestino();
+		Trayecto trayecto = cuandoConsultoPorUnDestino();
 		
-		obtengoLosDatosCorrespondientes(respuesta);
+		obtengoLosDatosCorrespondientes(trayecto);
 	}
 
-	private void obtengoLosDatosCorrespondientes(String[] respuesta) {
-		assertThat(respuesta[2]).isEqualTo("25.5 km");
+	private void obtengoLosDatosCorrespondientes(Trayecto trayecto) {
+		assertThat(trayecto.getDistancia()).isEqualTo("25.5 km");
 		
 	}
 
-	private String[] cuandoConsultoPorUnDestino() {
-		String[] respuesta = null;
-		try{ respuesta = servicioGoogleDistanceMatrixAPI.getData("alem171montegrande");
+	private Trayecto cuandoConsultoPorUnDestino() {
+		Trayecto trayecto = null;
+		try{ trayecto = servicioGoogleDistanceMatrixAPI.getDistance("alem171montegrande");
 		}catch(Exception e) {
 			System.out.println(e);
 		}
-		return respuesta;
+		return trayecto;
 	}
 	
 	

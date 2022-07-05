@@ -111,14 +111,31 @@
     <div id="reserva">
         <span>Su reserva de patente :<strong>* ${Reserva.getAmbulancia().getPatente()} * </strong></span>
         <br>
-        <span>Sale de nuestra clinica ubicada en :<strong> ${Seguimiento[0]} </strong></span>
+        <span>Sale de nuestra clinica ubicada en :<strong> ${Seguimiento.getLocalidadOrigen()} </strong></span>
         <br>
-        <span>Hacia la direccion que nos indico :<strong> ${Seguimiento[1]} </strong></span>
+        <span>Hacia la direccion que nos indico :<strong> ${Seguimiento.getLocalidadDestino()} </strong></span>
          <br>
-        <span>La distancia del recorrido son :<strong> ${Seguimiento[2]} </strong></span>
+        <span>La distancia del recorrido son :<strong> ${Seguimiento.getDistancia()} </strong></span>
         <br>
-        <span>El tiempo estimado de llegada es de :<strong> ${Seguimiento[3]} </strong></span>
+        <span>El tiempo estimado de llegada es de :<strong> ${Seguimiento.getTiempo()} </strong></span>
         <br>
+        </div>
+        
+        <br>
+        <br>
+        <br>
+        
+        <div id="now">
+            <span> Hora actual : </span>
+             <br>
+              <br>
+            <span> Hora estimada de Llegada : </span>
+             <br>
+              <br>
+            <span> Tiempo restante de recorrido : </span>
+             <br>
+              <br>
+            <span> La ambulancia se encuentra a  : </span>
         </div>
        
     </c:if>
