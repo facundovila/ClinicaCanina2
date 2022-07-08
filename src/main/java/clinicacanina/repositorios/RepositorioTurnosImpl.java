@@ -46,13 +46,7 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public List<Turno> mostarTurnosDelUsuario(long usuarioId) {
-	return sessionFactory.getCurrentSession().createCriteria(Turno.class)
-			.createAlias("usuario","u")
-			.add(Restrictions.eq("u.id",usuarioId))
-			.list();
-=======
+
 	public List<Turno> mostrarTurnoUsuarioDesdeHoy(long usuarioId) {
 		Calendar fechaActual= Calendar.getInstance();
 		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.fechaTurno >= :fecha and t.usuario.id= :usu" )
@@ -63,7 +57,7 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 		return sessionFactory.getCurrentSession().createCriteria(Turno.class).createAlias("usuario","u")
 				.add(Restrictions.eq("u.id",usuarioId)).list();
->>>>>>> login
+
 	}
 
 
