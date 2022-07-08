@@ -1,7 +1,10 @@
 package clinicacanina.servicios;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Turno;
-import clinicacanina.repositorios.RepositorioMascota;
 import clinicacanina.repositorios.RepositorioTurnos;
+
+import static java.util.Calendar.YEAR;
 
 
 @Service @Transactional 
@@ -34,7 +38,7 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 	@Override
 	public List<Turno> turnosDelUsuario(long usuarioId) {
-		return repositorioTurnos.mostarTurnosDelUsuario(usuarioId);
+		return repositorioTurnos.mostrarTurnoUsuarioDesdeHoy(usuarioId);
 	}
 
 	public RepositorioTurnos getRepositorioTurnos() {
@@ -47,21 +51,39 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	}
 	
 	public Boolean cancelarTurnoPorId(Long id) {
+
+		//esto tira error
+		//org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : [clinicacanina.modelo.Turno#1]
+
+		Turno turnoEsperado = repositorioTurnos.buscarTurnoPorId(id);
+
+		if(turnoEsperado == null) {
+			return false;}
+		repositorioTurnos.cancelarTurnoPorId(id);
+		return true;
+
+		//return repositorioTurnos.cancelarTurnoPorId(id);
+		}
+
+	@Override
+	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
+		return null;
+	}
+
+	@Override
+	public List<Turno> buscarTurnoPorFechaDeHoy() {
 		/*
-		Turno turno = repositorioTurnos.buscarTurnoPorId(id);
-		if(turno != null) {
-			repositorioTurnos.cancelarTurnoPorId(id);
-			return true;
-		}
-		return false;*/
-		return repositorioTurnos.cancelarTurnoPorId(id);
-		}
+		List<Turno> turno = new ArrayList<>();
+		repositorioTurnos.mostarTurnosDisponiblesFechaHoy();
+		if(turno.isEmpty()){
+			return turno;
+		}*/
+		return repositorioTurnos.mostarTurnosDisponiblesFechaHoy();
+	}
 
 	@Override
 	public Turno buscarTurnoPorId(Long id) {
 		return repositorioTurnos.buscarTurnoPorId(id);
 	}
-
-
 
 }

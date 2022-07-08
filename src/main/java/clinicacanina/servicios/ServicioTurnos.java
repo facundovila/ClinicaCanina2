@@ -1,5 +1,6 @@
 package clinicacanina.servicios;
 
+import java.util.Calendar;
 import java.util.List;
 
 import clinicacanina.modelo.Turno;
@@ -11,8 +12,14 @@ public interface ServicioTurnos {
 
 
     List<Turno> turnosDelUsuario(long l);
-    
+
+
+
     Turno buscarTurnoPorId(Long id);
 
 	Boolean cancelarTurnoPorId(Long idTurno);
+
+    List<Turno> buscarTurnoPorFecha(Calendar fecha);
+
+    List<Turno> buscarTurnoPorFechaDeHoy();
 }

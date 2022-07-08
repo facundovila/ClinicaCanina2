@@ -7,12 +7,14 @@ import org.dom4j.rule.Mode;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 
 import static org.mockito.Mockito.*;
@@ -28,7 +30,7 @@ public class ControladorUsuarioHomeTest {
     HttpSession session;
 
     /* para mockear la session y obtener el id se usan las dos lineas de arriba y se agregan estos mock en los test
-           when(request.getSession()).thenReturn(session);
+        when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute("userId")).thenReturn(1L);
      */
 
@@ -51,6 +53,18 @@ public class ControladorUsuarioHomeTest {
     @Test
     public void CuandoIngresoAlHomeSeMuestranLosTurnosDelUsuario(){
        // preparacion
+        CuandoCargoUnUsuarioYLECArgoUnTurno();
+        // ejecucion
+        ModelAndView modelAndView = controladorUsuarioHome.usuarioHome(request);
+        // comparacion
+        entoncesLaVistaCargaUnaListaDeTUrnos(modelAndView);
+    }
+
+    private void entoncesLaVistaCargaUnaListaDeTUrnos(ModelAndView modelAndView) {
+        assertThat(modelAndView.getModel().get("listaTurnosUsuario")).isNotNull();
+    }
+
+    private void CuandoCargoUnUsuarioYLECArgoUnTurno() {
         Usuario usuari1= new Usuario();
         usuari1.setId(1L);
         List<Turno> listaTurnos= new ArrayList<>();
@@ -60,10 +74,6 @@ public class ControladorUsuarioHomeTest {
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute("userId")).thenReturn(1L);
         Mockito.when(servicioTurnos.turnosDelUsuario(1L)).thenReturn(listaTurnos);
-        // ejecucion
-        ModelAndView modelAndView = controladorUsuarioHome.usuarioHome(request);
-        // comparacion
-        assertThat(modelAndView.getModel().get("listaTurnosUsuario")).isNotNull();
     }
 
 }

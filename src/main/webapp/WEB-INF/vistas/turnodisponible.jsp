@@ -8,8 +8,6 @@
 </head>
 <body>
 
-
-
 <c:if test="${not empty msg }">
 
     <h2>Lista de turnos</h2>

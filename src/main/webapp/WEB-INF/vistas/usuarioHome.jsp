@@ -9,22 +9,38 @@
 <body>
     <%@ include file="partials/usuarioMenu.jsp"%>
 <main>
-
     <c:forEach var="Turno" items="${listaTurnosUsuario}">
         <div class="w3-row w3-panel w3-border-top w3-border-bottom w3-border-blue">
             <div class="w3-col m8 l9">
                 <p><c:out value="${Turno.mascota.nombre}" /> Tiene Turno</p>
-                <p>el dia <c:out value="${Turno.fechaTurno}" />  a las  <c:out value="${Turno.horaTurno}" /></p>
+                <p>el dia <c:out value="${Turno.fecha}" />  a las <c:out value="${Turno.hora}" /></p>
                 <p>Con el medico: <c:out value="${Turno.medico.nombre}" /></p>
-                ${Turno.id}
             </div>
-            <div class="w3-col m4 l3">
-            <form:form action="cancelarTurno/${Turno.id}" method="POST">
-            	<button class="w3-button w3-black w3-round w3-small w3-border w3-margin-top"
-           		 type="submit">Cancelar Turno</button>
-			</form:form>
+
+                <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-blue">Cancelar Turno</button>
+
+                <div id="id01" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <header class="w3-container w3-teal">
+                         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <h2> Desea Cancelar Turno?</h2>
+                        </header>
+                        <div class="w3-container">
+                            <p></p>
+                            <button onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-green">Mantenerlo</button>
+                            <form:form action="cancelarTurno/${Turno.id}" method="POST">
+                                <button class="w3-button w3-red w3-round w3-small w3-border w3-margin-top"
+                                        type="submit">Cancelar Turno</button>
+                            </form:form>
+                            <c:if test="${not empty mensaje}">
+                                <div class="w3-panel w3-blue w3-padding-16">${mensaje}</div>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-        </div>
         <p></p>
     </c:forEach>
 

@@ -1,12 +1,16 @@
 package clinicacanina.repositorios;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Medico;
 import clinicacanina.modelo.Usuario;
-import org.hibernate.Session;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,6 +23,7 @@ import clinicacanina.modelo.Turno;
 
 @Repository
 public class RepositorioTurnosTest extends SpringTest {
+
 
 	@Autowired
 	private RepositorioTurnos repositorioTurnos;
@@ -84,7 +89,7 @@ public class RepositorioTurnosTest extends SpringTest {
 	@Rollback
 	public void puedoBuscarLosTurnosPorelIdDelUsuario() {
 		List <Turno> lista= new ArrayList<>();
-		lista= repositorioTurnos.mostarTurnosDelUsuario(1l);
+		lista= repositorioTurnos.mostrarTurnoUsuarioDesdeHoy(1l);
 		assertThat(lista.isEmpty()).isTrue();
 	}
 	@Test
@@ -124,6 +129,60 @@ public class RepositorioTurnosTest extends SpringTest {
 		session().save(turno3);
 	}
 	private List<Turno>cuandoBuscoAlUsuarioConDosTurnos(long idUsuario){
-		return repositorioTurnos.mostarTurnosDelUsuario(idUsuario);
+		return repositorioTurnos.mostarTodosTurnosDelUsuario(idUsuario);
 	}
+	@Test
+	@Transactional
+	@Rollback
+	public void puedoCancelarTurnoSinModificarFechaNiMedico(){
+		// preparacion
+		long idTurno=1l;
+		long idMedico=1L;
+		Calendar calendario = new GregorianCalendar(2022,06,06);
+
+		CuandoCargoUnTurnoAUnUsuario(idTurno, idMedico,calendario);
+		// ejecucion
+		alCancelarElturnoDelUsuario(idTurno);
+		//comparacion
+		entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(idTurno, idMedico,calendario);
+	}
+
+	private void entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(long idTurno, long idMedico, Calendar calendario) {
+		Turno turnobuscado= repositorioTurnos.buscarTurnoPorId(idTurno);
+		assertThat(turnobuscado.getFechaTurno()).isEqualTo(calendario);
+		assertThat(turnobuscado.getMedico().getId()).isEqualTo(idMedico);
+
+		assertThat(turnobuscado.getEstado()).isFalse();
+		assertThat(turnobuscado.getMascota()).isNull();
+		assertThat(turnobuscado.getUsuario()).isNull();
+	}
+
+	private void alCancelarElturnoDelUsuario(long idTurno) {
+		repositorioTurnos.cancelarTurnoPorId(idTurno);
+	}
+
+	private void CuandoCargoUnTurnoAUnUsuario(long idTurno, long idMedico, Calendar calendario) {
+		Usuario usuario1 = new Usuario();
+		usuario1.setId(1L);
+		session().save(usuario1);
+
+		Mascota mascota1 = new Mascota();
+		mascota1.setId(1L);
+		session().save(mascota1);
+
+		Medico medico= new Medico();
+		medico.setId(idMedico);
+		session().save(medico);
+
+		Turno turno1 = new Turno();
+		turno1.setId(idTurno);
+		turno1.setUsuario(usuario1);
+		turno1.setMedico(medico);
+		turno1.setMascota(mascota1);
+		turno1.setEstado(false);
+		turno1.setFechaTurno(calendario);
+		session().save(turno1);
+	}
+
+
 }
