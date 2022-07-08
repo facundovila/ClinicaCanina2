@@ -1,6 +1,7 @@
 package clinicacanina.repositorios;
 
 import clinicacanina.SpringTest;
+import clinicacanina.controladores.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +23,19 @@ public class RepositorioMascotaTest extends SpringTest {
     @Transactional
     @Rollback
     public void guardarUnaMascotaDeberiaPersistirla() {
-
         //preparacion
         Mascota mascota = dadoQueExisteMascota("goten", 15);
-
         //ejecucion
         Long idMascota = cuandoGuardoMascota(mascota);
-
-
         //validacion
         entoncesEncuentroLaMascota(idMascota);
 
     }
 
-
     @Test
     @Transactional
     @Rollback
     public void puedoBuscarMascotaPorNombre() {
-
         //preparacion
         Mascota mascota1 = dadoQueExisteMascota("goten", 15);
         Mascota mascota2 = dadoQueExisteMascota("firu", 20);
@@ -58,12 +53,10 @@ public class RepositorioMascotaTest extends SpringTest {
         //validacion
         entoncesEncuentroLaMascotaConNombre(mascotasBuscadas, cantidadEsperada);
     }
-
     @Test
     @Transactional
     @Rollback
     public void sePuedenBuscarTodasLasMascotas() {
-
         //preparacion
         Mascota mascota1 = dadoQueExisteMascota("goten", 15);
         Mascota mascota2 = dadoQueExisteMascota("firu", 20);
@@ -80,6 +73,61 @@ public class RepositorioMascotaTest extends SpringTest {
 
         //validacion
         entoncesEncuentroTodasLasMascota(todasLasMascotas, cantidadEsperada);
+
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void sePuedeModificarUnaMascota(){
+
+        String nombre = "lupe";
+        Integer peso = 10;
+        Integer edad=10;
+        String sintomas = "tratamiento";
+        String detalle="detalle";
+
+        HistoriaClinica historiaClinica = new HistoriaClinica();
+
+        historiaClinica.setEdad(edad);
+        historiaClinica.setPeso(peso);
+        historiaClinica.setNombre(nombre);
+        historiaClinica.setSintomas(sintomas);
+        historiaClinica.setDetalleTratamientos(detalle);
+
+
+
+        Mascota mascota = dadoQueExisteMascotaConHistoriaClinica(historiaClinica);
+
+        dadoQueGuardoMascota(mascota);
+
+        cuandoModificoMascota(mascota);
+
+        entoncesLaHistoriaClinicaCambio(mascota);
+
+
+
+
+
+
+
+
+    }
+
+    private void entoncesLaHistoriaClinicaCambio(Mascota mascota) {
+
+        assertThat(mascota.getSintomas()).isEqualTo("los sintomas fueron cambiados");
+        assertThat(mascota.getNombre()).isEqualTo("goten");
+        assertThat(mascota.getDetalleTratamientos()).isEqualTo("sada");
+
+    }
+
+    private void cuandoModificoMascota(Mascota mascota) {
+
+        mascota.setNombre("goten");
+        mascota.setSintomas("los sintomas fueron cambiados");
+        String detalleTratamientoCambiado = "sada";
+        repositorioMascota.modificarMascota(mascota.getId(),detalleTratamientoCambiado, mascota.getSintomas(),  mascota.getPeso(), mascota.getEdad(), mascota.getNombre());
 
     }
 
@@ -108,7 +156,6 @@ public class RepositorioMascotaTest extends SpringTest {
     }
 
     private void dadoQueGuardoMascota(Mascota mascota) {
-
         repositorioMascota.guardar(mascota);
     }
 
@@ -122,24 +169,22 @@ public class RepositorioMascotaTest extends SpringTest {
     }
 
     private Long cuandoGuardoMascota(Mascota mascota) {
-
-        repositorioMascota.guardar(mascota);
-
-        return mascota.getId();
-
-
+       // repositorioMascota.guardar(mascota);
+        // no tendria que llamar al repo para preguntarle cual es el id?
+        // return mascota.getId();
+        return repositorioMascota.guardarYRegresarID(mascota);
     }
 
     private Mascota dadoQueExisteMascota(String nombre, int peso) {
         Mascota mascota = new Mascota();
         mascota.setNombre(nombre);
         mascota.setPeso(peso);
-
-
         return mascota;
-
 
     }
 
+    private Mascota dadoQueExisteMascotaConHistoriaClinica(HistoriaClinica historiaClinica){
+        return new Mascota(historiaClinica);
+    }
 
 }

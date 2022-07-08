@@ -6,7 +6,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +26,6 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
         Mascota mascota = sessionFactory.getCurrentSession()
                 .get(Mascota.class, id);
-
 
         return mascota;
 
@@ -71,7 +69,25 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
     }
 
+    @Override
+    public Long guardarYRegresarID(Mascota mascota) {
+        return null;
+    }
 
+    @Override
+    public Mascota modificarMascota(Long id, String detalleTratamientos, String sintomas, Integer peso, Integer edad, String nombre) {
+
+        Mascota mascota = buscarPorId(id);
+        mascota.setSintomas(sintomas);
+        mascota.setDetalleTratamientos(detalleTratamientos);
+        mascota.setEdad(edad);
+        mascota.setPeso(peso);
+        mascota.setNombre(nombre);
+
+        sessionFactory.getCurrentSession().update(mascota);
+
+        return mascota;
+    }
 
 
 }

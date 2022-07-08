@@ -1,23 +1,22 @@
 package clinicacanina.controladores;
 
 public class DatosLogin {
+    private String email;
+    private String password;
 
-    private  Integer dni;
-    private  String contrasenia;
-
-    public String getContrasenia() {
-        return contrasenia;
+    public String getEmail() {
+        return email;
     }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Integer getDni() {
-        return dni;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDni(Integer dni) {
-        this.dni = dni;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -1,25 +1,30 @@
-<jsp:include page="/partials/header.jsp"></jsp:include>
+<%@ include file="partials/head.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="css/estilos.css">
 
 <body>
 
-<main class="fondo">
+<main class="">
     <div class="container">
 
             <h2 class="mb-3">Historia Clinica</h2>
 
         <div>
-            <p>nombre: ${historiaclinica.nombre}</p>
-            <p>peso: ${historiaclinica.peso}</p>
-            <p>edad: ${historiaclinica.edad}</p>
-            <p>sintomas: ${historiaclinica.sintomas}</p>
-            <p>tratamiento dado: ${historiaclinica.detalleTratamientos}</p>
+            <p>nombre: ${mascota.nombre}</p>
+            <p>peso: ${mascota.peso}</p>
+            <p>edad: ${mascota.edad}</p>
+            <p>sintomas: ${mascota.sintomas}</p>
+            <p>tratamiento dado: ${mascota.detalleTratamientos}</p>
+
 
         </div>
 
-
+        <div>
+            <p>
+                <a href="modificar-mascota?idMascota=${mascota.id}" class="w3-text-blue">Modificar Historia Clinica</a>
+            </p>
+        </div>
 
     </div>
     <br>
@@ -29,8 +34,10 @@
 </main>
 
 <footer>
-    <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
-    <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
+    <div class="link">
+        <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
+        <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
+    </div>
 </footer>
 </body>
 </html>

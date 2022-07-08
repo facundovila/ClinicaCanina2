@@ -10,6 +10,7 @@ public class HistoriaClinica {
     private String detalleTratamientos;
 
 
+
     public Integer getPeso() { return peso; }
 
     public void setPeso(Integer peso) {

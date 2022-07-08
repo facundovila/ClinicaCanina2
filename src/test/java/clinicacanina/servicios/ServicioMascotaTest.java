@@ -64,17 +64,57 @@ public class ServicioMascotaTest {
 		Integer edad=10;
 		String medicamentos = "tratamiento";
 		String detalle="detalle";
-		Long id= Long.valueOf(1);
-		Mascota mascota = dadoQueExistenMascota( nombre,  peso,  edad,  medicamentos,  detalle);
+
+		Mascota mascota = dadoQueExisteMascota( nombre,  peso,  edad,  medicamentos,  detalle);
 
 
-		when(repositorioMascota.buscarPorId(id)).thenReturn(mascota);
-
-		Mascota mascotaBuscada = cuandoBuscoMascota(id);
+		Mascota mascotaBuscada = cuandoBuscoMascota(mascota.getId());
 
 		entoncesObtengoLaMascota(mascotaBuscada.getNombre(), "lupe" );
 
 	}
+
+	@Test
+	public void sePuedeModificarLaHistoriaClinicaDeUnamascota(){
+
+
+		String nombre = "lupe";
+		Integer peso = 10;
+		Integer edad=10;
+		String medicamentos = "tratamiento";
+		String detalle="detalle";
+
+		Mascota mascota = dadoQueExisteMascotaParaModificar( nombre,  peso,  edad,  medicamentos,  detalle);
+
+		String detalleTratamientoCambiado = "pipeta anti pulgas";
+
+
+		Mascota mascotaModificada = dadoQueExisteMascotaParaModificar(nombre,  peso,  edad,  medicamentos,  detalleTratamientoCambiado);
+
+
+		when(repositorioMascota.modificarMascota(mascota.getId(), mascota.getSintomas(), detalleTratamientoCambiado, mascota.getPeso(), mascota.getEdad(), mascota.getNombre())).thenReturn(mascotaModificada);
+
+
+		servicioMascota.modificarMascota(mascota.getId(),  detalleTratamientoCambiado, medicamentos,edad, peso, nombre );
+
+
+		entoncesSeModificoLaHistoriaClinicaDeLaMascota(mascotaModificada.getDetalleTratamientos(),"pipeta anti pulgas" );
+
+
+
+
+
+
+	}
+
+	private void entoncesSeModificoLaHistoriaClinicaDeLaMascota(String detalleTratamientos, String detalleTratamientoCambiado) {
+
+		assertThat(detalleTratamientos).isEqualTo(detalleTratamientoCambiado);
+
+	}
+
+
+
 
 	private void entoncesObtengoLaMascota(String mascotaBuscada, String mascotaEsperada) {
 
@@ -87,7 +127,7 @@ public class ServicioMascotaTest {
 	}
 
 
-	private Mascota dadoQueExistenMascota(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
+	private Mascota dadoQueExisteMascota(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
 		HistoriaClinica historiaClinica= new HistoriaClinica();
 
 		historiaClinica.setDetalleTratamientos(detalle);
@@ -96,7 +136,33 @@ public class ServicioMascotaTest {
 		historiaClinica.setPeso(peso);
 		historiaClinica.setSintomas(medicamentos);
 
-		return new Mascota(historiaClinica);
+		Mascota mascota = new Mascota(historiaClinica);
+
+		mascota.setId(1L);
+
+		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
+
+		return mascota;
+
+
+	}
+	private Mascota dadoQueExisteMascotaParaModificar(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
+		HistoriaClinica historiaClinica= new HistoriaClinica();
+
+		historiaClinica.setDetalleTratamientos(detalle);
+		historiaClinica.setEdad(edad);
+		historiaClinica.setNombre(nombre);
+		historiaClinica.setPeso(peso);
+		historiaClinica.setSintomas(medicamentos);
+
+		Mascota mascota = new Mascota(historiaClinica);
+
+		mascota.setId(1L);
+
+		String detalleTratamientoCambiado = "pipeta anti pulgas";
+		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
+
+		return mascota;
 
 
 	}

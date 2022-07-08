@@ -1,21 +1,17 @@
 package clinicacanina.controladores;
 
 import clinicacanina.modelo.Mascota;
-import clinicacanina.modelo.Medico;
 import clinicacanina.repositorios.RepositorioMascota;
-import clinicacanina.repositorios.RepositorioMascotaImpl;
+import clinicacanina.servicios.ServicioLogin;
 import clinicacanina.servicios.ServicioMascota;
 import clinicacanina.servicios.ServicioMedico;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -37,6 +33,8 @@ public class ControladorMascotaTest {
     private HistoriaClinica historiaClinica;
     private RepositorioMascota repositorioMascota;
     private ControladorLogin controladorLogin;
+    private  ServicioLogin servicioLogin;
+    HttpSession session = mock(HttpSession.class);
 
     //private HttpSession session = mock(HttpSession.class);
     //  HttpServletRequest request = mock(HttpServletRequest.class);
@@ -45,9 +43,8 @@ public class ControladorMascotaTest {
         repositorioMascota = mock(RepositorioMascota.class);
         servicioMascota = mock(ServicioMascota.class);
         servicioMedico = mock(ServicioMedico.class);
-        controladorLogin = new ControladorLogin(servicioMedico);
+        controladorLogin = new ControladorLogin(servicioLogin);
         controladorMascota = new ControladorMascota(servicioMascota,servicioMedico);
-
 
         historiaClinica = new HistoriaClinica();
         historiaClinica.setDetalleTratamientos("tratamientos");
@@ -55,42 +52,6 @@ public class ControladorMascotaTest {
         historiaClinica.setNombre(NOMBRE_MASCOTA);
         historiaClinica.setPeso(PESO);
         historiaClinica.setSintomas("medicamentos");
-    }
-
-    @Test
-    public void queMePermitaLoguearUnUsuario() {
-
-        DatosLogin datosLogin = new DatosLogin();
-        datosLogin.setContrasenia("admin");
-        datosLogin.setDni(10);
-
-       Medico medico= new Medico();
-        medico.setId(1l);
-        medico.setContrasenia(datosLogin.getContrasenia());
-        medico.setDni(datosLogin.getDni());
-
-      Medico medicomock = mock(Medico.class);
-        when(servicioMedico.buscarMedicoLogin(datosLogin.getDni(), datosLogin.getContrasenia())).thenReturn(medicomock);// mock el medico usuario
-      //  when(servicioMedico.getMedico(medico.getId())).thenReturn(medico);
-
-        HttpSession session = mock(HttpSession.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getSession()).thenReturn(session);
-//
-  //       when(request.getSession().getAttribute("usuarioId")).thenReturn(medico.getId());
-     //   when(request.getSession().getAttribute("usuarioId")).thenReturn(1l);
-
-
-
-
-        ModelAndView mav = controladorLogin.validarLogin(datosLogin, request);
-
-
-        entoncesMeLlevaALaVista(VISTA_ESPERADA_LISTA, mav.getViewName());
-
-
-
-
 
     }
 
@@ -100,16 +61,14 @@ public class ControladorMascotaTest {
     public void AlPedirLaListaDeMascotasMeDevuelveLaListaCompletaSiEstoyLogeado() {
 
         //preparacion
-        HttpSession session = mock(HttpSession.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getSession()).thenReturn(session);
-        when(request.getSession().getAttribute("usuarioId")).thenReturn(1L);
+        when(session.getAttribute("userId")).thenReturn(1l);
+
         dadoQueExisteCiertaCantidadDeMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos(), CANTIDAD_MASCOTA);
-//        Medico medico = new Medico();
-//        medico.setId(1l);
+
 
         //ejecucion
-        ModelAndView mav = controladorMascota.listarMascotas(request);
+        ModelAndView mav = cuandoListoMascota();
+
 
 
         //validacion
@@ -118,46 +77,86 @@ public class ControladorMascotaTest {
 
     }
 
+    private ModelAndView cuandoListoMascota() {
 
-    @Test
-    public void IrALaHistoriaClinicaDeLaMascotaCuandoEstoyLogeado() {
-
-        //preparacion
-        Mascota mascota = dadoQueExisteMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos());
-
-        mascota.setId(1L);
-
-        HttpSession session = mock(HttpSession.class);
-        when(session.getAttribute("usuarioId")).thenReturn(1L);
-
-        //ejecucion
-        ModelAndView mav = cuandoVoyAdetalle(mascota.getId(), session);
-
-        //validacion
-        // entoncesEncuentroDetalleDeMascota(mav);
-        entoncesMeLlevaALaVista("historiaClinica", mav.getViewName());
-
-
+        return controladorMascota.listarMascotas(session);
     }
 
     @Test
     public void noPuedoVerLaListaDeAnimalesSiNoEstoyLogeadoYmeMandaALaVistaError() {
 
         //preparacion
-        HttpSession session = mock(HttpSession.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getSession()).thenReturn(session);
-        when(request.getSession().getAttribute("usuarioId")).thenReturn(null);
+        when(session.getAttribute("userId")).thenReturn(null);
+
         dadoQueExisteCiertaCantidadDeMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos(), CANTIDAD_MASCOTA);
 
         //ejecucion
-        ModelAndView mav = controladorMascota.listarMascotas(request);
+        ModelAndView mav = controladorMascota.listarMascotas(session);
 
 
         //validacion
 
         entoncesMeLlevaALaVista("error", mav.getViewName());
 
+    }
+
+    @Test
+    public void IrALaHistoriaClinicaDeLaMascotaCuandoEstoyLogeado() {
+
+
+        when(session.getAttribute("userId")).thenReturn(1L);
+
+        Mascota mascota = dadoQueExisteMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos());
+
+        mascota.setId(1L);
+
+
+        //ejecucion
+        ModelAndView mav = cuandoVoyAdetalle(mascota);
+
+        //validacion
+        entoncesEncuentroLaMascota(mav, mascota);
+        entoncesMeLlevaALaVista("historiaClinica", mav.getViewName());
+
+
+    }
+
+    @Test
+    public void IrAaModificarHistoriaClinicaDeLaMascotaCuandoEstoyLogeado() {
+
+
+        when(session.getAttribute("userId")).thenReturn(1L);
+
+        Mascota mascota = dadoQueExisteMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos());
+
+        mascota.setId(1L);
+
+
+        //ejecucion
+        ModelAndView mav = cuandoVoyAModificar(mascota);
+
+        //validacion
+        entoncesEncuentroLaMascotaAModificar(mav, mascota);
+        entoncesMeLlevaALaVista("modificarMascota", mav.getViewName());
+
+
+    }
+
+    @Test
+    public void IrAModificarHistoriaClinicaDeLaMascotaCuandoEstoyLogeado() {
+
+
+        when(session.getAttribute("userId")).thenReturn(1L);
+
+        Mascota mascota = dadoQueExisteMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos());
+
+        mascota.setId(1L);
+
+        //ejecucion
+        ModelAndView mav = cuandoVoyAModificar(mascota);
+
+        //validacion
+        entoncesMeLlevaALaVista("modificarMascota", mav.getViewName());
 
 
     }
@@ -165,14 +164,104 @@ public class ControladorMascotaTest {
 
 
 
+    @Test
+    public void sePuedeModificarLaHistoriaClinica(){
 
-    private ModelAndView cuandoVoyAdetalle(Long idMascota, HttpSession session) {
+        when(session.getAttribute("userId")).thenReturn(1L);
 
-        return controladorMascota.irAHistoriaClinica(idMascota, session);
+        Mascota mascotaBase = dadoQueExisteMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos());
+
+        Mascota mascotaModificada = dadoQueExisteMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos());
+
+        mascotaModificada.setId(1L);
+
+        ModelAndView mav = cuandoModificoLaHistoriaClinica(mascotaModificada);
+
+        ModelAndView historiaClinica  = controladorMascota.irAHistoriaClinica(mascotaModificada.getId(), session);
+
+
+        entoncesSeModificoLaMascota(historiaClinica, mascotaModificada);
+        entoncesMeLlevaALaVista("historiaClinica",mav.getViewName());
+
+
+
+    }
+
+    private void entoncesEnLaVistaSeVeLaMascotaModificada(ModelAndView mav) {
+
+        Mascota mascotaEncontrada = (Mascota) mav.getModel().get("mascota");
+
+        ModelAndView mavHistoriaClinica = controladorMascota.irAHistoriaClinica(1l,session);
+
+        Mascota mascotaHistoriaClinica = (Mascota) mavHistoriaClinica.getModel().get("mascota");
+
+
+        assertThat(mascotaEncontrada).isEqualTo(mascotaHistoriaClinica);
+
+
+
+
+
+
 
     }
 
 
+    private ModelAndView cuandoVoyAdetalle(Mascota mascota) {
+
+        when(servicioMascota.buscarMascotaPorId(mascota.getId())).thenReturn(mascota);
+        return controladorMascota.irAHistoriaClinica(mascota.getId(), session);
+
+    }
+
+    private ModelAndView cuandoVoyAModificar(Mascota mascota) {
+
+        when(servicioMascota.buscarMascotaPorId(mascota.getId())).thenReturn(mascota);
+        return controladorMascota.irAModificarMascota(mascota.getId(), session);
+
+    }
+
+    private void entoncesEncuentroLaMascota(ModelAndView mav, Mascota mascota) {
+
+        Mascota mascotaEncontrada = (Mascota) mav.getModel().get("mascota");
+
+        assertThat(mascotaEncontrada).isEqualTo(mascota);
+
+
+    }
+
+    private void entoncesEncuentroLaMascotaAModificar(ModelAndView mav, Mascota mascota) {
+
+        Mascota mascotaEncontrada = (Mascota) mav.getModel().get("historiaClinica");
+
+        assertThat(mascotaEncontrada).isEqualTo(mascota);
+
+
+    }
+
+
+    private void entoncesSeModificoLaMascota(ModelAndView mav, Mascota mascota) {
+
+        Mascota mascotaEncontrada = (Mascota) mav.getModel().get("mascota");
+
+
+        assertThat(mascotaEncontrada).isEqualTo(mascota);
+
+
+        assertThat(mascotaEncontrada.getDetalleTratamientos()).isEqualTo("se cambiaron los sintomas");
+
+    }
+
+    private ModelAndView cuandoModificoLaHistoriaClinica(Mascota mascota) {
+        when(servicioMascota.buscarMascotaPorId(mascota.getId())).thenReturn(mascota);
+
+        mascota.setId(1l);
+
+        mascota.setDetalleTratamientos("se cambiaron los sintomas");
+
+        return controladorMascota.modificarHistoriaClinica(mascota, session);
+
+    }
 
 
     private void entoncesEncuentroLista(ModelAndView mav, int cantidadEsperada) {
@@ -220,21 +309,21 @@ public class ControladorMascotaTest {
 
 
 
-    private Mascota dadoQueExisteMascota(String nombreMascota, Integer peso, Integer edad, String tratamiento, String medicamentos) {
+    private Mascota dadoQueExisteMascota(String nombreMascota, Integer peso, Integer edad, String sintomas, String tratamiento) {
 
         HistoriaClinica historiaClinica = new HistoriaClinica();
         historiaClinica.setDetalleTratamientos(tratamiento);
         historiaClinica.setEdad(edad);
         historiaClinica.setNombre(nombreMascota);
         historiaClinica.setPeso(peso);
-        historiaClinica.setSintomas(medicamentos);
+        historiaClinica.setSintomas(sintomas);
 
         Mascota mascota = new Mascota(historiaClinica);
 
 
         when(servicioMascota.crearMascota(historiaClinica)).thenReturn( mascota );
-        mascota.setId(1l);
-        when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
+
+
 
 
         return mascota;

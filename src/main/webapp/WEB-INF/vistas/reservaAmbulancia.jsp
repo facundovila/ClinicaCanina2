@@ -1,9 +1,13 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="/partials/header.jsp"></jsp:include>
-<link rel="stylesheet" href="../../css/estilos.css">
-<link rel="stylesheet" href="css/styleAmbulancia.css">
+<!DOCTYPE html>
+<html>
+<head>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+    <%@ include file="partials/head.jsp"%>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="css/styleAmbulancia.css">
+</head>
 
 <body>
 
@@ -82,31 +86,7 @@
        
     </c:if>
     <h2>${Error}</h2>
-    <!--  
-    <c:if test="${not empty datosParaSeguimiento}">
-        <form:form action="ver-seguimiento-reserva" method="POST" modelAttribute="datosParaSeguimiento" id="formulario">
-			    	
-					<hr class="colorgraph"><br>
-					
-                   
-					<%--Elementos de entrada de datos, el elemento path debe indicar en que atributo del objeto datosReservaAmbulancia se guardan los datos ingresados--%>
-					<div class = "inputs">
-					<form:label path="patente">Ingrese la patente de su reserva : </form:label>
-					<br>
-					<form:input path="patente" id="patente" type="text" class="form-control" minlength="2" maxlength="30"/>
-					</div>
-					<div class = "inputs">
-					<form:label path="telefono">Si no recuerda la patente, ingrese el telefono : </form:label>
-					<br>
-					<form:input path="telefono" id="telefono" type="text" class="form-control" />
-					</div>
-					<div id = "boton">
-					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>buscar</button>
-					</div>
-					
-				</form:form>
-    </c:if>
-      -->
+   
      <c:if test="${not empty Seguimiento}">
     <div id="reserva">
         <span>Su reserva de patente :<strong>* ${Reserva.getAmbulancia().getPatente()} * </strong></span>

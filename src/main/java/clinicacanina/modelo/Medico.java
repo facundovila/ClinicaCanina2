@@ -8,8 +8,6 @@ public class Medico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-
 	private String contrasenia;
 	private Integer dni;
 

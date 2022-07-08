@@ -1,16 +1,19 @@
-<jsp:include page="/partials/header.jsp"></jsp:include>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <%@ include file="partials/head.jsp"%>
+</head>
 <main>
     <div class="container">
         <c:if test="${empty sinMascotas}">
             <h4 class="mb-3 text-center">Lista De Mascotas</h4>
-            <div class="col-6">
+            <div class="col-6 center-block centrar">
 
 
-                <table class="table table-bordered">
+                <table class="table table-bordered centrar">
                     <thead>
                     <tr>
                         <th scope="col" class="text-center">Nombre</th>
@@ -44,7 +47,7 @@
     <div class="link">
         <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
         <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
-</div>
+    </div>
 </footer>
 </body>
 </html>

@@ -17,35 +17,50 @@ import clinicacanina.repositorios.RepositorioTurnos;
 public class ServicioTurnosImpl implements ServicioTurnos {
 	
 	private RepositorioTurnos repositorioTurnos;
-	
 
 
     @Autowired
     public ServicioTurnosImpl(RepositorioTurnos repositorioTurnos){
 
-        this.setRepositorioTurnos(repositorioTurnos);
-
+		this.setRepositorioTurnos(repositorioTurnos);
     }
-
 
 	@Override
 	public List<Turno> buscarTurno(String fecha) {
-		
+
 		return repositorioTurnos.mostrarTurnoDisponible(fecha);
+
+	}
+
+	@Override
+	public List<Turno> turnosDelUsuario(long usuarioId) {
+		return repositorioTurnos.mostarTurnosDelUsuario(usuarioId);
 	}
 
 	public RepositorioTurnos getRepositorioTurnos() {
 		return repositorioTurnos;
 	}
 
-
 	public void setRepositorioTurnos(RepositorioTurnos repositorioTurnos) {
+
 		this.repositorioTurnos = repositorioTurnos;
 	}
-
-
 	
+	public Boolean cancelarTurnoPorId(Long id) {
+		/*
+		Turno turno = repositorioTurnos.buscarTurnoPorId(id);
+		if(turno != null) {
+			repositorioTurnos.cancelarTurnoPorId(id);
+			return true;
+		}
+		return false;*/
+		return repositorioTurnos.cancelarTurnoPorId(id);
+		}
 
+	@Override
+	public Turno buscarTurnoPorId(Long id) {
+		return repositorioTurnos.buscarTurnoPorId(id);
+	}
 
 
 
