@@ -45,11 +45,13 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 	}
 
 	@Override
-	public void reservarAmbulancia(String direccion, Ambulancia ambulancia) {
+	public void reservarAmbulancia(String direccion, String telefono, String motivo, Ambulancia ambulancia) {
 		if((ambulancia !=null && ambulancia.getDisponibilidad() == true) && direccion != "") {
 			ambulancia.setDisponibilidad(false);
 			ReservaDeAmbulancia reservaDeAmbulancia = new ReservaDeAmbulancia();
 			reservaDeAmbulancia.setDireccion(direccion);
+			reservaDeAmbulancia.setTelefono(telefono);
+			reservaDeAmbulancia.setMotivo(motivo);
 			reservaDeAmbulancia.setAmbulancia(ambulancia);
 			repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia, ambulancia);
 		}else {
@@ -58,5 +60,21 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		
 		
 	}
+
+	// nuevo metodo review 3
+	@Override
+	public ReservaDeAmbulancia buscarReserva(Ambulancia ambulancia) {
+		List <ReservaDeAmbulancia> reservasAmbulancias = repositorioAmbulancia.buscarReservas();
+		if(reservasAmbulancias.isEmpty()) {
+			throw new ErrorDeReserva();
+		}
+		for(ReservaDeAmbulancia reserva : reservasAmbulancias ) {
+			if(reserva.getAmbulancia().getPatente().equals(ambulancia.getPatente())) {
+				return reserva;
+			}
+		}
+		return null;
+	}
+
   
 }

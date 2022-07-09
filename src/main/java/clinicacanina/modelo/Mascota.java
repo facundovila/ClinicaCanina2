@@ -1,10 +1,9 @@
 package clinicacanina.modelo;
 
 import clinicacanina.controladores.HistoriaClinica;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.persistence.GeneratedValue;
 
 @Entity
@@ -15,13 +14,13 @@ public class Mascota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    @NotNull
-    @Size(min = 3, message = "nombre invalido")
+
+
+   //@Size(min = 3, message = "nombre invalido")
     private String nombre;
 
-    @Column(nullable = false)
-    @NotNull
+
+
     private Integer peso;
 
 
@@ -83,7 +82,9 @@ public class Mascota {
 
     public String getSintomas() {return sintomas;}
 
-    public void setSintomas(String medicamentos) {this.sintomas = medicamentos;}
+    public Object setSintomas(String medicamentos) {this.sintomas = medicamentos;
+        return null;
+    }
 
     public String getDetalleTratamientos() {return detalleTratamientos;}
 

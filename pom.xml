@@ -197,7 +197,7 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>7.0.1.Final</version>
+
 		</dependency>
 				<dependency>
 					<groupId>org.glassfish</groupId>
@@ -208,7 +208,7 @@
 				<dependency>
 					<groupId>org.hibernate.validator</groupId>
 					<artifactId>hibernate-validator-cdi</artifactId>
-					<version>7.0.1.Final</version>
+
 				</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
@@ -231,7 +231,20 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
-
+        <dependency>
+       <groupId>com.google.maps</groupId>
+        <artifactId>google-maps-services</artifactId>
+        <version>2.1.0</version>
+       </dependency>
+         <dependency>
+         <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+          <version>1.7.25</version>
+          </dependency>
+          <dependency>
+         <groupId>com.googlecode.json-simple</groupId>
+          <artifactId>json-simple</artifactId>
+          <version>1.1.1</version>
+          </dependency>
     </dependencies>
 </project>

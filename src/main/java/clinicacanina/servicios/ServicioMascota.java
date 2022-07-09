@@ -18,4 +18,6 @@ public interface ServicioMascota {
      Mascota buscarMascotaPorId(Long id);
 
      List<Mascota> listarMascotas();
+
+     Mascota modificarMascota(Long id, String detalleTratamientos, String detalleTratamientoCambiado, Integer edad, Integer peso, String nombre);
 }

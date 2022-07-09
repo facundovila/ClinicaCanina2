@@ -1,9 +1,16 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<jsp:include page="/partials/header.jsp"></jsp:include>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <%@ include file="partials/head.jsp"%>
+</head>
+<body>
+<header>
+    <h1 class="text-center">CLINICA CANINA</h1>
+</header>
 <main>
-
 
     <section class="contenedor ">
 
@@ -15,30 +22,30 @@
 
         <article class="contenido2">
             <h3>Iniciar sesion</h3>
-            <form:form action="validar-login" method="POST" modelAttribute="datosLogin">
-                <div class="form-group mb-2">
-                    <label for="dni">Dni</label>
+            <div class="w3-col s9 w3-center">
+                <form:form action="validar-login" method="POST"
+                           modelAttribute="datosLogin">
 
-                    <form:input path="dni" id="dni"  class="form-control" />
-
-                </div>
-
-
-
-                <div class="form-group mb-2">
-                    <label for="contrasenia"> contraseña</label>
-
-                    <form:input path="contrasenia" type="password" id="contrasenia" class="form-control"/>
-
-                </div>
-
-                <button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Iniciar sesion</button>
-            </form:form>
-
-            <c:if test="${not empty error}">
-                <h4><span>${error}</span></h4>
-                <br>
-            </c:if>
+                    <p class="w3-center w3-margin-top">
+                        <form:input path="email" id="email" type="email" class="w3-input"
+                                    placeholder="Email" />
+                    </p>
+                    <p class="w3-center w3-margin-top">
+                        <form:input path="password" type="password" id="password"
+                                    class="w3-input" placeholder="Contraseña" />
+                    </p>
+                    <c:if test="${not empty error}">
+                        <div class="w3-panel w3-blue w3-padding-16">${error}</div>
+                    </c:if>
+                    <p>
+                        <button class="w3-btn w3-section w3-green w3-ripple w3-block"
+                                Type="Submit">Login</button>
+                    </p>
+                    <p>
+                        <a href="registro" class="w3-text-white">Registrarme</a>
+                    </p>
+                </form:form>
+            </div>
         </article>
     </section>
 

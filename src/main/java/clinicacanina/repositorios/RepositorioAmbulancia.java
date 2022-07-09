@@ -20,4 +20,6 @@ public interface RepositorioAmbulancia {
 	Ambulancia buscarAmbulanciaPorPatente(String patente);
 
 	void reservarAmbulancia(ReservaDeAmbulancia reservaDeAmbulancia, Ambulancia ambulancia);
+
+	List<ReservaDeAmbulancia> buscarReservas();
 }

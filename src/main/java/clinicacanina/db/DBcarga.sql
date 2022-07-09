@@ -24,9 +24,14 @@ insert into medico( disponibilidad, horarioEntrada, horarioSalida, nombre, dni, 
 -- QUERYS
 select * from medico;
 
+select * from usuario;
+
+select * from mascota;
+
 -- AMBULANCIA
 INSERT INTO ambulancia
    (disponible, patente)
    VALUES(true, 'ABC123'),(true, 'DEF456'),(true, 'GHI789'),(true, 'JKL012');
+
 
 

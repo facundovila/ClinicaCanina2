@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -16,6 +15,7 @@ import java.util.List;
 public class ServicioMascotaImpl implements ServicioMascota {
 
     private RepositorioMascota repositorioMascota;
+
 
 
     @Autowired
@@ -69,6 +69,34 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
     }
 
+    @Override
+    public Mascota modificarMascota(Long id, String detalleTratamientos, String sintomas, Integer edad, Integer peso, String nombre) {
+
+        Mascota mascotaAModificar = buscarMascotaPorId(id);
+
+
+
+        if(mascotaAModificar.getId() != null){
+//            mascotaAModificar.setDetalleTratamientos(detalleTratamientos);
+//            mascotaAModificar.setSintomas(sintomas);
+//            mascotaAModificar.setPeso(peso);
+//            mascotaAModificar.setEdad(edad);
+           Mascota mascotaModificada = repositorioMascota.modificarMascota( id, detalleTratamientos, sintomas, peso, edad, nombre);
+
+            return mascotaModificada;
+
+        }else{
+
+           throw new MascotaInexistenteException();
+
+        }
+
+
+
+
+
+
+    }
 
 
 }
