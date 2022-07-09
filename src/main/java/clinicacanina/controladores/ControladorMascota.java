@@ -30,42 +30,33 @@ public class ControladorMascota {
     }
 
 
-
-
-
-
-    @RequestMapping(path = "/listar-mascotas" , method = RequestMethod.GET)
+    @RequestMapping(path = "/listar-mascotas", method = RequestMethod.GET)
     public ModelAndView listarMascotas(HttpSession session) {
 
-        ModelMap model= new ModelMap();
+        ModelMap model = new ModelMap();
 
 
-        if(session.getAttribute("userId") != null){
+        if (session.getAttribute("userId") != null) {
 
 
             List<Mascota> listaDeMascotas = servicioMascota.listarMascotas();
 
 
-
-            if(listaDeMascotas.isEmpty()){
+            if (listaDeMascotas.isEmpty()) {
                 model.put("sinMascotas", "no hay pacientes mascotas");
 
                 return new ModelAndView("listaMascotas", model);
-            }
-            else if(!listaDeMascotas.isEmpty()){
+            } else if (!listaDeMascotas.isEmpty()) {
                 model.put("listarmascotas", listaDeMascotas);
             }
 
-                return new ModelAndView("listaMascotas", model);
-                }
-            else{
-                    model.put("error", "Usted debe estar registrado para acceder");
+            return new ModelAndView("listaMascotas", model);
+        } else {
+            model.put("error", "Usted debe estar registrado para acceder");
 
-                    return new ModelAndView("error", model);
+            return new ModelAndView("error", model);
 
         }
-
-
 
 
     }
@@ -74,9 +65,9 @@ public class ControladorMascota {
     @RequestMapping(path = "/historia-clinica", method = RequestMethod.GET)
     public ModelAndView irAHistoriaClinica(@RequestParam("idMascota") Long idMascota, HttpSession session) {
 
-        ModelMap model= new ModelMap();
+        ModelMap model = new ModelMap();
 
-        if(session.getAttribute("userId") != null){
+        if (session.getAttribute("userId") != null) {
 
             Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(idMascota);
 
@@ -84,7 +75,7 @@ public class ControladorMascota {
             model.put("mascota", mascotaBuscada);
 
             return new ModelAndView("historiaClinica", model);
-        }else{
+        } else {
             model.put("error", "Usted debe estar registrado para acceder");
 
             return new ModelAndView("error", model);
@@ -92,24 +83,23 @@ public class ControladorMascota {
         }
 
     }
-
 
 
     @RequestMapping(path = "/modificar-mascota", method = RequestMethod.GET)
     public ModelAndView irAModificarMascota(@RequestParam("idMascota") Long idMascota, HttpSession session) {
 
-        ModelMap model= new ModelMap();
+        ModelMap model = new ModelMap();
 
 
         Mascota mascotaAModificar = servicioMascota.buscarMascotaPorId(idMascota);
 
 
-        if(session.getAttribute("userId") != null && mascotaAModificar!=null ){
-            model.put("mascota", mascotaAModificar );
+        if (session.getAttribute("userId") != null && mascotaAModificar != null) {
+            model.put("mascota", mascotaAModificar);
 
             return new ModelAndView("modificarMascota", model);
 
-        }else{
+        } else {
             model.put("error", "Usted debe estar registrado para acceder");
 
             return new ModelAndView("error", model);
@@ -118,23 +108,22 @@ public class ControladorMascota {
     }
 
 
+    @RequestMapping(path = "/modificar-historia-clinica", method = RequestMethod.POST)
+    public ModelAndView modificarHistoriaClinica(@ModelAttribute("mascota") Mascota mascota, HttpSession session) {
 
-    @RequestMapping(path = "/modificar-historia-clinica",  method = RequestMethod.POST)
-    public ModelAndView modificarHistoriaClinica(  @ModelAttribute("mascota") Mascota mascota, HttpSession session){
 
-
-        ModelMap model= new ModelMap();
+        ModelMap model = new ModelMap();
         Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(mascota.getId());
 
-        if( session.getAttribute("userId") != null && mascotaBuscada!= null){
+        if (session.getAttribute("userId") != null && mascotaBuscada != null) {
 
-       servicioMascota.modificarMascota(mascotaBuscada.getId(), mascota.getDetalleTratamientos(), mascota.getSintomas(), mascota.getEdad(), mascota.getPeso(), mascota.getNombre());
+            servicioMascota.modificarMascota(mascotaBuscada.getId(), mascota.getDetalleTratamientos(), mascota.getSintomas(), mascota.getEdad(), mascota.getPeso(), mascota.getNombre());
 
 
             return new ModelAndView("historiaClinica", model);
 
 
-        }else{
+        } else {
             model.put("error", "Usted debe estar registrado para acceder");
 
             return new ModelAndView("error", model);
@@ -142,12 +131,7 @@ public class ControladorMascota {
         }
 
 
-
-
-
-
     }
-
 
 
 }

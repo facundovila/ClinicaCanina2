@@ -175,6 +175,7 @@ public class ControladorMascotaTest {
 
         mascotaModificada.setId(1L);
 
+        when(servicioMascota.buscarMascotaPorId(mascotaModificada.getId())).thenReturn(mascotaModificada);
         ModelAndView mav = cuandoModificoLaHistoriaClinica(mascotaModificada);
 
         ModelAndView historiaClinica  = controladorMascota.irAHistoriaClinica(mascotaModificada.getId(), session);
@@ -253,7 +254,7 @@ public class ControladorMascotaTest {
     }
 
     private ModelAndView cuandoModificoLaHistoriaClinica(Mascota mascota) {
-        when(servicioMascota.buscarMascotaPorId(mascota.getId())).thenReturn(mascota);
+
 
         mascota.setId(1l);
 
