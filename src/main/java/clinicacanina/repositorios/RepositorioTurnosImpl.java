@@ -75,13 +75,8 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		turnoNuevo.setEstado(false);
 		turnoNuevo.setUsuario(null);
 		turnoNuevo.setMascota(null);
-
 		sessionFactory.getCurrentSession().update(turnoNuevo);
-
-		Turno turnoADevolver = (Turno) sessionFactory.getCurrentSession()
-									  .createCriteria(Turno.class)
-				                      .add(Restrictions.eq("id",id)).uniqueResult();
-		return turnoADevolver.getEstado();
+		return turnoNuevo.getEstado();
 
 	}
 

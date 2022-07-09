@@ -23,11 +23,10 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
     @Override
     public Mascota buscarPorId(Long id) {
-
-        Mascota mascota = sessionFactory.getCurrentSession()
-                .get(Mascota.class, id);
-
-        return mascota;
+        return (Mascota) sessionFactory.getCurrentSession()
+                .createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
 
 
     }

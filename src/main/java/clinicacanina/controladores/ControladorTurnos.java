@@ -71,7 +71,7 @@ public class ControladorTurnos {
 
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 		List<Turno> turnos= servicioTurnos.buscarTurnoPorFechaDeHoy();
-		if(turnos==null){
+		if(turnos.size()==0){
 			mapa.put("mensaje","Sin Turnos Disponibles");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);
 		}
