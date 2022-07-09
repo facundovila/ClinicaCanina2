@@ -14,7 +14,7 @@ public class NavegacionTest {
 	
 	private Navegacion navegacion;
 	private final LocalDateTime AHORA = LocalDateTime.now();
-	private final String MINUTOS_ESTIMADOS = "41";
+	private final String MINUTOS_ESTIMADOS = "9";
 
 	@Before
 	public void init() {

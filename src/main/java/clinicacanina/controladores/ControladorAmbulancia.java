@@ -99,7 +99,7 @@ public class ControladorAmbulancia {
 		return new ModelAndView("reservaAmbulancia", model);
 	}
 	
-	//Se agrega metodo para consultar seguiemiento.
+	//Se agrega metodo para consultar seguimiento.
 	@RequestMapping(path="/ver-seguimiento")
 	public ModelAndView verSeguimiento() {
         Ambulancia ambulancia = null;
