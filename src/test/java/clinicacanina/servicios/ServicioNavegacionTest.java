@@ -20,7 +20,12 @@ public class ServicioNavegacionTest {
 	private ServicioNavegacion servicioNavegacion;
 	private RepositorioNavegacion repositorioNavegacion;
 	private final LocalDateTime AHORA = LocalDateTime.now();
-	private final String MINUTOS_ESTIMADOS = "5";
+	//Esta variable debe setarse con los minutos estimados tras la suma de los minutos
+	//del horario actual + el Integer retornado en dadoUnTiempoEstimadoDeLlegadaDeLaAmbulancia()
+	//el valor es variable ya que la hora es dinamica, de no setearse en funcion de lo especificado
+	//con anterioridad, el test queSePuedaCalcularElHorarioEstimadoDeLlegadaDeLaAmabulancia()
+	//fallara.
+	private final String MINUTOS_ESTIMADOS = "16";
 
 	@Before
 	public void init() {
