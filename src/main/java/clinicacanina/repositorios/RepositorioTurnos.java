@@ -22,4 +22,6 @@ public interface RepositorioTurnos {
 	Boolean cancelarTurnoPorId(Long id);
 
 	List<Turno> mostarTurnosDisponiblesFechaHoy();
+
+    boolean tomarTurno(long idMascota, long idUsuario, long idTurno);
 }

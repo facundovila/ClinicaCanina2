@@ -14,26 +14,12 @@ public class Mascota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
    //@Size(min = 3, message = "nombre invalido")
     private String nombre;
-
-
-
     private Integer peso;
-
-
-
     private Integer edad;
-
-
     private String sintomas;
-
-
     private String detalleTratamientos;
-
-
 
 
     public Mascota(HistoriaClinica historiaClinica){

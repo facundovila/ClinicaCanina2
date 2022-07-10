@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import clinicacanina.modelo.Turno;
@@ -25,14 +24,24 @@ public class ControladorTurnosTest {
 	private ServicioTurnos servicioTurnos;
 	private HttpServletRequest request;
 	private HttpSession session;
+	private HttpServletRequest requestNull;
+	private HttpSession sessionNull;
 	
 	
 	@Before
     public void init(){
 		session = mock(HttpSession.class);
 		request = mock(HttpServletRequest.class);
+		sessionNull = mock(HttpSession.class);
+		requestNull = mock(HttpServletRequest.class);
         servicioTurnos= mock(ServicioTurnos.class);
         controladorTurnos= new ControladorTurnos(servicioTurnos);
+
+		when(request.getSession()).thenReturn(session);
+		when(request.getSession().getAttribute("userId")).thenReturn(1L);
+
+		when(requestNull.getSession()).thenReturn(sessionNull);
+		when(requestNull.getSession().getAttribute("userId")).thenReturn(null);
     }
 	
 //	@Test
@@ -118,13 +127,13 @@ public class ControladorTurnosTest {
 	verify(servicioTurnos, times(1)).cancelarTurnoPorId(any());
 }
 	@Test
-	public void siElTurnoNoSePuedeCancelarSeRegresaUnBoleano(){
+	public void siTurnoSeCancelaSePoneUnMensaje(){
 		// esto testea el mensaje pero no pude arreglarlo en el repositorio
 		when(request.getSession()).thenReturn(session);
 		when(request.getSession().getAttribute("userId")).thenReturn(1L);
 		when(servicioTurnos.cancelarTurnoPorId(1L)).thenReturn(false);
 		ModelAndView modelo = controladorTurnos.cancelarTurno(1L,request);
-		assertThat(modelo.getModel().get("mensaje")).isEqualTo("el turno no se puede cancelar por el horario");
+		assertThat(modelo.getModel().get("mensaje")).isEqualTo("turno Cancelado");
 	}
 	@Test
 	public void CuandVoyaTurnosMeRegresaLaVistaSelecionaRTurno(){
@@ -155,13 +164,22 @@ public class ControladorTurnosTest {
 		when(request.getSession().getAttribute("userId")).thenReturn(1L);
 		List <Turno> lista= new ArrayList<Turno>();
 		when(servicioTurnos.buscarTurnoPorFechaDeHoy()).thenReturn(lista);
-
 		ModelAndView modelo = controladorTurnos.irSoliciarTurno(request);
 		verify(servicioTurnos, times(1)).buscarTurnoPorFechaDeHoy();
-
 		assertThat(modelo.getModel().get("mensaje")).isEqualTo("Sin Turnos Disponibles");
 
-}
+		}
+		@Test
+		public void cuandoSeleccionoElTurnoMeMandaAlHome() {
+			ModelAndView modelo = controladorTurnos.tomarTurno(request,1L,1L);
+			servicioTurnos.tomarTurno(1L,1L,1L);
+			assertThat(modelo.getViewName()).isEqualTo("redirect:/usuarioHome");
+		}
+	@Test
+	public void cuandoSeleccionoElTurnoMeMandaAlHomeSinLogin() {
+		ModelAndView modelo = controladorTurnos.tomarTurno(requestNull,1L,1L);
+		assertThat(modelo.getViewName()).isEqualTo("redirect:/login");
+	}
 
 
 

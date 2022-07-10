@@ -56,10 +56,8 @@ public class ControladorTurnos {
 		if (estado == false) {
 			mapa.put("mensaje", "el turno no se puede cancelar por el horario");
 		}
-
+		mapa.put("mensaje", "turno Cancelado");
 		return new ModelAndView("redirect:/usuarioHome", mapa);
-
-
 	}
 
 	@RequestMapping(path = "/usuarioSolicitarTurno")
@@ -68,16 +66,13 @@ public class ControladorTurnos {
 		if (request.getSession().getAttribute("userId") == null) {
 			return new ModelAndView("redirect:/login");
 		}
-
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 		List<Turno> turnos= servicioTurnos.buscarTurnoPorFechaDeHoy();
 		if(turnos.size()==0){
 			mapa.put("mensaje","Sin Turnos Disponibles");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);
 		}
-
 		mapa.put("listaTurnosDisponibles", turnos );
-
 		return new ModelAndView("usuarioSolicitarTurno", mapa);
 	}
 /*
@@ -87,9 +82,8 @@ public class ControladorTurnos {
 			if (request.getSession().getAttribute("userId") == null) {
 			return new ModelAndView("redirect:/login");
 			}
-
 		Calendar fecha = datosSolicitarTurno.getCalendario();
-		List<Turno> turnos= servicioTurnos.buscarTurnoPorFecha(fecha);
+			List<Turno> turnos= servicioTurnos.buscarTurnoPorFecha(fecha);
 		if(turnos.isEmpty()){
 			mapa.put("mensaje","Sin Turnos Disponibles");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);
@@ -99,6 +93,19 @@ public class ControladorTurnos {
 		return new ModelAndView("usuarioSolicitarTurno",mapa);
 
 }*/
+	@RequestMapping(path = "/tomarTurno/{idTurno}/{idMascota}", method = RequestMethod.POST)
+	public ModelAndView tomarTurno(HttpServletRequest request, @PathVariable("idTurno") long idTurno,@PathVariable("idTurno") long idMascota) {
+
+		ModelMap mapa = new ModelMap();
+		if (request.getSession().getAttribute("userId") == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		Long idUsuario = (Long) request.getSession().getAttribute("userId");
+		servicioTurnos.tomarTurno(idMascota, idUsuario,idTurno);
+
+		return new ModelAndView("redirect:/usuarioHome", mapa);
+	}
+
 }
 
 

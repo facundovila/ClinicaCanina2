@@ -82,6 +82,11 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	}
 
 	@Override
+	public boolean tomarTurno(long idMascota, long idUsuario, long idTurno) {
+	return repositorioTurnos.tomarTurno(idMascota, idUsuario,idTurno);
+	}
+
+	@Override
 	public Turno buscarTurnoPorId(Long id) {
 		return repositorioTurnos.buscarTurnoPorId(id);
 	}

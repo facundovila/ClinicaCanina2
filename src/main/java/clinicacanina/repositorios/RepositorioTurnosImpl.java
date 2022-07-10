@@ -79,9 +79,6 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		return turnoNuevo.getEstado();
 
 	}
-
-
-
 	@Override
 	public List<Turno> mostarTurnosDisponiblesFechaHoy() {
 
@@ -95,6 +92,15 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true  and t.fechaTurno between :fechaInicio and :fechaFin")
 				.setParameter("fechaInicio",fechaInicio).setParameter("fechaFin",fechaActual).list();
 
+	}
+
+	@Override
+	public boolean tomarTurno(long idMascota, long idUsuario, long idTurno) {
+		Turno turnoNuevo= buscarTurnoPorId(idTurno);
+		turnoNuevo.setEstado(true);
+		turnoNuevo.setUsuario();
+		sessionFactory.getCurrentSession().update(turnoNuevo);
+		return turnoNuevo.getEstado();
 	}
 
 }

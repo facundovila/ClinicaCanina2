@@ -146,6 +146,19 @@ public class ServicioTurnosTest {
 		// comparacion
 		assertThat(listaEsperada).isNotNull();
 	}
+	@Test
+	public void puedoTomarUnTurno(){
+		// preparacion
+		long idUsuario=1L;
+		long idTurno=1L;
+		long idMascota=1L;
+		when(repositorioTurnos.tomarTurno(idMascota,idUsuario,idTurno)).thenReturn(true);
+		// ejecucion
+		boolean estado= servicioTurnos.tomarTurno(idMascota,idUsuario,idTurno);
+		//validacion
+		assertThat(estado).isTrue();
+
+	}
 
 
 

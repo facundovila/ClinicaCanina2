@@ -22,4 +22,6 @@ public interface ServicioTurnos {
     List<Turno> buscarTurnoPorFecha(Calendar fecha);
 
     List<Turno> buscarTurnoPorFechaDeHoy();
+
+    boolean tomarTurno(long idMascota, long idUsuario, long idTurno);
 }
