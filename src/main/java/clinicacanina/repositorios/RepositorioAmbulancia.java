@@ -4,6 +4,7 @@ package clinicacanina.repositorios;
 import java.util.List;
 
 import clinicacanina.modelo.Ambulancia;
+import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 
 public interface RepositorioAmbulancia {
@@ -22,4 +23,6 @@ public interface RepositorioAmbulancia {
 	void reservarAmbulancia(ReservaDeAmbulancia reservaDeAmbulancia, Ambulancia ambulancia);
 
 	List<ReservaDeAmbulancia> buscarReservas();
+
+	
 }
