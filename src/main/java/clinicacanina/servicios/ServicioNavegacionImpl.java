@@ -3,6 +3,7 @@ package clinicacanina.servicios;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
@@ -36,7 +37,7 @@ private RepositorioNavegacion repositorioNavegacion;
 	public LocalDateTime calcularHorarioDeLlegada(String patente) {
 		LocalDateTime horarioActual = obtenerHoraActual();
 		String horarioActualString = horarioActual.getYear() + "-"+horarioActual.getMonthValue()+"-"+horarioActual.getDayOfMonth()+" "+horarioActual.getHour()+":"+horarioActual.getMinute();
-		Navegador navegador = repositorioNavegacion.buscarNavegacion(patente);
+		Navegador navegador = buscarNavegacion(patente);
 		String tiempoEstimado = navegador.getTiempoEstimado();
 		Integer tiempoEstimadoNumber = parseTiempoEstimadoDeLlegada(tiempoEstimado);
 		LocalDateTime horarioLlegada = sumarTiempoEstimadoAHoraActual(tiempoEstimadoNumber,horarioActual);
@@ -100,6 +101,37 @@ private RepositorioNavegacion repositorioNavegacion;
 		public void actualizarNavegacion(Navegador navegador) {
 			repositorioNavegacion.actualizarNavegacion(navegador);
 			
+		}
+
+
+		@Override
+		public String calcularTiempoRestanteDeLlegada(String patente) {
+			Integer diferenciaMinutos = 0;
+			LocalDateTime horaActual = obtenerHoraActual();
+			Navegador navegador = buscarNavegacion(patente);
+			String tiempoEstimado = navegador.getTiempoEstimado();
+			Integer tiempoEstimadoNumber = parseTiempoEstimadoDeLlegada(tiempoEstimado);
+			String horaDeSolicitud = navegador.getHorarioDeSolicitud();
+			LocalDateTime horaSolicitudParseada = parseLocalDateTime(horaDeSolicitud);
+			Integer minutosSolicitud = horaSolicitudParseada.getMinute();
+			Integer minutosActuales = horaActual.getMinute();
+			
+			if(minutosActuales > minutosSolicitud) {
+				diferenciaMinutos = minutosActuales - minutosSolicitud;
+				tiempoEstimadoNumber -= diferenciaMinutos;
+			}
+			tiempoEstimado = String.valueOf(tiempoEstimadoNumber);
+			navegador.setTiempoRestante(tiempoEstimado);
+			
+			actualizarNavegacion(navegador);
+			return tiempoEstimado;
+		}
+
+
+		private LocalDateTime parseLocalDateTime(String horaDeSolicitud) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-dd HH:mm");
+			LocalDateTime horaSolicitudParse = LocalDateTime.parse(horaDeSolicitud,formatter);
+			return horaSolicitudParse;
 		}
 
 }

@@ -13,6 +13,7 @@ public interface ServicioNavegacion {
     String guardarNavegacion(ReservaDeAmbulancia reserva, Trayecto trayecto);
     void actualizarNavegacion(Navegador navegador);
 	Navegador buscarNavegacion(String patente);
+	String calcularTiempoRestanteDeLlegada(String patente);
 
     
 }

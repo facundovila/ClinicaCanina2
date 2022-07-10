@@ -66,7 +66,36 @@ public class ServicioNavegacionTest {
 		entoncesObtengoElHorarioDeArrivo(horarioDeLlegada);
 	}
 	
+	@Test
+	public void queSePuedaCalcularElTiempoRestanteDeLlegada() {
+		String patente = "ABC123";
+		dadoQueExisteUnaNavegacionConSuHorarioDeSolicitud();
+		String tiempoRestante = cuandoConsultoElTiempoRestanteDeLlegada(patente);
+		entoncesObtengoCuantoFaltaParaQueArribeLaAmbulancia(tiempoRestante);
+	}
 	
+	
+	private void entoncesObtengoCuantoFaltaParaQueArribeLaAmbulancia(String tiempoRestante) {
+		Integer minutosActuales = AHORA.getMinute();
+		Integer minutosEstimados = 45;
+		Integer diferencia = minutosEstimados - minutosActuales;
+		String diferenciaString = String.valueOf(diferencia);
+		
+		assertThat(tiempoRestante).isEqualTo(diferenciaString);
+		
+	}
+
+	private String cuandoConsultoElTiempoRestanteDeLlegada(String patente) {
+		return servicioNavegacion.calcularTiempoRestanteDeLlegada(patente);
+	}
+
+	private void dadoQueExisteUnaNavegacionConSuHorarioDeSolicitud() {
+		Navegador navegador = crearNavegador();
+		navegador.setHorarioDeSolicitud("2022-07-10 19:00");
+		when(repositorioNavegacion.buscarNavegacion(navegador.getPatente())).thenReturn(navegador);
+		
+	}
+
 	private void entoncesObtengoElHorarioDeArrivo(LocalDateTime horarioDeLlegada) {
 		System.out.println(horarioDeLlegada);
 		assertThat(horarioDeLlegada).isNotNull();
