@@ -130,7 +130,8 @@ public class ControladorTurnosTest {
 	public void CuandVoyaTurnosMeRegresaLaVistaSelecionaRTurno(){
 		when(request.getSession()).thenReturn(session);
 		when(request.getSession().getAttribute("userId")).thenReturn(1L);
-		when(controladorTurnos.irSoliciarTurno(request)).thenReturn(new ModelAndView("usuarioSolicitarTurno"));
+		ModelAndView modelo = controladorTurnos.irSoliciarTurno(request);
+		assertThat(modelo.getViewName()).isEqualTo("usuarioSolicitarTurno");
 	}
 	@Test
 	public void CuandVoyASeleccionarTurnoMeRegresaUnaVistaCoonListaTurnos(){
@@ -154,10 +155,10 @@ public class ControladorTurnosTest {
 		when(request.getSession().getAttribute("userId")).thenReturn(1L);
 		List <Turno> lista= new ArrayList<Turno>();
 		when(servicioTurnos.buscarTurnoPorFechaDeHoy()).thenReturn(lista);
+
 		ModelAndView modelo = controladorTurnos.irSoliciarTurno(request);
 		verify(servicioTurnos, times(1)).buscarTurnoPorFechaDeHoy();
-		List<Turno> turno2= (List<Turno>) modelo.getModel().get("listaTurnosDisponibles");
-		assertThat(turno2).isNull();
+
 		assertThat(modelo.getModel().get("mensaje")).isEqualTo("Sin Turnos Disponibles");
 
 }

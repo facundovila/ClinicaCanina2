@@ -137,7 +137,7 @@ public class RepositorioTurnosTest extends SpringTest {
 	public void puedoCancelarTurnoSinModificarFechaNiMedico(){
 		// preparacion
 		long idTurno=1l;
-		long idMedico=1L;
+		long idMedico=2L;
 		Calendar calendario = new GregorianCalendar(2022,06,06);
 
 		Turno turno = CuandoCargoUnTurnoAUnUsuario(idTurno, idMedico,calendario);
@@ -146,13 +146,11 @@ public class RepositorioTurnosTest extends SpringTest {
 		//comparacion
 		entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(turno.getId(), idMedico,calendario);
 	}
-
 	private void entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(long idTurno, long idMedico, Calendar calendario) {
 		Turno turnobuscado= repositorioTurnos.buscarTurnoPorId(idTurno);
 		System.out.println("\n******************TURNO BUSCADO : " + turnobuscado+"**************************************\n");
 		assertThat(turnobuscado.getFechaTurno()).isEqualTo(calendario);
 		assertThat(turnobuscado.getMedico().getId()).isEqualTo(idMedico);
-
 		assertThat(turnobuscado.getEstado()).isFalse();
 		assertThat(turnobuscado.getMascota()).isNull();
 		assertThat(turnobuscado.getUsuario()).isNull();
