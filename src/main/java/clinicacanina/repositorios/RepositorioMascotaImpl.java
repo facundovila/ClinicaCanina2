@@ -82,7 +82,6 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
         mascota.setEdad(edad);
         mascota.setPeso(peso);
         mascota.setNombre(nombre);
-
         sessionFactory.getCurrentSession().update(mascota);
 
         return mascota;

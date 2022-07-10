@@ -3,7 +3,9 @@ package clinicacanina.servicios;
 import java.util.Calendar;
 import java.util.List;
 
+import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Turno;
+import clinicacanina.modelo.Usuario;
 
 public interface ServicioTurnos {
 

@@ -16,17 +16,6 @@ public class Usuario {
     private String rol;
     private Boolean activo = false;
 
-    @ManyToOne
-    @JoinColumn(name = "mascota_id")
-    private Mascota mascota;
-
-    public Mascota getMascota() {
-        return mascota;
-    }
-
-    public void setMascota(Mascota mascota) {
-        this.mascota = mascota;
-    }
 
     public Long getId() {
         return id;

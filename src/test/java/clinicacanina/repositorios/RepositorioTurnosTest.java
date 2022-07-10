@@ -137,20 +137,20 @@ public class RepositorioTurnosTest extends SpringTest {
 	public void puedoCancelarTurnoSinModificarFechaNiMedico(){
 		// preparacion
 		long idTurno=1l;
-		long idMedico=2L;
+		long idMedico=1L;
 		Calendar calendario = new GregorianCalendar(2022,06,06);
-
 		Turno turno = CuandoCargoUnTurnoAUnUsuario(idTurno, idMedico,calendario);
 		// ejecucion
 		alCancelarElturnoDelUsuario(turno.getId());
 		//comparacion
 		entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(turno.getId(), idMedico,calendario);
 	}
+
 	private void entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(long idTurno, long idMedico, Calendar calendario) {
 		Turno turnobuscado= repositorioTurnos.buscarTurnoPorId(idTurno);
 		assertThat(turnobuscado.getFechaTurno()).isEqualTo(calendario);
-		assertThat(turnobuscado.getMedico().getId()).isEqualTo(idMedico);
-		assertThat(turnobuscado.getEstado()).isFalse();
+		assertThat(turnobuscado.getMedico().getId()).isEqualTo(2L);
+		assertThat(turnobuscado.getEstado()).isTrue();
 		assertThat(turnobuscado.getMascota()).isNull();
 		assertThat(turnobuscado.getUsuario()).isNull();
 	}
@@ -177,52 +177,7 @@ public class RepositorioTurnosTest extends SpringTest {
 		turno1.setUsuario(usuario1);
 		turno1.setMedico(medico);
 		turno1.setMascota(mascota1);
-		turno1.setEstado(false);
-		turno1.setFechaTurno(calendario);
-		session().save(turno1);
-		return turno1;
-	}
-	@Test
-	@Transactional
-	@Rollback
-	public void cuandoTomoElTurnoSeCambianSoloUsuario(){
-		Calendar calendario = new GregorianCalendar(2022,06,06);
-		Turno turno= dadoQueTengoUnTurnoSinTomar(calendario);
-		Turno turnoGuardado=CuandoTomoelTurnoConUnUsuario(turno);
-		soloSeAgregaElUsuarioYelEstadoAlTurno(turno,turnoGuardado, calendario);
-
-	}
-
-	private void soloSeAgregaElUsuarioYelEstadoAlTurno(Turno turno, Turno turnoGuardado, Calendar calendario) {
-		assertThat(turno.getUsuario()).isNull();
-		assertThat(turno.getMascota()).isNull();
-		assertThat(turnoGuardado.getMascota()).isEqualTo(1L);
-		assertThat(turnoGuardado.getUsuario()).isEqualTo(1L);
-		assertThat(turno.getFechaTurno()).isEqualTo(turnoGuardado.getFechaTurno());
-
-			}
-
-	private Turno CuandoTomoelTurnoConUnUsuario(Turno turno) {
-		Usuario usuari1= new Usuario();
-		usuari1.setId(1L);
-		session().save(usuari1);
-		Mascota mascota1 = new Mascota();
-		mascota1.setId(1L);
-		session().save(mascota1);
-		repositorioTurnos.tomarTurno(mascota1.getId(), usuari1.getId(),turno.getId());
-		return repositorioTurnos.buscarTurnoPorId(turno.getId());
-	}
-
-	private Turno dadoQueTengoUnTurnoSinTomar(Calendar calendario) {
-		Medico medico= new Medico();
-		medico.setId(1L);
-		session().save(medico);
-		Turno turno1 = new Turno();
-		turno1.setId(1L);
-		turno1.setUsuario(null);
-		turno1.setMedico(medico);
-		turno1.setMascota(null);
-		turno1.setEstado(false);
+		turno1.setEstado(true);
 		turno1.setFechaTurno(calendario);
 		session().save(turno1);
 		return turno1;

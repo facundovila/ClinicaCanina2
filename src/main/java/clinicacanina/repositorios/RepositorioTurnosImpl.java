@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Usuario;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +74,7 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 	@Override
 	public Boolean cancelarTurnoPorId(Long id) {
 		Turno turnoNuevo= buscarTurnoPorId(id);
-		turnoNuevo.setEstado(false);
+		turnoNuevo.setEstado(true);
 		turnoNuevo.setUsuario(null);
 		turnoNuevo.setMascota(null);
 		sessionFactory.getCurrentSession().update(turnoNuevo);
@@ -95,12 +97,13 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 	}
 
 	@Override
-	public boolean tomarTurno(long idMascota, long idUsuario, long idTurno) {
-		Turno turnoNuevo= buscarTurnoPorId(idTurno);
-		turnoNuevo.setEstado(true);
-		turnoNuevo.setUsuario();
-		sessionFactory.getCurrentSession().update(turnoNuevo);
-		return turnoNuevo.getEstado();
+	public boolean tomarTurno(Mascota idMascota, Usuario idUsuario, long idTurno) {
+		Turno tomarTurno= buscarTurnoPorId(idTurno);
+		tomarTurno.setEstado(false);
+		tomarTurno.setUsuario(idUsuario);
+		tomarTurno.setMascota(idMascota);
+		sessionFactory.getCurrentSession().update(tomarTurno);
+		return tomarTurno.getEstado();
 	}
 
 }

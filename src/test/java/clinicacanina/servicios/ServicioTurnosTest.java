@@ -6,6 +6,9 @@ import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 //import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Usuario;
+import clinicacanina.repositorios.RepositorioUsuario;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,15 +28,22 @@ public class ServicioTurnosTest {
 	private ServicioTurnos servicioTurnos;
 	Calendar calendar;
 	private ServicioFechaYhora servicioFechaYhora;
+	private ServicioLogin servicioLogin;
+	private RepositorioUsuario repositorioUsuario;
+	private ServicioMascota servicioMascota;
+
 
 	
 	@Before
 	public void init() {
-		//mockStatic(Calendar.class);
+
 		calendar= Mockito.mock(Calendar.class);
 		servicioFechaYhora=mock(ServicioFechaYhora.class);
+		servicioMascota=mock(ServicioMascota.class);
 		repositorioTurnos = mock(RepositorioTurnos.class);
-		servicioTurnos = new ServicioTurnosImpl(repositorioTurnos);
+		repositorioUsuario= mock(RepositorioUsuario.class);
+		servicioLogin= new ServicioLoginImpl(repositorioUsuario);
+		servicioTurnos = new ServicioTurnosImpl(repositorioTurnos,servicioLogin,repositorioUsuario,servicioMascota);
 
 	}
 	@Test
@@ -149,18 +159,21 @@ public class ServicioTurnosTest {
 	@Test
 	public void puedoTomarUnTurno(){
 		// preparacion
-		long idUsuario=1L;
 		long idTurno=1L;
-		long idMascota=1L;
-		when(repositorioTurnos.tomarTurno(idMascota,idUsuario,idTurno)).thenReturn(true);
+		Usuario usuario= new Usuario();
+		usuario.setId(1L);
+		Mascota mascota=new Mascota();
+		mascota.setId(1L);
+		mascota.setUsuario(usuario);
+		when(servicioLogin.consultarUsuarioPorID(1L)).thenReturn(usuario);
+		when(servicioMascota.buscarMascotaPorId(1l)).thenReturn(mascota);
+		when(repositorioTurnos.tomarTurno(mascota,usuario,idTurno)).thenReturn(true);
 		// ejecucion
-		boolean estado= servicioTurnos.tomarTurno(idMascota,idUsuario,idTurno);
+		boolean estado= servicioTurnos.tomarTurno(1L,1L,idTurno);
 		//validacion
 		assertThat(estado).isTrue();
 
 	}
-
-
 
 	/*@Test
 	public void ElTurnoSoloSePuedeCancelarHastaSeisHorasDeAnticipacion(){

@@ -9,6 +9,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import clinicacanina.servicios.ServicioLogin;
+import clinicacanina.servicios.ServicioMascota;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
@@ -26,6 +28,8 @@ public class ControladorTurnosTest {
 	private HttpSession session;
 	private HttpServletRequest requestNull;
 	private HttpSession sessionNull;
+	private ServicioLogin servicioLogin;
+
 	
 	
 	@Before
@@ -35,7 +39,8 @@ public class ControladorTurnosTest {
 		sessionNull = mock(HttpSession.class);
 		requestNull = mock(HttpServletRequest.class);
         servicioTurnos= mock(ServicioTurnos.class);
-        controladorTurnos= new ControladorTurnos(servicioTurnos);
+		servicioLogin=mock(ServicioLogin.class);
+        controladorTurnos= new ControladorTurnos(servicioTurnos,servicioLogin);
 
 		when(request.getSession()).thenReturn(session);
 		when(request.getSession().getAttribute("userId")).thenReturn(1L);

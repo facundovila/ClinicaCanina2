@@ -6,6 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import clinicacanina.modelo.DatosSolicitarTurno;
+import clinicacanina.modelo.Mascota;
+import clinicacanina.servicios.ServicioLogin;
+import clinicacanina.servicios.ServicioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,10 +25,12 @@ import clinicacanina.servicios.ServicioTurnos;
 public class ControladorTurnos {
 
 	private ServicioTurnos servicioTurnos;
+	private ServicioLogin servicioLogin;
 
 	@Autowired
-	public ControladorTurnos(ServicioTurnos servicioTurnos) {
+	public ControladorTurnos(ServicioTurnos servicioTurnos,ServicioLogin servicioLogin) {
 		this.servicioTurnos = servicioTurnos;
+		this.servicioLogin=servicioLogin;
 	}
 
 
@@ -68,8 +73,12 @@ public class ControladorTurnos {
 		}
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 		List<Turno> turnos= servicioTurnos.buscarTurnoPorFechaDeHoy();
+		List<Mascota> mascotas= servicioLogin.listarMascotas((long)request.getSession().getAttribute("userId"));
+		mapa.put("listaMascotas",mascotas);
+
 		if(turnos.size()==0){
-			mapa.put("mensaje","Sin Turnos Disponibles");
+
+			mapa.put("mensaje","Sin Turnos disponibles para la fecha. Turnos mas Proximos");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);
 		}
 		mapa.put("listaTurnosDisponibles", turnos );
@@ -94,8 +103,7 @@ public class ControladorTurnos {
 
 }*/
 	@RequestMapping(path = "/tomarTurno/{idTurno}/{idMascota}", method = RequestMethod.POST)
-	public ModelAndView tomarTurno(HttpServletRequest request, @PathVariable("idTurno") long idTurno,@PathVariable("idTurno") long idMascota) {
-
+	public ModelAndView tomarTurno(HttpServletRequest request, @PathVariable("idTurno") long idTurno,@PathVariable("idMascota") long idMascota) {
 		ModelMap mapa = new ModelMap();
 		if (request.getSession().getAttribute("userId") == null) {
 			return new ModelAndView("redirect:/login");

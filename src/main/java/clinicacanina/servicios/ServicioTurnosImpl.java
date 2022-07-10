@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Usuario;
+import clinicacanina.repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +24,22 @@ import static java.util.Calendar.YEAR;
 public class ServicioTurnosImpl implements ServicioTurnos {
 	
 	private RepositorioTurnos repositorioTurnos;
+	private RepositorioUsuario repositorioUsuario;
+	private ServicioLogin servicioLogin;
+	private ServicioMascota servicioMascota;
+
 
 
     @Autowired
-    public ServicioTurnosImpl(RepositorioTurnos repositorioTurnos){
-
-		this.setRepositorioTurnos(repositorioTurnos);
+    public ServicioTurnosImpl(RepositorioTurnos repositorioTurnos,ServicioLogin servicioLogin,RepositorioUsuario repositorioUsuario,ServicioMascota servicioMascota){
+		this.servicioMascota=servicioMascota;
+		this.repositorioUsuario=repositorioUsuario;
+			this.servicioLogin=servicioLogin;
+			this.setRepositorioTurnos(repositorioTurnos);
     }
 
 	@Override
 	public List<Turno> buscarTurno(String fecha) {
-
 		return repositorioTurnos.mostrarTurnoDisponible(fecha);
 
 	}
@@ -83,9 +91,11 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 	@Override
 	public boolean tomarTurno(long idMascota, long idUsuario, long idTurno) {
-	return repositorioTurnos.tomarTurno(idMascota, idUsuario,idTurno);
+		Usuario u= servicioLogin.consultarUsuarioPorID(idUsuario);
+		Mascota m= servicioMascota.buscarMascotaPorId(idMascota);
+		boolean estado=repositorioTurnos.tomarTurno(m, u,idTurno);
+		return estado;
 	}
-
 	@Override
 	public Turno buscarTurnoPorId(Long id) {
 		return repositorioTurnos.buscarTurnoPorId(id);
