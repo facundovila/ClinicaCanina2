@@ -18,7 +18,34 @@ public class Navegador {
 	private String localidadOrigen;
 	private String localidadDestino;
 	private String distancia;
-	private String tiempo;
+	private String tiempoEstimado;
+	private String tiempoRestante;
+	private String horarioDeLlegada;
+	private String horarioDeSolicitud;
+	public String getHorarioDeSolicitud() {
+		return horarioDeSolicitud;
+	}
+	public void setHorarioDeSolicitud(String horarioDeSolicitud) {
+		this.horarioDeSolicitud = horarioDeSolicitud;
+	}
+	public String getHorarioDeLlegada() {
+		return horarioDeLlegada;
+	}
+	public void setHorarioDeLlegada(String horarioDeLlegada) {
+		this.horarioDeLlegada = horarioDeLlegada;
+	}
+	public String getTiempoEstimado() {
+		return tiempoEstimado;
+	}
+	public void setTiempoEstimado(String tiempoEstimado) {
+		this.tiempoEstimado = tiempoEstimado;
+	}
+	public String getTiempoRestante() {
+		return tiempoRestante;
+	}
+	public void setTiempoRestante(String tiempoRestante) {
+		this.tiempoRestante = tiempoRestante;
+	}
 	@OneToOne
 	 @JoinColumn(name = "reserva_id")
 	private ReservaDeAmbulancia reserva;
@@ -47,12 +74,7 @@ public class Navegador {
 	public void setDistancia(String distancia) {
 		this.distancia = distancia;
 	}
-	public String getTiempo() {
-		return tiempo;
-	}
-	public void setTiempo(String tiempo) {
-		this.tiempo = tiempo;
-	}
+	
 	public ReservaDeAmbulancia getReserva() {
 		return reserva;
 	}

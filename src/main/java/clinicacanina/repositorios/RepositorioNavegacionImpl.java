@@ -36,4 +36,10 @@ public class RepositorioNavegacionImpl implements RepositorioNavegacion{
 		
 	}
 
+	@Override
+	public void actualizarNavegacion(Navegador navegador) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(navegador);
+	}
+
 }

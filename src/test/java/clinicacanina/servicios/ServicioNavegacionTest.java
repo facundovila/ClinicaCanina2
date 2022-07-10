@@ -25,7 +25,7 @@ public class ServicioNavegacionTest {
 	//el valor es variable ya que la hora es dinamica, de no setearse en funcion de lo especificado
 	//con anterioridad, el test queSePuedaCalcularElHorarioEstimadoDeLlegadaDeLaAmabulancia()
 	//fallara.
-	private final String MINUTOS_ESTIMADOS = "16";
+	private final String MINUTOS_ESTIMADOS = "50";
 
 	@Before
 	public void init() {
@@ -42,14 +42,11 @@ public class ServicioNavegacionTest {
 		assertThat(horarioActual.getHour()).isEqualTo(AHORA.getHour());
 		assertThat(horarioActual.getMinute()).isEqualTo(AHORA.getMinute());
 		assertThat(horarioActual.getSecond()).isEqualTo(AHORA.getSecond());
+		System.out.println("Anio : " +horarioActual.getYear());
+		System.out.println("Mes : " + horarioActual.getMonthValue());
+        System.out.println("Dia : " +horarioActual.getDayOfMonth());
+        System.out.println(horarioActual.getYear() + "-"+horarioActual.getMonthValue()+"-"+horarioActual.getDayOfMonth()+" "+horarioActual.getHour()+":"+horarioActual.getMinute());
 		
-	}
-	
-	@Test
-	public void queSePuedaCalcularElHorarioEstimadoDeLlegadaDeLaAmabulancia() {
-		Integer tiempoEstimadoDeLlegada = dadoUnTiempoEstimadoDeLlegadaDeLaAmbulancia();
-		LocalDateTime horarioEstimadoDeLlegada= cuandoConsultoElHorarioEstimadoDeLlegada(tiempoEstimadoDeLlegada);
-		entoncesObtengoLoQueFaltaParaQueLlegue(horarioEstimadoDeLlegada);
 	}
 	
 	@Test
@@ -64,6 +61,25 @@ public class ServicioNavegacionTest {
 		dadoQueExisteUnaNavegacion();
 		Navegador navegador = cuandoBuscoUnaNavegacion("ABC123");
 		entoncesObtengoUnObjetoNavegador(navegador);
+	}
+	
+	@Test
+	public void queSePuedaCalcularElHorarioEstimadoDeLlegadaDeLaAmabulancia() {
+		String patente = "ABC123";
+		dadoQueExisteUnaNavegacion();
+		LocalDateTime horarioDeLlegada = cuandoConsultoElHorarioEstimadoDeLlegada(patente);
+		entoncesObtengoElHorarioDeArrivo(horarioDeLlegada);
+	}
+	
+	
+	private void entoncesObtengoElHorarioDeArrivo(LocalDateTime horarioDeLlegada) {
+		System.out.println(horarioDeLlegada);
+		assertThat(horarioDeLlegada).isNotNull();
+		
+	}
+
+	private LocalDateTime cuandoConsultoElHorarioEstimadoDeLlegada(String patente) {
+		return servicioNavegacion.calcularHorarioDeLlegada(patente);
 	}
 
 	private void entoncesObtengoUnObjetoNavegador(Navegador navegador) {
@@ -93,7 +109,7 @@ public class ServicioNavegacionTest {
 		trayecto.setLocalidadOrigen(navegador.getLocalidadOrigen());
 		trayecto.setLocalidadDestino(navegador.getLocalidadDestino());
 		trayecto.setDistancia(navegador.getDistancia());
-		trayecto.setTiempo(navegador.getTiempo());
+		trayecto.setTiempo(navegador.getTiempoEstimado());
 		return servicioNavegacion.guardarNavegacion(navegador.getReserva(), trayecto);
 	}
 
@@ -107,24 +123,6 @@ public class ServicioNavegacionTest {
 		
 	}
 
-	private void entoncesObtengoLoQueFaltaParaQueLlegue(LocalDateTime horarioEstimadoDeLlegada) {
-		System.out.println("Horario estimado de Llegada :" + horarioEstimadoDeLlegada);
-		String minutosEstimados = "Restan :" + horarioEstimadoDeLlegada.getMinute() + " Minutos";
-		String minutosEstimadosEsperados = "Restan :" + MINUTOS_ESTIMADOS + " Minutos";
-		
-		assertThat(minutosEstimados).isEqualTo(minutosEstimadosEsperados);
-		
-		
-	}
-
-	private LocalDateTime cuandoConsultoElHorarioEstimadoDeLlegada(Integer tiempo) {
-		return servicioNavegacion.calcularHorarioDeLlegada(tiempo);
-		
-	}
-
-	private Integer dadoUnTiempoEstimadoDeLlegadaDeLaAmbulancia() {
-		return 10;
-	}
 
 	private Navegador crearNavegador() {
 		ReservaDeAmbulancia reserva = new ReservaDeAmbulancia();
@@ -143,14 +141,14 @@ public class ServicioNavegacionTest {
         //-------------- Datos Trayecto --------------------
         trayecto.setLocalidadOrigen("FlorencioVarela1903SanJusto");
         trayecto.setLocalidadDestino(reserva.getDireccion());
-        trayecto.setDistancia("30km");
-        trayecto.setTiempo("45min");
+        trayecto.setDistancia("30 km");
+        trayecto.setTiempo("45 min");
         //-------------- Datos Navegador -------------------
         navegador.setReserva(reserva);
         navegador.setLocalidadOrigen(trayecto.getLocalidadOrigen());
         navegador.setLocalidadDestino(trayecto.getLocalidadDestino());
         navegador.setDistancia(trayecto.getDistancia());
-        navegador.setTiempo(trayecto.getTiempo());
+        navegador.setTiempoEstimado(trayecto.getTiempo());
         navegador.setPatente(ambulancia.getPatente());
         
         return navegador;

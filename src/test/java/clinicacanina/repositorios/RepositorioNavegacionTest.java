@@ -62,7 +62,7 @@ public class RepositorioNavegacionTest extends SpringTest{
         navegador.setLocalidadOrigen(trayecto.getLocalidadOrigen());
         navegador.setLocalidadDestino(trayecto.getLocalidadDestino());
         navegador.setDistancia(trayecto.getDistancia());
-        navegador.setTiempo(trayecto.getTiempo());
+        navegador.setTiempoEstimado(trayecto.getTiempo());
         navegador.setPatente(ambulancia.getPatente());
         
         //------------- Guardo Entidades -----------------

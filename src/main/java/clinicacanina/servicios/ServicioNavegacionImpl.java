@@ -33,17 +33,45 @@ private RepositorioNavegacion repositorioNavegacion;
 	}
 
 	@Override
-	public LocalDateTime calcularHorarioDeLlegada(Integer tiempo) {
+	public LocalDateTime calcularHorarioDeLlegada(String patente) {
 		LocalDateTime horarioActual = obtenerHoraActual();
-		return horarioActual.plusMinutes(tiempo);
+		String horarioActualString = horarioActual.getYear() + "-"+horarioActual.getMonthValue()+"-"+horarioActual.getDayOfMonth()+" "+horarioActual.getHour()+":"+horarioActual.getMinute();
+		Navegador navegador = repositorioNavegacion.buscarNavegacion(patente);
+		String tiempoEstimado = navegador.getTiempoEstimado();
+		Integer tiempoEstimadoNumber = parseTiempoEstimadoDeLlegada(tiempoEstimado);
+		LocalDateTime horarioLlegada = sumarTiempoEstimadoAHoraActual(tiempoEstimadoNumber,horarioActual);
+		//Formato de guardado : "2022-7-10 16:11"
+		String horarioLLegadaString = horarioLlegada.getYear() + "-"+horarioLlegada.getMonthValue()+"-"+horarioLlegada.getDayOfMonth()+" "+horarioLlegada.getHour()+":"+horarioLlegada.getMinute();
+		
+		navegador.setHorarioDeLlegada(horarioLLegadaString);
+		navegador.setHorarioDeSolicitud(horarioActualString);
+		//---------Se actualizan los datos del Navegador en la BD -------------------
+		actualizarNavegacion(navegador);
+		return horarioLlegada;
+		
 		
 	}
 
-	@Override
-	public String calcularDistanciaRecorridoRestante() {
+
+	private LocalDateTime sumarTiempoEstimadoAHoraActual(Integer tiempoEstimadoNumber, LocalDateTime horarioActual) {
+		
+		LocalDateTime horarioLlegada = horarioActual.plusMinutes(tiempoEstimadoNumber);
+		return horarioLlegada;
+	}
+
+
+	private Integer parseTiempoEstimadoDeLlegada(String tiempoEstimado) {
+		char[] arrayCaracteres = tiempoEstimado.toCharArray();
+		String tiempoEstimadoString = String.valueOf(arrayCaracteres[0]) + String.valueOf(arrayCaracteres[1]);
+		Integer tiempoEstimadoNumber = Integer.parseInt(tiempoEstimadoString);
+		return tiempoEstimadoNumber;
+	}
+
+	/*@Override
+	public String calcularDistanciaRecorridoRestante(String ) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 	
 	// Nuevo metodo para guardar datos de seguimiento
 		@Override
@@ -53,7 +81,7 @@ private RepositorioNavegacion repositorioNavegacion;
 			navegador.setLocalidadOrigen(trayecto.getLocalidadOrigen());
 			navegador.setLocalidadDestino(trayecto.getLocalidadDestino());
 			navegador.setDistancia(trayecto.getDistancia());
-			navegador.setTiempo(trayecto.getTiempo());
+			navegador.setTiempoEstimado(trayecto.getTiempo());
 			//Long idNavegacion = repositorioNavegacion.guardarNavegacion(navegador);
 			
 			return navegador.getReserva().getAmbulancia().getPatente();
@@ -65,6 +93,13 @@ private RepositorioNavegacion repositorioNavegacion;
 		public Navegador buscarNavegacion(String patente) {
 			Navegador navegadorEcontrado = repositorioNavegacion.buscarNavegacion(patente);
 			return navegadorEcontrado;
+		}
+
+
+		@Override
+		public void actualizarNavegacion(Navegador navegador) {
+			repositorioNavegacion.actualizarNavegacion(navegador);
+			
 		}
 
 }
