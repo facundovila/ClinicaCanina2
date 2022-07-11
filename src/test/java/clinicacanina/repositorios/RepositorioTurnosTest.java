@@ -137,21 +137,20 @@ public class RepositorioTurnosTest extends SpringTest {
 	public void puedoCancelarTurnoSinModificarFechaNiMedico(){
 		// preparacion
 		long idTurno=1l;
-		long idMedico=1L;
+		long idMedico=2L;
 		Calendar calendario = new GregorianCalendar(2022,06,06);
 
-		CuandoCargoUnTurnoAUnUsuario(idTurno, idMedico,calendario);
+		Turno turno = CuandoCargoUnTurnoAUnUsuario(idTurno, idMedico,calendario);
 		// ejecucion
-		alCancelarElturnoDelUsuario(idTurno);
+		alCancelarElturnoDelUsuario(turno.getId());
 		//comparacion
-		entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(idTurno, idMedico,calendario);
+		entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(turno.getId(), idMedico,calendario);
 	}
-
 	private void entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(long idTurno, long idMedico, Calendar calendario) {
 		Turno turnobuscado= repositorioTurnos.buscarTurnoPorId(idTurno);
+		System.out.println("\n******************TURNO BUSCADO : " + turnobuscado+"**************************************\n");
 		assertThat(turnobuscado.getFechaTurno()).isEqualTo(calendario);
 		assertThat(turnobuscado.getMedico().getId()).isEqualTo(idMedico);
-
 		assertThat(turnobuscado.getEstado()).isFalse();
 		assertThat(turnobuscado.getMascota()).isNull();
 		assertThat(turnobuscado.getUsuario()).isNull();
@@ -161,7 +160,7 @@ public class RepositorioTurnosTest extends SpringTest {
 		repositorioTurnos.cancelarTurnoPorId(idTurno);
 	}
 
-	private void CuandoCargoUnTurnoAUnUsuario(long idTurno, long idMedico, Calendar calendario) {
+	private Turno CuandoCargoUnTurnoAUnUsuario(long idTurno, long idMedico, Calendar calendario) {
 		Usuario usuario1 = new Usuario();
 		usuario1.setId(1L);
 		session().save(usuario1);
@@ -182,6 +181,7 @@ public class RepositorioTurnosTest extends SpringTest {
 		turno1.setEstado(false);
 		turno1.setFechaTurno(calendario);
 		session().save(turno1);
+		return turno1;
 	}
 
 

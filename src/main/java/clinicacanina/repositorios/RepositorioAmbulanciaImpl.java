@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.Estado;
+import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 
 @Repository
@@ -63,5 +64,7 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 					                               .list();
 		return reservas;
 	}
+
+	
 
 }

@@ -99,7 +99,7 @@ public class ControladorAmbulancia {
 		return new ModelAndView("reservaAmbulancia", model);
 	}
 	
-	//Se agrega metodo para consultar seguiemiento.
+	//Se agrega metodo para consultar seguimiento.
 	@RequestMapping(path="/ver-seguimiento")
 	public ModelAndView verSeguimiento() {
         Ambulancia ambulancia = null;
@@ -107,7 +107,7 @@ public class ControladorAmbulancia {
         String direccion = "";
         Trayecto trayecto = null;
 		ModelMap model = new ModelMap();
-		//model.put("datosParaSeguimiento", new DatosParaSeguimiento());
+		
         if(patente == "") {
         	model.put("Error", "No se puede visualizar el seguimiento.");
         	return new ModelAndView("reservaAmbulancia", model);

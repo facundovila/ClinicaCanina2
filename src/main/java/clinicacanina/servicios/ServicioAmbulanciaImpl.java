@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ErrorDeReserva;
+import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.repositorios.RepositorioAmbulancia;
+import clinicacanina.repositorios.Trayecto;
 
 @Service @Transactional
 public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
@@ -75,6 +77,8 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		}
 		return null;
 	}
+
+	
 
   
 }

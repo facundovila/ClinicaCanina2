@@ -122,6 +122,26 @@ public class ControladorMascotaTest {
 
     }
 
+<<<<<<< HEAD
+=======
+    @Test
+    public void IrAaModificarHistoriaClinicaDeLaMascotaCuandoEstoyLogeado() {
+
+
+        when(session.getAttribute("userId")).thenReturn(1L);
+
+        Mascota mascota = dadoQueExisteMascota(historiaClinica.getNombre(), historiaClinica.getPeso(), historiaClinica.getEdad(), historiaClinica.getSintomas(), historiaClinica.getDetalleTratamientos());
+
+        mascota.setId(1L);
+
+
+        //ejecucion
+        ModelAndView mav = cuandoVoyAModificar(mascota);
+
+        //validacion
+       // entoncesEncuentroLaMascotaAModificar(mav, mascota);
+        entoncesMeLlevaALaVista("modificarMascota", mav.getViewName());
+>>>>>>> f8af1f536f83a534ef32f106d5ed362e24fb0059
 
 
     @Test
