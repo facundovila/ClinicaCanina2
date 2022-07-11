@@ -19,18 +19,10 @@ public class Mascota {
    //@Size(min = 3, message = "nombre invalido")
     private String nombre;
 
-
-
     private Integer peso;
-
 
     private Integer edad;
 
-
-    private String sintomas;
-
-
-    private String detalleTratamientos;
 
 
 
@@ -39,8 +31,6 @@ public class Mascota {
         this.nombre = historiaClinica.getNombre();
         this.peso = historiaClinica.getPeso();
         this.edad = historiaClinica.getEdad();
-        this.sintomas = historiaClinica.getSintomas();
-        this.detalleTratamientos = historiaClinica.getDetalleTratamientos();
     }
 
 
@@ -79,16 +69,6 @@ public class Mascota {
     public void setPeso(Integer peso) {
         this.peso = peso;
     }
-
-    public String getSintomas() {return sintomas;}
-
-    public Object setSintomas(String medicamentos) {this.sintomas = medicamentos;
-        return null;
-    }
-
-    public String getDetalleTratamientos() {return detalleTratamientos;}
-
-    public void setDetalleTratamientos(String detalleTratamientos) {this.detalleTratamientos = detalleTratamientos;}
 
 
 

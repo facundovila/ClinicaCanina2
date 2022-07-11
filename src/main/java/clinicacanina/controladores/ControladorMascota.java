@@ -1,6 +1,7 @@
 package clinicacanina.controladores;
 
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.VisitaClinica;
 import clinicacanina.servicios.ServicioMascota;
 import clinicacanina.servicios.ServicioMedico;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,8 +82,10 @@ public class ControladorMascota {
 
             Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(idMascota);
 
+            List<VisitaClinica> listaVisitas = servicioMascota.obtenerVisitasClinicasDeLaMascota(mascotaBuscada);
 
             model.put("mascota", mascotaBuscada);
+            model.put("visita", listaVisitas);
 
             return new ModelAndView("historiaClinica", model);
         }else{
@@ -129,7 +132,7 @@ public class ControladorMascota {
 
         if( session.getAttribute("userId") != null && mascotaBuscada!= null){
 
-       servicioMascota.modificarMascota(mascotaBuscada.getId(), mascota.getDetalleTratamientos(), mascota.getSintomas(), mascota.getEdad(), mascota.getPeso(), mascota.getNombre());
+     //  servicioMascota.modificarMascota(mascotaBuscada.getId(), mascota.getDetalleTratamientos(), mascota.getSintomas(), mascota.getEdad(), mascota.getPeso(), mascota.getNombre());
 
 
             return new ModelAndView("historiaClinica", model);

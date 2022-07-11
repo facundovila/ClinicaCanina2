@@ -2,6 +2,7 @@ package clinicacanina.servicios;
 
 import clinicacanina.controladores.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.VisitaClinica;
 
 import java.util.List;
 
@@ -20,4 +21,9 @@ public interface ServicioMascota {
      List<Mascota> listarMascotas();
 
      Mascota modificarMascota(Long id, String detalleTratamientos, String detalleTratamientoCambiado, Integer edad, Integer peso, String nombre);
+
+     Long guardarVisitaMedicaDeMascota(Long idMascota, VisitaClinica visitaClinica);
+
+     List<VisitaClinica> obtenerVisitasClinicasDeLaMascota(Mascota mascota);
+
 }

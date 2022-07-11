@@ -1,10 +1,19 @@
 
 -- MASCOTAS
 use db;
-insert into mascota(peso, nombre, edad, sintomas, detalleTratamientos)values
-                                                                         (15, 'hachi', 40, 'resfrio', 'te con limon'),
-                                                                         (8,'firu', 8, 'gripe', 'optamox');
 
+
+insert into mascota(peso, nombre, edad)values
+                                                                         (15, 'hachi', 40 ),
+                                                                         (8,'firu', 8);
+
+
+insert into visitaclinica(sintomas,tratamiento, fecha) values ('sintomas', 'tratamientoje', '2021-10-07');
+insert into visitaclinica(sintomas,tratamiento, fecha) values ('sintomas', 'tratamiento22','2021-10-10');
+
+update visitaclinica set `mascota_id` = 1 where id =1;
+update visitaclinica set `mascota_id` = 2 where id =2;
+update visitaclinica set `fecha` = CURDATE() where id =2;
 
 
 
@@ -33,5 +42,5 @@ INSERT INTO ambulancia
    (disponible, patente)
    VALUES(true, 'ABC123'),(true, 'DEF456'),(true, 'GHI789'),(true, 'JKL012');
 
-
+select * from usuario;
 

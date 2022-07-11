@@ -3,11 +3,14 @@ package clinicacanina.repositorios;
 import clinicacanina.SpringTest;
 import clinicacanina.controladores.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.VisitaClinica;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.*;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -144,36 +147,84 @@ public class RepositorioMascotaTest extends SpringTest {
         Mascota mascota = dadoQueExisteMascotaConHistoriaClinica(historiaClinica);
 
         dadoQueGuardoMascota(mascota);
+//
+//        cuandoModificoMascota(mascota);
+//
+//        entoncesLaHistoriaClinicaCambio(mascota);
 
-        cuandoModificoMascota(mascota);
-
-        entoncesLaHistoriaClinicaCambio(mascota);
-
-
-
-
+    }
 
 
+    @Test
+    @Transactional
+    @Rollback
+    public void sePuedeAgregarVisitasAUnaMascota(){
+
+        Mascota mascota = dadoQueExisteMascota("goten", 15);
+        Long idMascota = repositorioMascota.guardar(mascota);
+
+        VisitaClinica visitaClinica= new VisitaClinica();
+
+        visitaClinica.setTratamiento("tratamientos");
+        visitaClinica.setSintomas("sintomas");
+
+        repositorioMascota.guardarVisitaMedica(idMascota, visitaClinica );
+
+        assertThat(visitaClinica.getId()).isNotNull();
 
 
     }
 
-    private void entoncesLaHistoriaClinicaCambio(Mascota mascota) {
 
-        assertThat(mascota.getSintomas()).isEqualTo("los sintomas fueron cambiados");
-        assertThat(mascota.getNombre()).isEqualTo("goten");
-        assertThat(mascota.getDetalleTratamientos()).isEqualTo("sada");
+
+    @Test
+    @Transactional
+    @Rollback
+    public void sePuedeObtenerLasVisitasMedicasDeLaMascota(){
+        Mascota mascota = dadoQueExisteMascota("goten", 15);
+        Long idMascota = repositorioMascota.guardar(mascota);
+
+        VisitaClinica visitaClinica= new VisitaClinica();
+        visitaClinica.setTratamiento("tratamientos");
+        visitaClinica.setSintomas("sintomas");
+
+        VisitaClinica visitaClinica2= new VisitaClinica();
+        visitaClinica2.setSintomas("fiebre");
+        visitaClinica2.setTratamiento("pastillas");
+
+        repositorioMascota.guardarVisitaMedica(idMascota, visitaClinica );
+        repositorioMascota.guardarVisitaMedica(idMascota, visitaClinica2 );
+
+        List<VisitaClinica> visitas = repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota);
+
+
+        assertThat(visitas).hasSize(2);
 
     }
 
-    private void cuandoModificoMascota(Mascota mascota) {
 
-        mascota.setNombre("goten");
-        mascota.setSintomas("los sintomas fueron cambiados");
-        String detalleTratamientoCambiado = "sada";
-        repositorioMascota.modificarMascota(mascota.getId(),detalleTratamientoCambiado, mascota.getSintomas(),  mascota.getPeso(), mascota.getEdad(), mascota.getNombre());
 
-    }
+
+
+
+
+
+//    private void entoncesLaHistoriaClinicaCambio(Mascota mascota) {
+//
+//        assertThat(mascota.getSintomas()).isEqualTo("los sintomas fueron cambiados");
+//        assertThat(mascota.getNombre()).isEqualTo("goten");
+//        assertThat(mascota.getDetalleTratamientos()).isEqualTo("sada");
+//
+//    }
+//
+//    private void cuandoModificoMascota(Mascota mascota) {
+//
+//        mascota.setNombre("goten");
+//        mascota.setSintomas("los sintomas fueron cambiados");
+//        String detalleTratamientoCambiado = "sada";
+//        repositorioMascota.modificarMascota(mascota.getId(),detalleTratamientoCambiado, mascota.getSintomas(),  mascota.getPeso(), mascota.getEdad(), mascota.getNombre());
+//
+//    }
 
 
     private void entoncesEncuentroTodasLasMascota(List<Mascota> todasLasMascotas, Integer cantidadEsperada) {
@@ -213,10 +264,11 @@ public class RepositorioMascotaTest extends SpringTest {
     }
 
     private Long cuandoGuardoMascota(Mascota mascota) {
-       // repositorioMascota.guardar(mascota);
+
+            return repositorioMascota.guardar(mascota);
         // no tendria que llamar al repo para preguntarle cual es el id?
         // return mascota.getId();
-        return repositorioMascota.guardarYRegresarID(mascota);
+       // return repositorioMascota.guardarYRegresarID(mascota);
     }
 
     private Mascota dadoQueExisteMascota(String nombre, int peso) {
