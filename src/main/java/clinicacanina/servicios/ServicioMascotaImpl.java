@@ -67,15 +67,13 @@ public class ServicioMascotaImpl implements ServicioMascota {
     }
 
     @Override
-    public Mascota modificarMascota(Long id, String detalleTratamientos, String sintomas, Integer edad, Integer peso, String nombre) {
+    public Mascota modificarMascota(Long id, Integer edad, Float peso) {
 
         Mascota mascotaAModificar = buscarMascotaPorId(id);
 
-
-
         if(mascotaAModificar.getId() != null){
 
-           Mascota mascotaModificada = repositorioMascota.modificarMascota( id, detalleTratamientos, sintomas, peso, edad, nombre);
+           Mascota mascotaModificada = repositorioMascota.modificarMascota( id, peso, edad);
 
             return mascotaModificada;
 

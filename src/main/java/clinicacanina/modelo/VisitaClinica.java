@@ -2,6 +2,7 @@ package clinicacanina.modelo;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 
 @Entity
@@ -13,7 +14,12 @@ public class VisitaClinica {
     private String sintomas;
     private String tratamiento;
 
-    private Date fecha;
+
+
+    private Integer edad;
+    private Float peso;
+
+    private final LocalDate fechaActual = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name ="mascota_id")
@@ -28,7 +34,9 @@ public class VisitaClinica {
         this.mascotaAsignada = mascotaAsignada;
     }
 
-
+    public LocalDate getFechaActual() {
+        return fechaActual;
+    }
 
 
     public String getSintomas() {
@@ -47,15 +55,14 @@ public class VisitaClinica {
         this.tratamiento = tratamiento;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
+    public Integer getEdad() {return edad;}
 
+    public void setEdad(Integer edad) {this.edad = edad;}
 
+    public Float getPeso() {return peso;}
+
+    public void setPeso(Float peso) {this.peso = peso;}
 
     public Long getId() {
         return id;

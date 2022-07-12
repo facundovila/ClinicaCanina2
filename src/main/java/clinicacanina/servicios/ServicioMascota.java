@@ -20,10 +20,11 @@ public interface ServicioMascota {
 
      List<Mascota> listarMascotas();
 
-     Mascota modificarMascota(Long id, String detalleTratamientos, String detalleTratamientoCambiado, Integer edad, Integer peso, String nombre);
+     Mascota modificarMascota(Long id, Integer edad, Float peso);
 
      Long guardarVisitaMedicaDeMascota(Long idMascota, VisitaClinica visitaClinica);
 
      List<VisitaClinica> obtenerVisitasClinicasDeLaMascota(Mascota mascota);
+
 
 }

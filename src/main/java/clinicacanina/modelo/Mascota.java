@@ -19,9 +19,10 @@ public class Mascota {
    //@Size(min = 3, message = "nombre invalido")
     private String nombre;
 
-    private Integer peso;
+    private Float peso;
 
     private Integer edad;
+
 
 
 
@@ -62,11 +63,11 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public Integer getPeso() {
+    public Float getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Float peso) {
         this.peso = peso;
     }
 

@@ -44,7 +44,7 @@
                     <tbody>
                         <c:forEach items="${visita}" var="visita">
                     <tr>
-                        <td class="text-center" >${visita.fecha}</td>
+                        <td class="text-center" >${visita.fechaActual}</td>
                         <td class="text-center">${visita.sintomas}</td>
                         <td class="text-center">${visita.tratamiento}</td>
 
@@ -62,7 +62,7 @@
         </div>
          <div>
              <p>
-                 <a href="modificar-mascota?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
+                 <a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
              </p>
          </div>
         </article>

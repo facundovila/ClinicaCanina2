@@ -70,8 +70,9 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		if(reservasAmbulancias.isEmpty()) {
 			throw new ErrorDeReserva();
 		}
-		for(ReservaDeAmbulancia reserva : reservasAmbulancias ) {
-			if(reserva.getAmbulancia().getPatente().equals(ambulancia.getPatente())) {
+		for (int i = 0; i < reservasAmbulancias.size(); i++) {
+			ReservaDeAmbulancia reserva = reservasAmbulancias.get(i);
+			if (reserva.getAmbulancia().getPatente().equals(ambulancia.getPatente())) {
 				return reserva;
 			}
 		}

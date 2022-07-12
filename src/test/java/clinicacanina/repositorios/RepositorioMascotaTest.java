@@ -29,9 +29,9 @@ public class RepositorioMascotaTest extends SpringTest {
     public void puedoBuscarMascotaPorId() {
 
         //preparacion
-        Mascota mascota1 = dadoQueExisteMascota("goten", 15);
-        Mascota mascota2 = dadoQueExisteMascota("firu", 20);
-        Mascota mascota3 = dadoQueExisteMascota("firu", 17);
+        Mascota mascota1 = dadoQueExisteMascota("goten", 15F);
+        Mascota mascota2 = dadoQueExisteMascota("firu", 20F);
+        Mascota mascota3 = dadoQueExisteMascota("firu", 17.5F);
 
         dadoQueGuardoMascota(mascota1);
         dadoQueGuardoMascota(mascota2);
@@ -55,7 +55,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Rollback
     public void guardarUnaMascotaDeberiaPersistirla() {
         //preparacion
-        Mascota mascota = dadoQueExisteMascota("goten", 15);
+        Mascota mascota = dadoQueExisteMascota("goten", 15F);
         //ejecucion
         Long idMascota = cuandoGuardoMascota(mascota);
         //validacion
@@ -68,9 +68,9 @@ public class RepositorioMascotaTest extends SpringTest {
     @Rollback
     public void puedoBuscarMascotaPorNombre() {
         //preparacion
-        Mascota mascota1 = dadoQueExisteMascota("goten", 15);
-        Mascota mascota2 = dadoQueExisteMascota("firu", 20);
-        Mascota mascota3 = dadoQueExisteMascota("firu", 17);
+        Mascota mascota1 = dadoQueExisteMascota("goten", 15F);
+        Mascota mascota2 = dadoQueExisteMascota("firu", 20F);
+        Mascota mascota3 = dadoQueExisteMascota("firu", 17F);
 
         dadoQueGuardoMascota(mascota1);
         dadoQueGuardoMascota(mascota2);
@@ -85,29 +85,14 @@ public class RepositorioMascotaTest extends SpringTest {
         entoncesEncuentroLaMascotaConNombre(mascotasBuscadas, cantidadEsperada);
     }
 
-
-
-    private void entoncesEncuentroLaMascotaporId(Long idMascotaBuscada, Long id) {
-
-        assertThat(idMascotaBuscada).isEqualTo(id);
-
-    }
-
-    private Mascota CuandoBuscoMascotaPorid(Long id) {
-
-        return repositorioMascota.buscarPorId(id );
-    }
-
-
-
     @Test
     @Transactional
     @Rollback
     public void sePuedenBuscarTodasLasMascotas() {
         //preparacion
-        Mascota mascota1 = dadoQueExisteMascota("goten", 15);
-        Mascota mascota2 = dadoQueExisteMascota("firu", 20);
-        Mascota mascota3 = dadoQueExisteMascota("firu", 17);
+        Mascota mascota1 = dadoQueExisteMascota("goten", 15F);
+        Mascota mascota2 = dadoQueExisteMascota("firu", 20F);
+        Mascota mascota3 = dadoQueExisteMascota("firu", 17F);
 
         dadoQueGuardoMascota(mascota1);
         dadoQueGuardoMascota(mascota2);
@@ -123,36 +108,33 @@ public class RepositorioMascotaTest extends SpringTest {
 
     }
 
+
     @Test
     @Transactional
     @Rollback
     public void sePuedeModificarUnaMascota(){
 
         String nombre = "lupe";
-        Integer peso = 10;
+        Float peso = 10F;
         Integer edad=10;
-        String sintomas = "tratamiento";
-        String detalle="detalle";
 
         HistoriaClinica historiaClinica = new HistoriaClinica();
 
         historiaClinica.setEdad(edad);
         historiaClinica.setPeso(peso);
         historiaClinica.setNombre(nombre);
-        historiaClinica.setSintomas(sintomas);
-        historiaClinica.setDetalleTratamientos(detalle);
-
 
 
         Mascota mascota = dadoQueExisteMascotaConHistoriaClinica(historiaClinica);
 
         dadoQueGuardoMascota(mascota);
-//
-//        cuandoModificoMascota(mascota);
-//
-//        entoncesLaHistoriaClinicaCambio(mascota);
+
+        cuandoModificoMascota(mascota);
+
+        entoncesCambioLa(mascota);
 
     }
+
 
 
     @Test
@@ -160,7 +142,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Rollback
     public void sePuedeAgregarVisitasAUnaMascota(){
 
-        Mascota mascota = dadoQueExisteMascota("goten", 15);
+        Mascota mascota = dadoQueExisteMascota("goten", 15F);
         Long idMascota = repositorioMascota.guardar(mascota);
 
         VisitaClinica visitaClinica= new VisitaClinica();
@@ -181,7 +163,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Transactional
     @Rollback
     public void sePuedeObtenerLasVisitasMedicasDeLaMascota(){
-        Mascota mascota = dadoQueExisteMascota("goten", 15);
+        Mascota mascota = dadoQueExisteMascota("goten", 15F);
         Long idMascota = repositorioMascota.guardar(mascota);
 
         VisitaClinica visitaClinica= new VisitaClinica();
@@ -203,28 +185,32 @@ public class RepositorioMascotaTest extends SpringTest {
     }
 
 
+    private void entoncesCambioLa(Mascota mascota) {
+
+        assertThat(mascota.getEdad()).isEqualTo(15);
+
+    }
+
+    private void cuandoModificoMascota(Mascota mascota) {
+
+        mascota.setEdad(15);
+
+        repositorioMascota.modificarMascota(mascota.getId(), mascota.getPeso(), mascota.getEdad());
+
+    }
+
+    private void entoncesEncuentroLaMascotaporId(Long idMascotaBuscada, Long id) {
+
+        assertThat(idMascotaBuscada).isEqualTo(id);
+
+    }
+
+    private Mascota CuandoBuscoMascotaPorid(Long id) {
+
+        return repositorioMascota.buscarPorId(id );
+    }
 
 
-
-
-
-
-//    private void entoncesLaHistoriaClinicaCambio(Mascota mascota) {
-//
-//        assertThat(mascota.getSintomas()).isEqualTo("los sintomas fueron cambiados");
-//        assertThat(mascota.getNombre()).isEqualTo("goten");
-//        assertThat(mascota.getDetalleTratamientos()).isEqualTo("sada");
-//
-//    }
-//
-//    private void cuandoModificoMascota(Mascota mascota) {
-//
-//        mascota.setNombre("goten");
-//        mascota.setSintomas("los sintomas fueron cambiados");
-//        String detalleTratamientoCambiado = "sada";
-//        repositorioMascota.modificarMascota(mascota.getId(),detalleTratamientoCambiado, mascota.getSintomas(),  mascota.getPeso(), mascota.getEdad(), mascota.getNombre());
-//
-//    }
 
 
     private void entoncesEncuentroTodasLasMascota(List<Mascota> todasLasMascotas, Integer cantidadEsperada) {
@@ -254,19 +240,17 @@ public class RepositorioMascotaTest extends SpringTest {
 
 
     private void entoncesEncuentroLaMascota(Long idMascota) {
-        Mascota mascota = repositorioMascota.buscarPorId(idMascota);
-       // assertThat(mascota.getNombre()).isEqualTo("goten");
+        repositorioMascota.buscarPorId(idMascota);
+
     }
 
     private Long cuandoGuardoMascota(Mascota mascota) {
 
             return repositorioMascota.guardar(mascota);
-        // no tendria que llamar al repo para preguntarle cual es el id?
-        // return mascota.getId();
-       // return repositorioMascota.guardarYRegresarID(mascota);
+
     }
 
-    private Mascota dadoQueExisteMascota(String nombre, int peso) {
+    private Mascota dadoQueExisteMascota(String nombre, Float peso) {
         Mascota mascota = new Mascota();
         mascota.setNombre(nombre);
         mascota.setPeso(peso);

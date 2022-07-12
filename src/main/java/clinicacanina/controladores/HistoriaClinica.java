@@ -4,16 +4,16 @@ package clinicacanina.controladores;
 public class HistoriaClinica {
 
     private String nombre;
-    private Integer peso;
+    private Float peso;
     private Integer edad;
     private String sintomas;
     private String detalleTratamientos;
 
 
 
-    public Integer getPeso() { return peso; }
+    public Float getPeso() { return peso; }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Float peso) {
         this.peso = peso;
     }
 
