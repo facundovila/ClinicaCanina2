@@ -80,7 +80,7 @@ public class ServicioNavegacionTest {
 		Integer minutosEstimados = 45;
 		Integer diferencia = minutosEstimados - minutosActuales;
 		String diferenciaString = String.valueOf(diferencia);
-		
+		System.out.println("Tiempo Restante : " + tiempoRestante);
 		assertThat(tiempoRestante).isEqualTo(diferenciaString);
 		
 	}
@@ -97,7 +97,7 @@ public class ServicioNavegacionTest {
 	}
 
 	private void entoncesObtengoElHorarioDeArrivo(LocalDateTime horarioDeLlegada) {
-		System.out.println(horarioDeLlegada);
+		System.out.println("Horario de llegada : " + horarioDeLlegada);
 		assertThat(horarioDeLlegada).isNotNull();
 		
 	}
@@ -118,7 +118,9 @@ public class ServicioNavegacionTest {
 	}
 
 	private void dadoQueExisteUnaNavegacion() {
-		when(repositorioNavegacion.buscarNavegacion("ABC123")).thenReturn(crearNavegador());
+		Navegador navegador = crearNavegador();
+		navegador.setHorarioDeSolicitud("2022-07-10 19:00");
+		when(repositorioNavegacion.buscarNavegacion("ABC123")).thenReturn(navegador);
 		
 	}
 

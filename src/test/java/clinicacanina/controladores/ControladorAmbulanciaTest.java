@@ -15,6 +15,7 @@ import clinicacanina.modelo.ErrorDeReserva;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.servicios.ServicioAmbulancia;
 import clinicacanina.servicios.ServicioGoogleDistanceMatrixAPI;
+import clinicacanina.servicios.ServicioNavegacion;
 import clinicacanina.servicios.ServicioValidacionDatos;
 
 import static org.assertj.core.api.Assertions.*;
@@ -33,15 +34,17 @@ public class ControladorAmbulanciaTest {
 	private final String MODEL_ERROR = "Ocurrio un error inesperado al intentar reservar."; 
 	private ControladorAmbulancia controladorAmbulancia;
 	private ServicioAmbulancia servicioAmbulancia;
+	private ServicioNavegacion servicioNavegacion;
 	//private ServicioValidacionDatos servicioValidacionDatos;
 	//private ServicioGoogleDistanceMatrixAPI servicioGoogleDistanceMatrixAPI = new ServicioGoogleDistanceMatrixAPI();
 	
 	@Before
 	public void init() {
 		servicioAmbulancia = mock(ServicioAmbulancia.class);
+		servicioNavegacion = mock(ServicioNavegacion.class);
 		//servicioValidacionDatos = mock(ServicioValidacionDatos.class);
 		//controladorAmbulancia = new ControladorAmbulancia(servicioAmbulancia, servicioValidacionDatos);
-		controladorAmbulancia = new ControladorAmbulancia(servicioAmbulancia);
+		controladorAmbulancia = new ControladorAmbulancia(servicioAmbulancia, servicioNavegacion);
 	}
 	
 	@Test

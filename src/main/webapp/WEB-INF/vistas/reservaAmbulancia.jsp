@@ -99,26 +99,14 @@
         <br>
         <span>El tiempo estimado de llegada es de :<strong> ${Seguimiento.getTiempo()} </strong></span>
         <br>
-        </div>
+    </div>
         
         <br>
         <br>
         <br>
-        
-        <div id="now">
-            <span> Hora actual : </span>
-             <br>
-              <br>
-            <span> Hora estimada de Llegada : </span>
-             <br>
-              <br>
-            <span> Tiempo restante de recorrido : </span>
-             <br>
-              <br>
-            <span> La ambulancia se encuentra a  : </span>
-        </div>
-       
-    </c:if>
+      
+       </c:if>
+  
     <c:if test="${not empty Error}">
       <div id = "noAmbulancias">				
     <h2>

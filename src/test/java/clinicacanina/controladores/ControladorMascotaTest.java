@@ -122,8 +122,7 @@ public class ControladorMascotaTest {
 
     }
 
-<<<<<<< HEAD
-=======
+
     @Test
     public void IrAaModificarHistoriaClinicaDeLaMascotaCuandoEstoyLogeado() {
 
@@ -141,10 +140,18 @@ public class ControladorMascotaTest {
         //validacion
        // entoncesEncuentroLaMascotaAModificar(mav, mascota);
         entoncesMeLlevaALaVista("modificarMascota", mav.getViewName());
->>>>>>> f8af1f536f83a534ef32f106d5ed362e24fb0059
+    }
 
 
-    @Test
+    private Mascota dadoQueExisteMascota(String nombre, Integer peso2, Integer edad, String sintomas,
+			String detalleTratamientos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Test
     public void IrAAgregarVisitaMedicaDeLaMascotaCuandoEstoyLogeado() {
 
 
