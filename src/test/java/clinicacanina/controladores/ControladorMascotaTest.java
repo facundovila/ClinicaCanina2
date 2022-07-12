@@ -121,7 +121,6 @@ public class ControladorMascotaTest {
 
 
 
-
     @Test
     public void IrAAgregarVisitaMedicaDeLaMascotaCuandoEstoyLogeado() {
 
@@ -139,7 +138,9 @@ public class ControladorMascotaTest {
         entoncesMeLlevaALaVista("modificarMascota", mav.getViewName());
 
 
+
     }
+
 
 
 
