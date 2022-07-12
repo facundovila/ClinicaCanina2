@@ -1,10 +1,7 @@
 package clinicacanina.servicios;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import clinicacanina.modelo.Mascota;
@@ -16,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Turno;
 import clinicacanina.repositorios.RepositorioTurnos;
-
-import static java.util.Calendar.YEAR;
 
 
 @Service @Transactional 
@@ -80,12 +75,6 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 	@Override
 	public List<Turno> buscarTurnoPorFechaDeHoy() {
-		/*
-		List<Turno> turno = new ArrayList<>();
-		repositorioTurnos.mostarTurnosDisponiblesFechaHoy();
-		if(turno.isEmpty()){
-			return turno;
-		}*/
 		return repositorioTurnos.mostarTurnosDisponiblesFechaHoy();
 	}
 
@@ -95,6 +84,13 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 		Mascota m= servicioMascota.buscarMascotaPorId(idMascota);
 		boolean estado=repositorioTurnos.tomarTurno(m, u,idTurno);
 		return estado;
+	}
+
+	@Override
+	public List<Turno> buscarProximosTurnos() {
+		Calendar calendar =repositorioTurnos.buscarProximoTurnoLibre().getFechaTurno();
+		List<Turno> lista =repositorioTurnos.buscarTurnosPorFecha(calendar);
+		return lista;
 	}
 	@Override
 	public Turno buscarTurnoPorId(Long id) {

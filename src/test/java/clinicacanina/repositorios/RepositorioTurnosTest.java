@@ -1,36 +1,33 @@
 package clinicacanina.repositorios;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-
+import static org.assertj.core.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Medico;
 import clinicacanina.modelo.Usuario;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import clinicacanina.SpringTest;
 import clinicacanina.modelo.Turno;
 
-@Repository
 public class RepositorioTurnosTest extends SpringTest {
-
 
 	@Autowired
 	private RepositorioTurnos repositorioTurnos;
 
-	@Test
-	@Transactional
-	@Rollback
+	private Turno turno1= new Turno();
+	private Turno turno2= new Turno();
+	private Turno turno3= new Turno();
+	private  Turno turno4= new Turno();
+
+
+
+	@Test @Transactional @Rollback
 	public void guardarUnTurnoDeberiaPersistirlo() {
 		//preparacion
 		Turno turno = dadoQueExisteTurno("fecha");
@@ -40,9 +37,7 @@ public class RepositorioTurnosTest extends SpringTest {
 		entoncesEncuentroTurno(fecha);
 	}
 
-	@Test
-	@Transactional
-	@Rollback()
+	@Test @Transactional @Rollback
 	public void creaUnTurnoYLoBuscaPorFecha() {
 
 		Turno turno1 = dadoQueExisteTurno("fecha1");
@@ -84,17 +79,13 @@ public class RepositorioTurnosTest extends SpringTest {
 	}
 
 
-	@Test
-	@Transactional
-	@Rollback
+	@Test @Transactional @Rollback
 	public void puedoBuscarLosTurnosPorelIdDelUsuario() {
 		List <Turno> lista= new ArrayList<>();
 		lista= repositorioTurnos.mostrarTurnoUsuarioDesdeHoy(1l);
 		assertThat(lista.isEmpty()).isTrue();
 	}
-	@Test
-	@Transactional
-	@Rollback
+	@Test @Transactional @Rollback
 	public void GuardoTurnosYBuscoPorIdDeUnUsuarioRegresaListaDETurnos(){
 		long idUsuario=1L;
 		CuandoCArgoDosTurnosAUnUsuario(idUsuario);
@@ -131,9 +122,7 @@ public class RepositorioTurnosTest extends SpringTest {
 	private List<Turno>cuandoBuscoAlUsuarioConDosTurnos(long idUsuario){
 		return repositorioTurnos.mostarTodosTurnosDelUsuario(idUsuario);
 	}
-	@Test
-	@Transactional
-	@Rollback
+	@Test @Transactional @Rollback
 	public void puedoCancelarTurnoSinModificarFechaNiMedico(){
 		// preparacion
 		long idTurno=1l;
@@ -149,7 +138,7 @@ public class RepositorioTurnosTest extends SpringTest {
 	private void entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(long idTurno, long idMedico, Calendar calendario) {
 		Turno turnobuscado= repositorioTurnos.buscarTurnoPorId(idTurno);
 		assertThat(turnobuscado.getFechaTurno()).isEqualTo(calendario);
-		assertThat(turnobuscado.getMedico().getId()).isEqualTo(2L);
+		assertThat(turnobuscado.getMedico().getId()).isEqualTo(idMedico);
 		assertThat(turnobuscado.getEstado()).isTrue();
 		assertThat(turnobuscado.getMascota()).isNull();
 		assertThat(turnobuscado.getUsuario()).isNull();
@@ -163,9 +152,9 @@ public class RepositorioTurnosTest extends SpringTest {
 		Usuario usuario1 = new Usuario();
 		usuario1.setId(1L);
 		session().save(usuario1);
-
 		Mascota mascota1 = new Mascota();
 		mascota1.setId(1L);
+		mascota1.setUsuario(usuario1);
 		session().save(mascota1);
 
 		Medico medico= new Medico();
@@ -183,5 +172,82 @@ public class RepositorioTurnosTest extends SpringTest {
 		return turno1;
 	}
 
+	@Test @Transactional @Rollback
+	public void puedoBuscarElPrimerTurnoLibre(){
+		dadoQueCargoVariosTurnos();
+		Turno turnoproximo=cuandoBuscoelTurnoMasProximo();
+		encuentroSoloUnTurno(turnoproximo);
+	}
+	private void encuentroSoloUnTurno(Turno turnoproximo) {
+		Calendar fechaHoy =Calendar.getInstance();
+		int anio2=fechaHoy.get(Calendar.YEAR);
+		assertThat(turnoproximo.getFechaTurno().get(Calendar.YEAR)).isEqualTo(anio2+1);
+		assertThat(turnoproximo.getEstado()).isTrue();
+		assertThat(turnoproximo.getId()).isEqualTo(2L);
+	}
+	private Turno cuandoBuscoelTurnoMasProximo() {
+		return repositorioTurnos.buscarProximoTurnoLibre();
+	}
 
+	private void dadoQueCargoVariosTurnos() {
+		Turno turno1= new Turno();
+		Turno turno2= new Turno();
+		Turno turno3= new Turno();
+		Turno turno4= new Turno();
+		turno1.setId(1L);
+		turno2.setId(2L);
+		turno3.setId(3L);
+		turno4.setId(4L);
+		turno1.setEstado(true);
+		turno2.setEstado(true);
+		turno3.setEstado(true);
+		turno4.setEstado(true);
+
+		turno1.setFechaTurno(new GregorianCalendar(2022,01,01,10,00));
+		Calendar calenda =Calendar.getInstance();
+		int anio=calenda.get(Calendar.YEAR);
+		anio+=1;
+		turno2.setFechaTurno(new GregorianCalendar(anio,01,01,10,00));
+		anio+=1;
+		turno3.setFechaTurno(new GregorianCalendar(anio,01,01,10,00));
+		anio+=1;
+		turno4.setFechaTurno(new GregorianCalendar(anio,01,01,10,00));
+		session().save(turno1);
+		session().save(turno2);
+		session().save(turno3);
+		session().save(turno4);
+	}
+	@Test @Transactional @Rollback
+	public void puedoBuscarLosTurnosPorFecha(){
+		Calendar calendario =new GregorianCalendar(2022,1,10,10,00);
+		dadoQueCargoVariosTurnosDisponibles(calendario);
+		List <Turno> retorno= cuandoBuscoTurnosPorFechaPasandoUnCalendarMeRegresaUnaListaDeTurnosDeLaFecha(calendario);
+		entoncesEncuentroTurnosConLasMismasFechas(calendario,retorno);
+	}
+
+	private void entoncesEncuentroTurnosConLasMismasFechas(Calendar calendario,List <Turno> retorno) {
+		assertThat(retorno.size()).isEqualTo(2);
+	}
+
+	private List<Turno> cuandoBuscoTurnosPorFechaPasandoUnCalendarMeRegresaUnaListaDeTurnosDeLaFecha(Calendar calendario) {
+		return repositorioTurnos.buscarTurnosPorFecha(calendario);
+	}
+	private void dadoQueCargoVariosTurnosDisponibles(Calendar calendario) {
+		Turno turno1= new Turno();
+		Turno turno2= new Turno();
+		Turno turno3= new Turno();
+		Turno turno4= new Turno();
+		turno1.setEstado(true);
+		turno2.setEstado(true);
+		turno3.setEstado(true);
+		turno4.setEstado(true);
+		turno1.setFechaTurno(new GregorianCalendar(2022,1,1,10,00));
+		turno2.setFechaTurno(calendario);
+		turno3.setFechaTurno(calendario);
+		turno4.setFechaTurno(new GregorianCalendar(2023,1,1,10,00));
+		session().save(turno1);
+		session().save(turno2);
+		session().save(turno3);
+		session().save(turno4);
+	}
 }

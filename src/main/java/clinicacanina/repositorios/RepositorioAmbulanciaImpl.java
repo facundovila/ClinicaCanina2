@@ -58,7 +58,6 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 	public List<ReservaDeAmbulancia> buscarReservas() {
 		 final Session session = sessionFactory.getCurrentSession();
 	      List<ReservaDeAmbulancia> reservas = new LinkedList<ReservaDeAmbulancia>();
-			
 	      reservas = (List<ReservaDeAmbulancia>) session.createCriteria(ReservaDeAmbulancia.class)
 					                               .list();
 		return reservas;

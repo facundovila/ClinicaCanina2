@@ -26,4 +26,8 @@ public interface RepositorioTurnos {
 	List<Turno> mostarTurnosDisponiblesFechaHoy();
 
     boolean tomarTurno(Mascota idMascota, Usuario idUsuario, long idTurno);
+
+    Turno buscarProximoTurnoLibre();
+
+    List<Turno> buscarTurnosPorFecha(Calendar calendario);
 }

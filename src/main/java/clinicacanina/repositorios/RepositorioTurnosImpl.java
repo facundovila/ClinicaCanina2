@@ -1,8 +1,8 @@
 package clinicacanina.repositorios;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Usuario;
@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 import clinicacanina.modelo.Turno;
 
@@ -83,16 +84,20 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 	}
 	@Override
 	public List<Turno> mostarTurnosDisponiblesFechaHoy() {
-
 		//  sessionFactory.getCurrentSession().createQuery("from turno t where t.fechaTurno >= :fecha and t.estado= true" )
 		//	.setDate("fecha",new java.util.Date()).list();
-		Calendar fechaActual= Calendar.getInstance();
-		fechaActual.set(Calendar.HOUR,23);
-		fechaActual.set(Calendar.MINUTE,59);
-		fechaActual.set(Calendar.SECOND,59);
-		Calendar fechaInicio= Calendar.getInstance();
+		Date date = Calendar.getInstance().getTime();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-mm-dd");
+		String fechaInicio = dateFormat.format(date);
+		String fechaInicio2 = dateFormat2.format(date);
+		/*Calendar fechaFin= Calendar.getInstance();
+		fechaFin.set(Calendar.MINUTE,59);
+		fechaFin.set(Calendar.SECOND,59);
+		fechaFin.set(Calendar.HOUR,59);*/
+		String fechaFin= fechaInicio2+" 23:59:59";
 		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true  and t.fechaTurno between :fechaInicio and :fechaFin")
-				.setParameter("fechaInicio",fechaInicio).setParameter("fechaFin",fechaActual).list();
+				.setParameter("fechaInicio",fechaInicio).setParameter("fechaFin",fechaFin).list();
 
 	}
 
@@ -105,5 +110,33 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		sessionFactory.getCurrentSession().update(tomarTurno);
 		return tomarTurno.getEstado();
 	}
+
+	@Override
+	public Turno buscarProximoTurnoLibre() {
+	/*
+		Calendar fechaActual= Calendar.getInstance();
+		String hql = "from turno t where t.estado=true  and t.fechaTurno > :fechaA";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("fechaA",fechaActual);
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+		Turno results = (Turno) query.uniqueResult();
+		return results;
+	 */
+		Calendar fechaActual= Calendar.getInstance();
+		return (Turno) sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true  and t.fechaTurno > :fechaActual")
+				.setParameter("fechaActual",fechaActual).setMaxResults(1).uniqueResult();
+
+	}
+	@Override
+	public List<Turno> buscarTurnosPorFecha(Calendar calendario) {
+		Calendar fechaMaxima=calendario;
+		fechaMaxima.set(Calendar.HOUR,23);
+		fechaMaxima.set(Calendar.MINUTE,59);
+		fechaMaxima.set(Calendar.SECOND,59);
+		return sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true and t.fechaTurno between :fechaActual and :fechaMaxima")
+				.setParameter("fechaActual",calendario).setParameter("fechaMaxima",fechaMaxima).list();
+	}
+
 
 }

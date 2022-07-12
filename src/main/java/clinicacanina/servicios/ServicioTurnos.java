@@ -3,9 +3,7 @@ package clinicacanina.servicios;
 import java.util.Calendar;
 import java.util.List;
 
-import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Turno;
-import clinicacanina.modelo.Usuario;
 
 public interface ServicioTurnos {
 
@@ -26,4 +24,6 @@ public interface ServicioTurnos {
     List<Turno> buscarTurnoPorFechaDeHoy();
 
     boolean tomarTurno(long idMascota, long idUsuario, long idTurno);
+
+    List<Turno> buscarProximosTurnos();
 }

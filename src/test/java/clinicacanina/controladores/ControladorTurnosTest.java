@@ -171,7 +171,7 @@ public class ControladorTurnosTest {
 		when(servicioTurnos.buscarTurnoPorFechaDeHoy()).thenReturn(lista);
 		ModelAndView modelo = controladorTurnos.irSoliciarTurno(request);
 		verify(servicioTurnos, times(1)).buscarTurnoPorFechaDeHoy();
-		assertThat(modelo.getModel().get("mensaje")).isEqualTo("Sin Turnos Disponibles");
+		assertThat(modelo.getModel().get("mensaje")).isEqualTo("Sin Turnos disponibles para la fecha. Turnos mas Proximos");
 
 		}
 		@Test

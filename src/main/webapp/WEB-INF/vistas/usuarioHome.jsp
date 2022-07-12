@@ -12,8 +12,8 @@
     <c:forEach var="Turno" items="${listaTurnosUsuario}">
         <div class="w3-row w3-panel w3-border-top w3-border-bottom w3-border-blue">
             <div class="w3-col m8 l9">
-                <p><h2>><c:out value="${Turno.mascota.nombre}" /> Tiene Turno</h2></p>
-                <p><h2>el dia <c:out value="${Turno.fechaTurno.time.date}" /> a las <c:out value="${Turno.fechaTurno.time.hours}"></c:out> :<c:out value="${Turno.fechaTurno.time.minutes}" /></h2></p>
+                <p><h2><c:out value="${Turno.mascota.nombre}" /> Tiene Turno</h2></p>
+                <p><h2>el dia  <c:out value="${Turno.fechaTurno.time.date}"></c:out>/<c:out value="${Turno.fechaTurno.time.month+1}"></c:out> a las <c:out value="${Turno.fechaTurno.time.hours+3}"></c:out>:<c:out value="${Turno.fechaTurno.time.minutes}" />hs.</h2></p>
                 <p><h2>Con el medico: <c:out value="${Turno.medico.nombre}" /></h2></p>
             </div>
 
