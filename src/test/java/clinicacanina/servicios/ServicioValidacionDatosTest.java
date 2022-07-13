@@ -2,6 +2,9 @@ package clinicacanina.servicios;
 
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -69,6 +72,28 @@ public class ServicioValidacionDatosTest {
 	public void queSePuedaValidarUnMotivoInvalido() {
 		boolean resultado = cuandoValidoUnMotivo(MOTIVO_INVALIDO);
 		entoncesObtengoUnaValidacionIncorrecta(resultado);
+	}
+	
+	
+	@Test 
+	public void queSePuedaConvertirUnaFechaHora(){
+		String fechaHora = "2022-7-10 16:1";
+		
+		String fechaHoraConvertida = cuandoValidoUnaFechaHora(fechaHora);
+		obtengoLaFechaHoraConvertida(fechaHoraConvertida);
+	}
+
+	private void obtengoLaFechaHoraConvertida(String fechaHoraConvertida) {
+		String formatoEsperado = "2022-7-10 16:01";
+		System.out.println(fechaHoraConvertida);
+		assertThat(fechaHoraConvertida).isEqualTo(formatoEsperado);
+		
+		
+	}
+
+	private String cuandoValidoUnaFechaHora(String fechaHora) {
+		return servicioValidacionDatos.validarHorario(fechaHora);
+		
 	}
 
 	private boolean cuandoValidoUnMotivo(String motivo) {

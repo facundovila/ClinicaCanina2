@@ -33,9 +33,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
 	@Override
 	public LocalDateTime calcularHorarioDeLlegada(String patente) {
 		LocalDateTime horarioSolicitud;
-		// String horarioActualString = horarioActual.getYear() +
-		// "-"+horarioActual.getMonthValue()+"-"+horarioActual.getDayOfMonth()+"
-		// "+horarioActual.getHour()+":"+horarioActual.getMinute();
+		
 		Navegador navegador = buscarNavegacion(patente);
 		String tiempoEstimado = navegador.getTiempoEstimado();
 		Integer tiempoEstimadoNumber = parseTiempoEstimadoDeLlegada(tiempoEstimado);
@@ -48,7 +46,6 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
 				+ horarioLlegada.getDayOfMonth() + " " + horarioLlegada.getHour() + ":" + horarioLlegada.getMinute();
 
 		navegador.setHorarioDeLlegada(horarioLLegadaString);
-		// navegador.setHorarioDeSolicitud(horarioActualString);
 		// ---------Se actualizan los datos del Navegador en la BD -------------------
 		actualizarNavegacion(navegador);
 		return horarioLlegada;

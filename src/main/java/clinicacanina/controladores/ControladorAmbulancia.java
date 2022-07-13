@@ -142,11 +142,16 @@ public class ControladorAmbulancia {
 		LocalDateTime horarioDeLlegada = servicioNavegacion.calcularHorarioDeLlegada(navegador.getPatente());
 		String tiempoRestante = servicioNavegacion.calcularTiempoRestanteDeLlegada(navegador.getPatente());
 		String horarioLlegadaString = horarioDeLlegada.getHour()+":"+horarioDeLlegada.getMinute();
-		datosNavegacion.add(navegador.getHorarioDeSolicitud());
-	    datosNavegacion.add(horarioLlegadaString);
+		datosNavegacion.add(servicioValidacionDatos.validarHorario(navegador.getHorarioDeSolicitud()));
+		datosNavegacion.add(navegador.getTiempoEstimado());
+	    datosNavegacion.add(servicioValidacionDatos.validarHorario(horarioLlegadaString));
 	    datosNavegacion.add(tiempoRestante);
-	    model.put("DatosNavegacion", datosNavegacion);
-		//model.put("Hola", "Hola");
+	    if(Integer.parseInt(tiempoRestante) > 0) {
+	    	model.put("DatosNavegacion", datosNavegacion);
+	    }else {
+	    	model.put("Llegada", "La Ambulancia con patente <strong>" + navegador.getPatente() + "</strong> se encuentra en la puerta de su domicilio.");
+	    }
+	   
 	    return new ModelAndView("seguimiento", model);
 	}
 	

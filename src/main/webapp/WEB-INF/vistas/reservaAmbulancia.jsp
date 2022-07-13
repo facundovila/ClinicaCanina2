@@ -4,8 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-    <%@ include file="partials/head.jsp"%>
-    <link rel="stylesheet" href="../css/estilos.css">
+<%@ include file="partials/head.jsp"%>
+    <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/styleAmbulancia.css">
 </head>
 
@@ -99,6 +99,10 @@
         <br>
         <span>El tiempo estimado de llegada es de :<strong> ${Seguimiento.getTiempo()} </strong></span>
         <br>
+        <br>
+        <div id="seguimiento">
+        <a href="http://localhost:8080/ClinicaCanina2/detalle-seguimiento">Detalle</a>
+        </div>
     </div>
         
         <br>
@@ -119,10 +123,7 @@
 </main>
 
 <footer>
-    <div class="link">
-        <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
-        <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
-    </div>
+    
 </footer>
 </body>
 </html>

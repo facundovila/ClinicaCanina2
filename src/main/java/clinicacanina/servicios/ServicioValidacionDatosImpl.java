@@ -1,5 +1,9 @@
 package clinicacanina.servicios;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,8 +51,60 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 		return patente.matches(regex);
 	}
 
-	
-	
-	
+	@Override
+	public String validarHorario(String time) {
+		char[] arrayCaracteres = time.toCharArray();
+		String timeConvertido = "";
+		
+		if(arrayCaracteres.length > 5 && arrayCaracteres.length < 15) {
+			// fecha y hora
+			timeConvertido = convertirHorarioSolicitud(arrayCaracteres);
+		}
+		if(arrayCaracteres.length == 15) {
+			timeConvertido = time;
+		}
+		if(arrayCaracteres.length == 5) {
+			// hora correcta
+			timeConvertido = time;
+		}
+		if(arrayCaracteres.length < 5) {
+			// hora incorrecta
+			timeConvertido = convertirHorarioLlegada(arrayCaracteres);
+		}
+		
+		return timeConvertido;
+	}
 
+
+	
+	private String convertirHorarioSolicitud(char[]  time) {
+		String horarioConvertido = "";
+		for(int i = 0; i < time.length; i++) {
+			if(i == 12) {
+				horarioConvertido += time[i];
+				horarioConvertido += "0";
+				break;
+			}else {
+				horarioConvertido += time[i];
+			}
+		}
+		
+		return horarioConvertido += time[time.length -1];
+	}
+
+	
+	private String convertirHorarioLlegada(char[]  time) {
+		String horarioConvertido = "";
+		for(int i = 0; i < time.length; i++) {
+			if(i == 2) {
+				horarioConvertido += time[i];
+				horarioConvertido += "0";
+				break;
+			}else {
+				horarioConvertido += time[i];
+			}
+		}
+		
+		return horarioConvertido += time[time.length -1];
+	}
 }
