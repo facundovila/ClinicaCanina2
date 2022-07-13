@@ -1,11 +1,8 @@
 package clinicacanina.servicios;
 
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
-//import static org.powermock.api.mockito.PowerMockito.mockStatic;
-
+import static org.mockito.Mockito.*;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Usuario;
 import clinicacanina.repositorios.RepositorioUsuario;
@@ -173,6 +170,46 @@ public class ServicioTurnosTest {
 		//validacion
 		assertThat(estado).isTrue();
 
+	}
+@Test
+	public void sibuscarProximoTurnoLibreNoEncuentraFechasRetornaListaEmpy(){
+	dadoqueNoTengoTurnosCargados();
+		List<Turno> turnosEsperados = cuandoUsoBuscarProximoTurnoDisponible();
+	encuentroUnaListaEmpy(turnosEsperados);
+
+}
+
+	private void encuentroUnaListaEmpy(List<Turno> turnosEsperados) {
+		assertThat(turnosEsperados.isEmpty()).isTrue();
+		assertThat(turnosEsperados).isNotNull();
+	}
+
+	private List<Turno> cuandoUsoBuscarProximoTurnoDisponible() {
+		return servicioTurnos.buscarProximosTurnos();
+	}
+
+	private void dadoqueNoTengoTurnosCargados() {
+		when(repositorioTurnos.buscarProximoTurnoLibre()).thenReturn(null);
+	}
+
+	@Test
+	public void cuandoBuscoPorFEchasYnoTEngoRegresaListaVacia(){
+		dadoQueNoTEngoTurnosCArgados();
+		List<Turno> turnosEsperados = cuandoUsoBuscarProximoTurnoDisponible();
+		entoncesMeTraeUnaListaLimpia(turnosEsperados);
+	}
+
+	private void dadoQueNoTEngoTurnosCArgados() {
+		Calendar calendario= Calendar.getInstance();
+		Turno turno= new Turno();
+		when(repositorioTurnos.buscarProximoTurnoLibre()).thenReturn(turno);
+		when(repositorioTurnos.buscarTurnosPorFecha(calendario)).thenReturn(null);
+	}
+
+	private void entoncesMeTraeUnaListaLimpia(List<Turno> turnosEsperados) {
+		assertThat(turnosEsperados).isNotNull();
+		assertThat(turnosEsperados.isEmpty()).isTrue();
+		verify(repositorioTurnos,times(1)).buscarProximoTurnoLibre();
 	}
 
 

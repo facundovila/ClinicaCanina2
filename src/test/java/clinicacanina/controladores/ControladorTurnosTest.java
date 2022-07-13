@@ -185,6 +185,7 @@ public class ControladorTurnosTest {
 		ModelAndView modelo = controladorTurnos.tomarTurno(requestNull,1L,1L);
 		assertThat(modelo.getViewName()).isEqualTo("redirect:/login");
 	}
+	
 
 
 

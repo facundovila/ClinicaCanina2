@@ -1,19 +1,18 @@
 
--- MASCOTAS
+
 use db;
-insert into mascota(peso, nombre, edad, sintomas, detalleTratamientos)values(15, 'hachi', 40, 'resfrio', 'te con limon'),
-                                                                            (8,'firu', 8, 'gripe', 'optamox');
+-- usuario
+INSERT INTO `db`.`usuario` (`id`,  `email`, `password`) VALUES ('1', 'usuario@usuario.com', '1');
+-- MASCOTAS
 
-
-
-
+use db;
+insert into mascota(peso, nombre, edad, sintomas, detalleTratamientos,usuario_id)values(15, 'hachi', 40, 'resfrio', 'te con limon',1),
+                                                                                       (8,'firu', 8, 'gripe', 'optamox',1);
 
 -- MEDICOS
 insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre, dni, contrasenia) VALUE (true, 10,15,'carlos',10, 'admin');
 
 insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre, dni, contrasenia) VALUE (false, 10,15,'jose',11, 'admin2');
-
-
 
 
 -- QUERYS
@@ -24,7 +23,7 @@ INSERT INTO ambulancia
 (disponible, patente)
 VALUES(true, 'ABC123'),(true, 'DEF456'),(true, 'GHI789'),(true, 'JKL012');
 SELECT * FROM db.turno;
-INSERT INTO `db`.`turno` (`estado`, `fechaTurno`, `medico_id`) VALUES (1, '2024-06-06 20:00:00.000000', '1'),(1, '2022-06-29 10:00:00', '1')
+INSERT INTO `db`.`turno` (`estado`, `fechaTurno`, `medico_id`) VALUES (1, '2022-06-06 20:00:00.000000', '1'),(1, '2022-06-29 10:00:00', '1')
                                                                     ,(1, '2022-06-29 11:00:00', '1')
                                                                     ,(1, '2022-06-29 12:00:00', '1')
                                                                     ,(1, '2022-06-29 13:00:00', '1')
@@ -122,14 +121,7 @@ INSERT INTO `db`.`turno` (`estado`, `fechaTurno`, `medico_id`) VALUES (1, '2024-
                                                                     ,(1, '2022-07-12 15:00:00', '1')
                                                                     ,(1, '2022-07-12 16:00:00', '1')
                                                                     ,(1, '2022-07-12 17:00:00', '1')
-                                                                    ,(1, '2022-07-12 18:00:00', '1'),(1,'2022-7-12 11:00:00','1')
-                                                                    ,(1,'2022-7-12 12:00:00','1')
-                                                                    ,(1,'2022-7-12 13:00:00','1')
-                                                                    ,(1,'2022-7-12 14:00:00','1')
-                                                                    ,(1,'2022-7-12 15:00:00','1')
-                                                                    ,(1,'2022-7-12 16:00:00','1')
-                                                                    ,(1,'2022-7-12 17:00:00','1')
-                                                                    ,(1,'2022-7-12 18:00:00','1')
+                                                                    ,(1, '2022-07-12 18:00:00', '1')
                                                                     ,(1,'2022-7-13 11:00:00','1')
                                                                     ,(1,'2022-7-13 12:00:00','1')
                                                                     ,(1,'2022-7-13 13:00:00','1')
@@ -324,3 +316,4 @@ UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '4'
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '5');
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '6');
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '31');
+

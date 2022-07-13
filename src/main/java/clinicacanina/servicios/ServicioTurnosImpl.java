@@ -1,7 +1,10 @@
 package clinicacanina.servicios;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import clinicacanina.modelo.Mascota;
@@ -54,24 +57,20 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	}
 	
 	public Boolean cancelarTurnoPorId(Long id) {
-
 		//esto tira error
 		//org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : [clinicacanina.modelo.Turno#1]
-
+/*
 		Turno turnoEsperado = repositorioTurnos.buscarTurnoPorId(id);
 
 		if(turnoEsperado == null) {
 			return false;}
 		repositorioTurnos.cancelarTurnoPorId(id);
 		return true;
-
-		//return repositorioTurnos.cancelarTurnoPorId(id);
+*/
+		return repositorioTurnos.cancelarTurnoPorId(id);
 		}
 
-	@Override
-	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
-		return null;
-	}
+
 
 	@Override
 	public List<Turno> buscarTurnoPorFechaDeHoy() {
@@ -88,10 +87,38 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 	@Override
 	public List<Turno> buscarProximosTurnos() {
-		Calendar calendar =repositorioTurnos.buscarProximoTurnoLibre().getFechaTurno();
-		List<Turno> lista =repositorioTurnos.buscarTurnosPorFecha(calendar);
+		/*
+		Turno turno=repositorioTurnos.buscarProximoTurnoLibre();
+		List<Turno> lista =repositorioTurnos.buscarTurnosPorFecha(turno.getFechaTurno());// esto tiene el problema
+		//List<Turno> lista =new ArrayList<>();
+		//lista.add(turno);
+		* */
+
+		List<Turno> lista =new ArrayList<>();
+		Turno turno=repositorioTurnos.buscarProximoTurnoLibre();
+		if (turno==null){
+			lista =new ArrayList<>();
+			return lista;
+		}
+
+		lista=repositorioTurnos.buscarTurnosPorFecha(turno.getFechaTurno());// esto tiene el problema
+		if (lista==null){
+			lista =new ArrayList<>();
+			return lista;
+		}
 		return lista;
 	}
+	@Override
+	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
+		List <Turno>lista=repositorioTurnos.buscarTurnosPorFecha(fecha);// esto tiene el problema
+		if (lista==null){
+			lista =new ArrayList<>();
+			return lista;
+		}
+		return lista;
+	}
+
+
 	@Override
 	public Turno buscarTurnoPorId(Long id) {
 		return repositorioTurnos.buscarTurnoPorId(id);

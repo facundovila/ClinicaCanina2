@@ -10,7 +10,7 @@
     <%@ include file="partials/usuarioMenu.jsp"%>
 <main>
 
-    <form:form action="usuarioSolicitarTurno"  modelAttribute="datosSolicitarTurno" method="POST">
+    <form:form action="irSoliciarTurnoPorFecha"  modelAttribute="datosSolicitarTurno" method="POST">
         <input type="date" id="fecha" name="fecha">
         <input type="submit">
     </form:form>
@@ -22,7 +22,7 @@
         <div class="w3-row w3-panel w3-border-top w3-border-bottom w3-border-blue">
             <div class="w3-col m8 l9">
                 <p>Turno Nro: <c:out value="${Turno.id}" /></p>
-                <p>el dia <c:out value="${Turno.fechaTurno.time.date}"></c:out>/<c:out value="${Turno.fechaTurno.time.month+1}" />  a las <c:out value="${Turno.fechaTurno.time.hours+3}"></c:out> :<c:out value="${Turno.fechaTurno.time.minutes}" /></p>
+                <p>el dia <c:out value="${Turno.fechaTurno.time.date}"></c:out>/<c:out value="${Turno.fechaTurno.time.month+1}" />  a las <c:out value="${Turno.fechaTurno.time.hours}"></c:out> :<c:out value="${Turno.fechaTurno.time.minutes}" /></p>
                 <p>Con el medico: <c:out value="${Turno.medico.nombre}" /></p>
             </div>
             <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-blue">Solicitar Turno</button>
@@ -52,8 +52,6 @@
         </div>
         <p></p>
     </c:forEach>
-
 </main>
-
 </body>
 </html>

@@ -73,31 +73,22 @@ public class ControladorTurnos {
 			return new ModelAndView("redirect:/login");
 		}
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
+
 		List<Mascota> mascotas= servicioLogin.listarMascotas((long)request.getSession().getAttribute("userId"));
 		mapa.put("listaMascotas",mascotas);
+
 		List<Turno> turnos= servicioTurnos.buscarTurnoPorFechaDeHoy();
-		if(turnos.size()==0){
+		if(turnos.isEmpty()){
 			mapa.put("mensaje","Sin Turnos disponibles para la fecha. Turnos mas Proximos");
 			//aca va un metodo para traer proximos turnos;
 			turnos= servicioTurnos.buscarProximosTurnos();
-			mapa.put("listaTurnosDisponibles", turnos );
+			mapa.put("listaTurnosDisponibles", turnos);
 			return new ModelAndView("usuarioSolicitarTurno", mapa);
 		}
 		mapa.put("listaTurnosDisponibles", turnos );
 		return new ModelAndView("usuarioSolicitarTurno", mapa);
 	}
-/*
-	@RequestMapping(path="/irSoliciarTurnoPorFecha", method = RequestMethod.POST)
-		public ModelAndView irSoliciarTurno(@ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno, HttpServletRequest request) {
-		ModelMap mapa = new ModelMap();
-		if (request.getSession().getAttribute("userId") == null) {
-			return new ModelAndView("redirect:/login");
-		}
-		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
 
-
-		return new ModelAndView("usuarioSolicitarTurno", mapa);
-	}*/
 	@RequestMapping(path = "/tomarTurno/{idTurno}/{idMascota}", method = RequestMethod.POST)
 	public ModelAndView tomarTurno(HttpServletRequest request, @PathVariable("idTurno") long idTurno,@PathVariable("idMascota") long idMascota) {
 		ModelMap mapa = new ModelMap();
@@ -107,6 +98,26 @@ public class ControladorTurnos {
 		Long idUsuario = (Long) request.getSession().getAttribute("userId");
 		servicioTurnos.tomarTurno(idMascota, idUsuario,idTurno);
 		return new ModelAndView("redirect:/usuarioHome", mapa);
+	}
+
+
+	@RequestMapping(path="/irSoliciarTurnoPorFecha", method = RequestMethod.POST)
+		public ModelAndView irSoliciarTurnoFecha(@ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno, HttpServletRequest request) {
+		ModelMap mapa = new ModelMap();
+		if (request.getSession().getAttribute("userId") == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		List<Mascota> mascotas= servicioLogin.listarMascotas((long)request.getSession().getAttribute("userId"));
+		mapa.put("listaMascotas",mascotas);
+		Calendar fecha=datosSolicitarTurno.getCalendario();
+		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(fecha);
+		if(turnos.isEmpty()){
+			mapa.put("mensaje","Sin Turnos. Seleccione Otra Fecha");
+			return new ModelAndView("usuarioSolicitarTurno", mapa);
+		}
+		mapa.put("listaTurnosDisponibles", turnos );
+
+		return new ModelAndView("usuarioSolicitarTurno", mapa);
 	}
 
 }
