@@ -40,6 +40,7 @@
             
            
         </div>
+        <img src="city-map-4320755.png" alt="MDN">
  </c:if>
  </main>
 
