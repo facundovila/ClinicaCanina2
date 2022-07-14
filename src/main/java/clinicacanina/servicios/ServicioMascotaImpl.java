@@ -71,6 +71,11 @@ public class ServicioMascotaImpl implements ServicioMascota {
         return repositorioMascota.buscarTodasLasMascotas();
 
     }
+    @Override
+    public List<Mascota> listarMascotasPorUsuario(Long idUsuario){
+        return repositorioMascota.listarMascotasPorUsuario(idUsuario);
+    }
+
 
     @Override
     public Mascota modificarMascota(Long id, Integer edad, Float peso) {

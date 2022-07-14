@@ -214,7 +214,7 @@ public class ControladorMascota {
         ModelMap mapa= new ModelMap();
         Long idUsuario = (Long) request.getSession().getAttribute("userId");
        servicioMascota.crearNuevaMascota(datosCrearMascota.getNombre(),idUsuario);
-    return new ModelAndView("redirect:/listar-mascotas",mapa);
+    return new ModelAndView("redirect:/usuarioHome",mapa);
       }
 
 
