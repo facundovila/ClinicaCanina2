@@ -11,7 +11,7 @@
 
 </header>
 
-<main  class="fondo">
+<main  class="fondo2">
     <br>
     <br>
 

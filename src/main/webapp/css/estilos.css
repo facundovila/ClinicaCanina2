@@ -25,6 +25,13 @@ main{
     background-color: #f8efc0;
 }
 
+.fondo2{
+    background-image: url(../img/huellas.jpg);
+    background-repeat: repeat;
+
+
+}
+
 .centrar{
     margin: auto;
 

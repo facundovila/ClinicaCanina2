@@ -8,7 +8,7 @@
 </head>
 <body>
     <%@ include file="partials/usuarioMenu.jsp"%>
-<main>
+<main class="fondo2">
 
         <section>
             <article>

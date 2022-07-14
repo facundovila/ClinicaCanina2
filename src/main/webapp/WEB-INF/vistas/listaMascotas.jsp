@@ -12,7 +12,7 @@
 
 </header>
 
-<main class="fondo">
+<main class="fondo2">
     <div class="container">
         <c:if test="${empty sinMascotas}">
             <h4 class="mb-3 text-center">Lista De Mascotas</h4>

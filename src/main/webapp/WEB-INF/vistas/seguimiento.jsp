@@ -31,7 +31,7 @@
              <br>
               <br>
            <div id="actualizar">
-           <a href="http://localhost:8080/ClinicaCanina2/detalle-seguimiento">Actualizar</a>
+           <a href="detalle-seguimiento">Actualizar</a>
            </div>
         </div>
         <br>

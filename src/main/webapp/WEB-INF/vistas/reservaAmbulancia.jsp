@@ -81,8 +81,8 @@
         <span>Ante un imprevisto, nos comunicaremos al : ${ReservaRealizada.getTelefono()}</span>
         <br>
         <br>
-        <div id="seguimiento">
-        <a href="http://localhost:8080/ClinicaCanina2/ver-seguimiento">Ver seguimiento</a>
+        <div class="seguimiento">
+        <a href="ver-seguimiento">Ver seguimiento</a>
         </div>
         </div>
        
@@ -102,8 +102,8 @@
         <span>El tiempo estimado de llegada es de :<strong> ${Seguimiento.getTiempo()} </strong></span>
         <br>
         <br>
-        <div id="seguimiento">
-        <a href="http://localhost:8080/ClinicaCanina2/detalle-seguimiento">Detalle</a>
+        <div class="seguimiento">
+        <a href="detalle-seguimiento">Detalle</a>
         </div>
     </div>
         

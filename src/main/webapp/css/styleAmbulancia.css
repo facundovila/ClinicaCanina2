@@ -47,7 +47,7 @@ body{
 	
 }
 
-#seguimiento{
+.seguimiento{
 	background-color : green;
 	width : 40%;
 	border-radius : 0.5em;
@@ -61,7 +61,7 @@ body{
      transition : all 0.5s;
 }
 
-#seguimiento:hover{
+.seguimiento:hover{
 	background-color : grey;
 	color : black;
 	border : 2px solid green;

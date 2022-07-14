@@ -15,7 +15,7 @@
 <header>
     <%@ include file="partials/usuarioMenu.jsp"%>
 </header>
-<main class="fondo">
+<main class="fondo2">
     <section>
      <article>
         <div class="container">

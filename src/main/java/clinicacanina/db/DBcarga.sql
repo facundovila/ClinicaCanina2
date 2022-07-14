@@ -1,10 +1,5 @@
 
 
-INSERT INTO `db`.`usuario` (`id`, `email`, `password`) VALUES ('1', 'usuario@usuario.com', '1');
-INSERT INTO `db`.`mascota` (`edad`, `nombre`, `peso` ) VALUES (1, 'toto', 3),(1, 'mostaza', 3);
-
-insert into  db.mascota  (`nombre`) VALUES ('jose');
-
 -- MEDICOS
 insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre, dni, contrasenia) VALUE (true, 10,15,'carlos',10, 'admin');
 
@@ -34,6 +29,9 @@ select * from mascota;
 
 INSERT INTO ambulancia(disponible, patente)
 VALUES(true, 'ABC123'),(true, 'DEF456'),(true, 'GHI789'),(true, 'JKL012');
+INSERT INTO ambulancia
+(disponible, patente)
+VALUES(true, 'MNN123'),(true, 'OPQ456'),(true, 'RST789'),(true, 'VWX012'),(true, 'YZZ123'),(true, 'AAA456'),(true, 'BBB789'),(true, 'CCC012');
 
 INSERT INTO `db`.`turno` (`estado`, `fechaTurno`, `medico_id`) VALUES (1, '2022-06-06 20:00:00.000000', '1'),(1, '2022-06-29 10:00:00', '1')
                                                                     ,(1, '2022-06-29 11:00:00', '1')
@@ -333,3 +331,4 @@ UPDATE `db`.`turno` SET estado = false, mascota_id = 1, usuario_id = 1 where id 
 
 
 select * from visitaclinica;
+
