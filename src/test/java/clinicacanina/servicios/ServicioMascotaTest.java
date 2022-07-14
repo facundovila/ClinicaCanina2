@@ -89,7 +89,7 @@ public class ServicioMascotaTest {
 
 
 		when(repositorioMascota.guardarVisitaMedica(mascota.getId(),visitaClinica)).thenReturn(visitaClinica.getId());
-
+		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
 
 		servicioMascota.guardarVisitaMedicaDeMascota(mascota.getId(), visitaClinica);
 

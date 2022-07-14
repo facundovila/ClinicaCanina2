@@ -14,8 +14,6 @@ public interface ServicioMascota {
 
      Mascota crearMascota(HistoriaClinica historiaClinica);
 
-
-
      Mascota buscarMascotaPorId(Long id);
 
      List<Mascota> listarMascotas();
@@ -27,4 +25,5 @@ public interface ServicioMascota {
      List<VisitaClinica> obtenerVisitasClinicasDeLaMascota(Mascota mascota);
 
 
+     void guardarImagen(Long id, String originalFilename);
 }

@@ -24,4 +24,8 @@ public interface RepositorioMascota {
     Long guardarVisitaMedica(Long idMascota, VisitaClinica visita);
 
     Mascota getById(Long idMascota);
+
+
+
+    void guardarImagen(Long id, String originalFilename);
 }

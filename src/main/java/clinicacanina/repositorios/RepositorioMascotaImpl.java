@@ -45,6 +45,7 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
 
 
+
     @Override
     public Long guardar(Mascota mascota){
 
@@ -89,6 +90,20 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
         return mascota;
     }
+
+
+    @Override
+    public void guardarImagen(Long id, String originalFilename) {
+
+        Mascota mascota = buscarPorId(id);
+        mascota.setImagen(originalFilename);
+
+        sessionFactory.getCurrentSession().update(mascota);
+
+    }
+
+
+
 
     @Override
     public List<VisitaClinica> obtenerVisitaMedicaDeLaMascota(Mascota mascota) {

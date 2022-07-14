@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
+import java.util.List;
 
 @Entity
 @Table(name = "mascota")
@@ -23,6 +24,7 @@ public class Mascota {
 
     private Integer edad;
 
+    private String imagen;
 
 
 
@@ -71,8 +73,13 @@ public class Mascota {
         this.peso = peso;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
 
-
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
 
 

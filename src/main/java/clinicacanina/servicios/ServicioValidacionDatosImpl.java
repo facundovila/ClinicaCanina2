@@ -47,8 +47,21 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 		return patente.matches(regex);
 	}
 
-	
-	
-	
+	@Override
+	public boolean validadEdad(Integer edad) {
+
+		int contador = 0;
+			while (edad != 0) {
+				edad = edad / 10;
+				++contador;
+			}
+
+		if(contador <= 2 ){
+			return true;
+		}
+		return false;
+	}
+
 
 }
+

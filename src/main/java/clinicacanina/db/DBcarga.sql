@@ -44,3 +44,4 @@ INSERT INTO ambulancia
 
 select * from usuario;
 
+select * from visitaclinica;

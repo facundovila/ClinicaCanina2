@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -87,16 +88,56 @@ public class ServicioMascotaImpl implements ServicioMascota {
     @Override
     public Long guardarVisitaMedicaDeMascota(Long idMascota, VisitaClinica visitaClinica){
 
-       return repositorioMascota.guardarVisitaMedica(idMascota,visitaClinica);
+        LocalDateTime horarioActual = LocalDateTime.now();
+
+        String HorarioActualParseado = parseHoraActual(horarioActual);
+
+        visitaClinica.setFechaActual(HorarioActualParseado);
+
+        Mascota mascotaBuscada = buscarMascotaPorId(idMascota);
+
+        if(mascotaBuscada.getId() != null){
+            return repositorioMascota.guardarVisitaMedica(mascotaBuscada.getId() ,visitaClinica);
+        }else{
+            throw new MascotaInexistenteException();
+        }
+
 
     }
 
     @Override
     public List<VisitaClinica> obtenerVisitasClinicasDeLaMascota(Mascota mascota){
 
-        return repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota);
+        if(mascota !=null){
+            return repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota);
+
+        }else{
+            throw new MascotaInexistenteException();
+        }
+
+    }
+
+    @Override
+    public void guardarImagen(Long id, String originalFilename) {
+        Mascota mascotaAModificar = buscarMascotaPorId(id);
+
+        repositorioMascota.guardarImagen(id, originalFilename);
+
+    }
+
+
+    private String parseHoraActual(LocalDateTime horarioActual){
+
+        String horaActual = horarioActual.getYear() + "-" + horarioActual.getMonthValue() + "-"
+                + horarioActual.getDayOfMonth();
+
+
+        return horaActual;
 
     }
 
 
 }
+
+
+

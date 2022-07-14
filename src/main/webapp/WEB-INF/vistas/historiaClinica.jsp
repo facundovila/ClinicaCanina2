@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+
 
 <link rel="stylesheet" href="css/estilos.css">
 <!doctype html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es" >
 <head>
     <%@ include file="partials/head.jsp"%>
 </head>
@@ -14,8 +17,9 @@
 </header>
 <main class="fondo">
 
-
+    
     <section>
+
      <article>
         <div class="container">
 
@@ -42,7 +46,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${visita}" var="visita">
+                        <c:forEach items="${visitas}" var="visita">
                     <tr>
                         <td class="text-center" >${visita.fechaActual}</td>
                         <td class="text-center">${visita.sintomas}</td>
@@ -65,6 +69,37 @@
                  <a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
              </p>
          </div>
+        </article>
+
+
+        <article>
+
+
+
+
+
+
+
+
+
+<%--            <form:form action="guardar-imagen" method="POST"  modelAttribute="mascota" enctype="multipart/form-data">--%>
+
+<%--                <p class=" w3-margin-top">--%>
+<%--                    <form:input path="id" id="sintomas" type="hidden" class="w3-input" value="${mascota.id}"--%>
+<%--                                placeholder=""  />--%>
+<%--                </p>--%>
+
+<%--                <p class=" w3-margin-top">--%>
+<%--                    <label for="imagen">Imagen</label>--%>
+<%--                    <form:input path="" type="file" name="file" id="imagen"--%>
+<%--                                class="form-control"  />--%>
+<%--                </p>--%>
+<%--                <div class="card-footer bg-dark">--%>
+
+<%--                    <input type="submit" class="btn btn-primary btn-sm" value="Agregar imagen">--%>
+
+<%--                </div>--%>
+<%--            </form:form>--%>
         </article>
 
     </section>
