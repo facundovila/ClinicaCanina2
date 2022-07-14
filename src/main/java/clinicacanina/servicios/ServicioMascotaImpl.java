@@ -3,6 +3,7 @@ package clinicacanina.servicios;
 
 import clinicacanina.controladores.HistoriaClinica;
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.VisitaClinica;
 import clinicacanina.repositorios.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,10 +59,6 @@ public class ServicioMascotaImpl implements ServicioMascota {
     }
 
 
-
-
-
-
     @Override
     public List<Mascota> listarMascotas(){
 
@@ -70,18 +67,13 @@ public class ServicioMascotaImpl implements ServicioMascota {
     }
 
     @Override
-    public Mascota modificarMascota(Long id, String detalleTratamientos, String sintomas, Integer edad, Integer peso, String nombre) {
+    public Mascota modificarMascota(Long id, Integer edad, Float peso) {
 
         Mascota mascotaAModificar = buscarMascotaPorId(id);
 
-
-
         if(mascotaAModificar.getId() != null){
-//            mascotaAModificar.setDetalleTratamientos(detalleTratamientos);
-//            mascotaAModificar.setSintomas(sintomas);
-//            mascotaAModificar.setPeso(peso);
-//            mascotaAModificar.setEdad(edad);
-           Mascota mascotaModificada = repositorioMascota.modificarMascota( id, detalleTratamientos, sintomas, peso, edad, nombre);
+
+           Mascota mascotaModificada = repositorioMascota.modificarMascota( id, peso, edad);
 
             return mascotaModificada;
 
@@ -90,11 +82,19 @@ public class ServicioMascotaImpl implements ServicioMascota {
            throw new MascotaInexistenteException();
 
         }
+    }
 
+    @Override
+    public Long guardarVisitaMedicaDeMascota(Long idMascota, VisitaClinica visitaClinica){
 
+       return repositorioMascota.guardarVisitaMedica(idMascota,visitaClinica);
 
+    }
 
+    @Override
+    public List<VisitaClinica> obtenerVisitasClinicasDeLaMascota(Mascota mascota){
 
+        return repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota);
 
     }
 

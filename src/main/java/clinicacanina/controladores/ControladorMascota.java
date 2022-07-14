@@ -1,6 +1,7 @@
 package clinicacanina.controladores;
 
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.VisitaClinica;
 import clinicacanina.servicios.ServicioMascota;
 import clinicacanina.servicios.ServicioMedico;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class ControladorMascota {
     public ModelAndView listarMascotas(HttpSession session) {
 
         ModelMap model= new ModelMap();
+
 
 
         if(session.getAttribute("userId") != null){
@@ -80,12 +82,14 @@ public class ControladorMascota {
 
             Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(idMascota);
 
+            List<VisitaClinica> listaVisitas = servicioMascota.obtenerVisitasClinicasDeLaMascota(mascotaBuscada);
 
             model.put("mascota", mascotaBuscada);
+            model.put("visita", listaVisitas);
 
             return new ModelAndView("historiaClinica", model);
         }else{
-            model.put("error", "Usted debe estar registrado para acceder");
+            model.put("error", "Usted debe estar registrado para accederr");
 
             return new ModelAndView("error", model);
 
@@ -95,22 +99,24 @@ public class ControladorMascota {
 
 
 
-    @RequestMapping(path = "/modificar-mascota", method = RequestMethod.GET)
-    public ModelAndView irAModificarMascota(@RequestParam("idMascota") Long idMascota, HttpSession session) {
+    @RequestMapping(path = "/agregar-visita", method = RequestMethod.GET)
+    public ModelAndView agregarVisitas(@RequestParam("idMascota") Long idMascota, HttpSession session) {
 
         ModelMap model= new ModelMap();
 
 
         Mascota mascotaAModificar = servicioMascota.buscarMascotaPorId(idMascota);
 
+        VisitaClinica visitaClinica = new VisitaClinica();
 
         if(session.getAttribute("userId") != null && mascotaAModificar!=null ){
             model.put("mascota", mascotaAModificar );
+            model.put("visita", visitaClinica);
 
             return new ModelAndView("modificarMascota", model);
 
         }else{
-            model.put("error", "Usted debe estar registrado para acceder");
+            model.put("error", "Usted debe estar registrado para accedeer");
 
             return new ModelAndView("error", model);
         }
@@ -120,22 +126,22 @@ public class ControladorMascota {
 
 
     @RequestMapping(path = "/modificar-historia-clinica",  method = RequestMethod.POST)
-    public ModelAndView modificarHistoriaClinica(  @ModelAttribute("mascota") Mascota mascota, HttpSession session){
+    public ModelAndView agregarVisitaMedica( @ModelAttribute VisitaClinica visitaClinica, HttpSession session){
 
 
         ModelMap model= new ModelMap();
-        Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(mascota.getId());
+        Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(visitaClinica.getMascotaAsignada().getId());
+
+        servicioMascota.modificarMascota(mascotaBuscada.getId(), visitaClinica.getEdad() , visitaClinica.getPeso());
 
         if( session.getAttribute("userId") != null && mascotaBuscada!= null){
 
-       servicioMascota.modificarMascota(mascotaBuscada.getId(), mascota.getDetalleTratamientos(), mascota.getSintomas(), mascota.getEdad(), mascota.getPeso(), mascota.getNombre());
+                servicioMascota.guardarVisitaMedicaDeMascota(mascotaBuscada.getId(), visitaClinica);
 
-
-            return new ModelAndView("historiaClinica", model);
-
+                return new ModelAndView("redirect:/historia-clinica?idMascota="+mascotaBuscada.getId());
 
         }else{
-            model.put("error", "Usted debe estar registrado para acceder");
+            model.put("error", "no se encuentra mascota");
 
             return new ModelAndView("error", model);
 

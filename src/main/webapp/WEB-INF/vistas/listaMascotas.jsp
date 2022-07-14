@@ -6,14 +6,23 @@
 <head>
     <%@ include file="partials/head.jsp"%>
 </head>
-<main>
+<body>
+<header>
+    <%@ include file="partials/usuarioMenu.jsp"%>
+
+</header>
+
+<main class="fondo">
     <div class="container">
         <c:if test="${empty sinMascotas}">
+
             <h4 class="mb-3 text-center">Lista De Mascotas</h4>
-            <div class="col-6 center-block centrar">
 
 
-                <table class="table table-bordered centrar">
+            <div class="col-6 center-block centrar border rounded">
+
+
+                <table class="table table-bordered table-light  centrar">
                     <thead>
                     <tr>
                         <th scope="col" class="text-center">Nombre</th>
@@ -36,7 +45,7 @@
             </div>
         </c:if>
 
-                <h2>${sinMascotas}</h2>
+        <h2>${sinMascotas}</h2>
 
 
 
@@ -49,5 +58,6 @@
         <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
     </div>
 </footer>
+
 </body>
 </html>

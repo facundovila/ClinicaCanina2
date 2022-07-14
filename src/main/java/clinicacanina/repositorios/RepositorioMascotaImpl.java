@@ -1,11 +1,14 @@
 package clinicacanina.repositorios;
 
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.VisitaClinica;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -13,6 +16,7 @@ import java.util.List;
 public class RepositorioMascotaImpl implements RepositorioMascota {
 
     private SessionFactory sessionFactory;
+
 
     @Autowired
     public RepositorioMascotaImpl(SessionFactory sessionFactory) {
@@ -31,6 +35,7 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
     }
 
+    @Override
     public Mascota getById(Long idMascota) {
         return (Mascota) sessionFactory.getCurrentSession()
                 .createCriteria(Mascota.class)
@@ -74,18 +79,42 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
     }
 
     @Override
-    public Mascota modificarMascota(Long id, String detalleTratamientos, String sintomas, Integer peso, Integer edad, String nombre) {
+    public Mascota modificarMascota(Long id,  Float peso, Integer edad) {
 
         Mascota mascota = buscarPorId(id);
-        mascota.setSintomas(sintomas);
-        mascota.setDetalleTratamientos(detalleTratamientos);
         mascota.setEdad(edad);
         mascota.setPeso(peso);
-        mascota.setNombre(nombre);
         sessionFactory.getCurrentSession().update(mascota);
 
         return mascota;
     }
+
+    @Override
+    public List<VisitaClinica> obtenerVisitaMedicaDeLaMascota(Mascota mascota) {
+
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select distinct v from VisitaClinica v where mascotaAsignada =: mascota ")
+                .setParameter("mascota", mascota)
+                .list();
+
+
+    }
+
+    @Override
+    public Long guardarVisitaMedica(Long idMascota, VisitaClinica visita){
+
+        Mascota mascota = getById(idMascota);
+
+        visita.setMascotaAsignada(mascota);
+
+        sessionFactory.getCurrentSession().save(visita);
+
+        return visita.getId();
+
+
+    }
+
+
 
 
 }

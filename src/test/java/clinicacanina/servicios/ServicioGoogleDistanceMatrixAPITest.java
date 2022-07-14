@@ -28,6 +28,7 @@ public class ServicioGoogleDistanceMatrixAPITest {
 
 	private void obtengoLosDatosCorrespondientes(Trayecto trayecto) {
 		assertThat(trayecto.getDistancia()).isEqualTo("25.5 km");
+		System.out.println(trayecto.getDistancia());
 		
 	}
 

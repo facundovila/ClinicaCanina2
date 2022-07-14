@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ErrorDeReserva;
+import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.repositorios.RepositorioAmbulancia;
+import clinicacanina.repositorios.Trayecto;
 
 @Service @Transactional
 public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
@@ -68,13 +70,16 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		if(reservasAmbulancias.isEmpty()) {
 			throw new ErrorDeReserva();
 		}
-		for(ReservaDeAmbulancia reserva : reservasAmbulancias ) {
-			if(reserva.getAmbulancia().getPatente().equals(ambulancia.getPatente())) {
+		for (int i = 0; i < reservasAmbulancias.size(); i++) {
+			ReservaDeAmbulancia reserva = reservasAmbulancias.get(i);
+			if (reserva.getAmbulancia().getPatente().equals(ambulancia.getPatente())) {
 				return reserva;
 			}
 		}
 		return null;
 	}
+
+	
 
   
 }

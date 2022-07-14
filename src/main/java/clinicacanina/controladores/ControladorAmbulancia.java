@@ -1,5 +1,7 @@
 package clinicacanina.controladores;
 
+import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import clinicacanina.modelo.Ambulancia;
+import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.repositorios.Trayecto;
 import clinicacanina.servicios.ServicioAmbulancia;
 import clinicacanina.servicios.ServicioGoogleDistanceMatrixAPI;
+import clinicacanina.servicios.ServicioNavegacion;
 import clinicacanina.servicios.ServicioValidacionDatos;
 import clinicacanina.servicios.ServicioValidacionDatosImpl;
 
@@ -22,14 +26,16 @@ import clinicacanina.servicios.ServicioValidacionDatosImpl;
 public class ControladorAmbulancia {
 	
 	private ServicioAmbulancia servicioAmbulancia;
+	private ServicioNavegacion servicioNavegacion;
 	private ServicioValidacionDatosImpl servicioValidacionDatos = new ServicioValidacionDatosImpl();
 	private ServicioGoogleDistanceMatrixAPI servicioGoogleDistanceMatrixAPI = new ServicioGoogleDistanceMatrixAPI();
 	private String patente ="";
 	
 	@Autowired
-	public ControladorAmbulancia(ServicioAmbulancia servicioAmbulancia) {
+	public ControladorAmbulancia(ServicioAmbulancia servicioAmbulancia, ServicioNavegacion servicioNavegacion) {
 		this.servicioAmbulancia = servicioAmbulancia;
-		//this.servicioValidacionDatos = servicioValidacionDatos;
+		this.servicioNavegacion = servicioNavegacion;
+		
 	}
 
 	@RequestMapping(path="/pedir-ambulancia")
@@ -99,7 +105,7 @@ public class ControladorAmbulancia {
 		return new ModelAndView("reservaAmbulancia", model);
 	}
 	
-	//Se agrega metodo para consultar seguiemiento.
+	//Se agrega metodo para consultar seguimiento.
 	@RequestMapping(path="/ver-seguimiento")
 	public ModelAndView verSeguimiento() {
         Ambulancia ambulancia = null;
@@ -107,7 +113,7 @@ public class ControladorAmbulancia {
         String direccion = "";
         Trayecto trayecto = null;
 		ModelMap model = new ModelMap();
-		//model.put("datosParaSeguimiento", new DatosParaSeguimiento());
+		
         if(patente == "") {
         	model.put("Error", "No se puede visualizar el seguimiento.");
         	return new ModelAndView("reservaAmbulancia", model);
@@ -117,12 +123,36 @@ public class ControladorAmbulancia {
         direccion = servicioValidacionDatos.quitarEspaciosEnBlanco(reserva.getDireccion());
         try {
         trayecto = servicioGoogleDistanceMatrixAPI.getDistance(direccion);
+        
         model.put("Seguimiento", trayecto);
         model.put("Reserva", reserva);
+        // Guardo datos para el seguimiento de la Navegacion.
+        servicioNavegacion.guardarNavegacion(reserva, trayecto);
         }catch(Exception e) {
         	model.put("Error", "Ocurrio un error al intentar consultar el seguimiento.");
         }
 		return new ModelAndView("reservaAmbulancia", model);
+	}
+	
+	@RequestMapping(path="/detalle-seguimiento")
+	public ModelAndView detalleSeguimiento() {
+		ModelMap model = new ModelMap();
+		List <String> datosNavegacion = new LinkedList<String>();
+		Navegador navegador = servicioNavegacion.buscarNavegacion(patente);
+		LocalDateTime horarioDeLlegada = servicioNavegacion.calcularHorarioDeLlegada(navegador.getPatente());
+		String tiempoRestante = servicioNavegacion.calcularTiempoRestanteDeLlegada(navegador.getPatente());
+		String horarioLlegadaString = horarioDeLlegada.getHour()+":"+horarioDeLlegada.getMinute();
+		datosNavegacion.add(servicioValidacionDatos.validarHorario(navegador.getHorarioDeSolicitud()));
+		datosNavegacion.add(navegador.getTiempoEstimado());
+	    datosNavegacion.add(servicioValidacionDatos.validarHorario(horarioLlegadaString));
+	    datosNavegacion.add(tiempoRestante);
+	    if(Integer.parseInt(tiempoRestante) > 0) {
+	    	model.put("DatosNavegacion", datosNavegacion);
+	    }else {
+	    	model.put("Llegada", "La Ambulancia con patente <strong>" + navegador.getPatente() + "</strong> se encuentra en la puerta de su domicilio.");
+	    }
+	   
+	    return new ModelAndView("seguimiento", model);
 	}
 	
 }

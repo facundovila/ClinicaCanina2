@@ -1,6 +1,7 @@
 package clinicacanina.servicios;
 
 import clinicacanina.controladores.HistoriaClinica;
+import clinicacanina.modelo.VisitaClinica;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +11,7 @@ import clinicacanina.repositorios.RepositorioMascota;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -34,14 +36,13 @@ public class ServicioMascotaTest {
 		
 		//preparacion
 		String nombre = "Lupe";
-		Integer peso = 10;
+		Float peso = 10F;
 		Integer cantidadDeMascotas = 10;
 		Integer cantidadDeMascotasEsperadas = 10;
 		Integer edad=10;
-		String medicamentos = "tratamiento";
-		String detalle="detalle";
+
 		
-		List<Mascota> mascota = dadoQueExistenMascotas(cantidadDeMascotas,nombre,peso,edad, medicamentos, detalle);//crea Mascotas
+		List<Mascota> mascota = dadoQueExistenMascotas(cantidadDeMascotas,nombre,peso,edad);//crea Mascotas
 		when(repositorioMascota.buscarTodasLasMascotas()).thenReturn(mascota);
 
 
@@ -58,14 +59,14 @@ public class ServicioMascotaTest {
 	public void sePuedeBuscarUnaMascota(){
 
 		String nombre = "lupe";
-		Integer peso = 10;
+		Float peso = 10F;
 
 
 		Integer edad=10;
 		String medicamentos = "tratamiento";
 		String detalle="detalle";
 
-		Mascota mascota = dadoQueExisteMascota( nombre,  peso,  edad,  medicamentos,  detalle);
+		Mascota mascota = dadoQueExisteMascota( nombre,  peso,  edad);
 
 
 		Mascota mascotaBuscada = cuandoBuscoMascota(mascota.getId());
@@ -74,44 +75,90 @@ public class ServicioMascotaTest {
 
 	}
 
+
+	@Test
+	public void sePuedeGuardarVisitaMedica(){
+
+		Mascota mascota = new Mascota();
+		mascota.setNombre("hachi");
+		mascota.setPeso(15F);
+		mascota.setId(1l);
+
+		VisitaClinica visitaClinica = new VisitaClinica();
+		visitaClinica.setId(2l);
+
+
+		when(repositorioMascota.guardarVisitaMedica(mascota.getId(),visitaClinica)).thenReturn(visitaClinica.getId());
+
+
+		servicioMascota.guardarVisitaMedicaDeMascota(mascota.getId(), visitaClinica);
+
+		assertThat(visitaClinica.getId()).isEqualTo(2l);
+
+	}
+
+
+	@Test
+	public void sePuedeObtenerLasVisitasMedicasDeLaMascota(){
+
+		Mascota mascota = new Mascota();
+		mascota.setNombre("hachi");
+		mascota.setPeso(15F);
+		mascota.setId(1l);
+
+		VisitaClinica visitaClinica = new VisitaClinica();
+		visitaClinica.setId(2l);
+		visitaClinica.setSintomas("sintomas");
+		visitaClinica.setTratamiento("tratamiento");
+		visitaClinica.setMascotaAsignada(mascota);
+
+		List<VisitaClinica> visitasEsperadas = new LinkedList<>();
+
+		visitasEsperadas.add(visitaClinica);
+
+
+		when(repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota)).thenReturn(visitasEsperadas);
+
+
+		List<VisitaClinica> visitaRecibidas = servicioMascota.obtenerVisitasClinicasDeLaMascota(mascota);
+
+		assertThat(visitaRecibidas.contains(mascota)).isEqualTo(visitasEsperadas.contains(mascota));
+
+	}
+
+
+
+
 	@Test
 	public void sePuedeModificarLaHistoriaClinicaDeUnamascota(){
 
-
 		String nombre = "lupe";
-		Integer peso = 10;
+		Float peso = 10F;
 		Integer edad=10;
-		String medicamentos = "tratamiento";
-		String detalle="detalle";
 
-		Mascota mascota = dadoQueExisteMascotaParaModificar( nombre,  peso,  edad,  medicamentos,  detalle);
+		Mascota mascota = dadoQueExisteMascotaParaModificar( nombre,  peso,  edad);
 
-		String detalleTratamientoCambiado = "pipeta anti pulgas";
+		cuandoModificoMascota(mascota);
 
-
-		Mascota mascotaModificada = dadoQueExisteMascotaParaModificar(nombre,  peso,  edad,  medicamentos,  detalleTratamientoCambiado);
-
-
-		when(repositorioMascota.modificarMascota(mascota.getId(), mascota.getSintomas(), detalleTratamientoCambiado, mascota.getPeso(), mascota.getEdad(), mascota.getNombre())).thenReturn(mascotaModificada);
-
-
-		servicioMascota.modificarMascota(mascota.getId(),  detalleTratamientoCambiado, medicamentos,edad, peso, nombre );
-
-
-		entoncesSeModificoLaHistoriaClinicaDeLaMascota(mascotaModificada.getDetalleTratamientos(),"pipeta anti pulgas" );
-
-
-
-
+		entoncesSeModificoLaMascota(mascota);
 
 
 	}
 
-	private void entoncesSeModificoLaHistoriaClinicaDeLaMascota(String detalleTratamientos, String detalleTratamientoCambiado) {
+	private void entoncesSeModificoLaMascota(Mascota mascota) {
 
-		assertThat(detalleTratamientos).isEqualTo(detalleTratamientoCambiado);
+		assertThat(mascota.getEdad()).isEqualTo(15);
 
 	}
+
+	private Mascota cuandoModificoMascota(Mascota mascota) {
+
+		mascota.setEdad(15);
+
+		return servicioMascota.modificarMascota(mascota.getId(), mascota.getEdad(), mascota.getPeso());
+	}
+
+
 
 
 
@@ -127,14 +174,14 @@ public class ServicioMascotaTest {
 	}
 
 
-	private Mascota dadoQueExisteMascota(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
+	private Mascota dadoQueExisteMascota(String nombre, Float peso, Integer edad){
 		HistoriaClinica historiaClinica= new HistoriaClinica();
 
-		historiaClinica.setDetalleTratamientos(detalle);
+
 		historiaClinica.setEdad(edad);
 		historiaClinica.setNombre(nombre);
 		historiaClinica.setPeso(peso);
-		historiaClinica.setSintomas(medicamentos);
+
 
 		Mascota mascota = new Mascota(historiaClinica);
 
@@ -146,35 +193,33 @@ public class ServicioMascotaTest {
 
 
 	}
-	private Mascota dadoQueExisteMascotaParaModificar(String nombre, Integer peso, Integer edad, String medicamentos, String detalle){
+	private Mascota dadoQueExisteMascotaParaModificar(String nombre, Float peso, Integer edad){
 		HistoriaClinica historiaClinica= new HistoriaClinica();
 
-		historiaClinica.setDetalleTratamientos(detalle);
+
 		historiaClinica.setEdad(edad);
 		historiaClinica.setNombre(nombre);
 		historiaClinica.setPeso(peso);
-		historiaClinica.setSintomas(medicamentos);
+
 
 		Mascota mascota = new Mascota(historiaClinica);
 
 		mascota.setId(1L);
 
-		String detalleTratamientoCambiado = "pipeta anti pulgas";
 		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
+		when(repositorioMascota.modificarMascota( mascota.getId(), mascota.getPeso() , mascota.getEdad())).thenReturn(mascota);
 
 		return mascota;
 
 
 	}
 	
-	private List<Mascota> dadoQueExistenMascotas(Integer cantidadDeMascotas, String nombre, Integer peso, Integer edad, String medicamentos, String detalle) {
+	private List<Mascota> dadoQueExistenMascotas(Integer cantidadDeMascotas, String nombre, Float peso, Integer edad) {
 		HistoriaClinica historiaClinica= new HistoriaClinica();
 
-		historiaClinica.setDetalleTratamientos(detalle);
 		historiaClinica.setEdad(edad);
 		historiaClinica.setNombre(nombre);
 		historiaClinica.setPeso(peso);
-		historiaClinica.setSintomas(medicamentos);
 
 		List<Mascota> mascota1 = new ArrayList<>();
 		for (int i = 0; i < cantidadDeMascotas; i++) {

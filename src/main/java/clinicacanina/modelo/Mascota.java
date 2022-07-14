@@ -16,16 +16,18 @@ public class Mascota {
 
    //@Size(min = 3, message = "nombre invalido")
     private String nombre;
-    private Integer peso;
-    private Integer edad;
-    private String sintomas;
-    private String detalleTratamientos;
+
+
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     public Usuario getUsuario() {
         return usuario;
     }
+
+    private Float peso;
+
+    private Integer edad;
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -35,10 +37,7 @@ public class Mascota {
         this.nombre = historiaClinica.getNombre();
         this.peso = historiaClinica.getPeso();
         this.edad = historiaClinica.getEdad();
-        this.sintomas = historiaClinica.getSintomas();
-        this.detalleTratamientos = historiaClinica.getDetalleTratamientos();
     }
-
 
     public Mascota() {}
 
@@ -59,7 +58,6 @@ public class Mascota {
     }
 
 
-
     public String getNombre() {
         return nombre;
     }
@@ -68,23 +66,13 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public Integer getPeso() {
+    public Float getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Float peso) {
         this.peso = peso;
     }
-
-    public String getSintomas() {return sintomas;}
-
-    public Object setSintomas(String medicamentos) {this.sintomas = medicamentos;
-        return null;
-    }
-
-    public String getDetalleTratamientos() {return detalleTratamientos;}
-
-    public void setDetalleTratamientos(String detalleTratamientos) {this.detalleTratamientos = detalleTratamientos;}
 
 
 

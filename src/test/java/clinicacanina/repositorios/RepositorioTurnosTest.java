@@ -206,7 +206,6 @@ public class RepositorioTurnosTest extends SpringTest {
 
 	private void entoncesBuscoElTurnoYMeMuestraSoloIdFechaYmeDico(Long idTurno) {
 		Turno turnobuscado= repositorioTurnos.buscarTurnoPorId(idTurno);
-		System.out.println("\n******************TURNO BUSCADO : " + turnobuscado.getId()+"**************************************\n");
 		assertThat(turnobuscado.getFechaTurno()).isNotNull();
 		assertThat(turnobuscado.getEstado()).isTrue();
 		assertThat(turnobuscado.getMascota()).isNull();
