@@ -10,7 +10,10 @@
 </head>
 
 <body>
+<header>
+    <%@ include file="partials/usuarioMenu.jsp"%>
 
+</header>
 <main>
 
  <c:if test="${not empty DatosNavegacion}">
