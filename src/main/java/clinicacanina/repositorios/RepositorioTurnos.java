@@ -30,4 +30,6 @@ public interface RepositorioTurnos {
     Turno buscarProximoTurnoLibre();
 
     List<Turno> buscarTurnosPorFecha(Calendar calendario);
+
+    void tomarTurnoUsuario(Usuario idUsuario, Long idTurno);
 }

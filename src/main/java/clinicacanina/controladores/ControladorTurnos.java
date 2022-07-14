@@ -1,6 +1,9 @@
 package clinicacanina.controladores;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -99,17 +102,31 @@ public class ControladorTurnos {
 		servicioTurnos.tomarTurno(idMascota, idUsuario,idTurno);
 		return new ModelAndView("redirect:/usuarioHome", mapa);
 	}
-
-
-	@RequestMapping(path="/irSoliciarTurnoPorFecha", method = RequestMethod.POST)
-		public ModelAndView irSoliciarTurnoFecha(@ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno, HttpServletRequest request) {
+/*
+	@RequestMapping(path = "/tomarTurnoUsuario/{idTurno}", method = RequestMethod.POST)
+	public ModelAndView tomarTurnoUsuario(HttpServletRequest request, @PathVariable("idTurno") long idTurno) {
 		ModelMap mapa = new ModelMap();
 		if (request.getSession().getAttribute("userId") == null) {
 			return new ModelAndView("redirect:/login");
 		}
+		Long idUsuario = (Long) request.getSession().getAttribute("userId");
+		servicioTurnos.tomarTurnoUsuario(idUsuario,idTurno);
+		return new ModelAndView("redirect:/usuarioHome", mapa);
+	}
+*/
+
+	@RequestMapping(path="/irSoliciarTurnoPorFecha", method = RequestMethod.POST)
+		public ModelAndView irSoliciarTurnoFecha(@ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno, HttpServletRequest request) {
+
+		if (request.getSession().getAttribute("userId") == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		ModelMap mapa = new ModelMap();
+
 		List<Mascota> mascotas= servicioLogin.listarMascotas((long)request.getSession().getAttribute("userId"));
 		mapa.put("listaMascotas",mascotas);
 		Calendar fecha=datosSolicitarTurno.getCalendario();
+		mapa.put("mensaje",fecha);
 		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(fecha);
 		if(turnos.isEmpty()){
 			mapa.put("mensaje","Sin Turnos. Seleccione Otra Fecha");

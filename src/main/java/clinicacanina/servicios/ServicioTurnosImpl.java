@@ -67,7 +67,8 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 		repositorioTurnos.cancelarTurnoPorId(id);
 		return true;
 */
-		return repositorioTurnos.cancelarTurnoPorId(id);
+		//return repositorioTurnos.cancelarTurnoPorId(id);
+		return true;
 		}
 
 
@@ -108,9 +109,19 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 		}
 		return lista;
 	}
+
+	@Override
+	public void tomarTurnoUsuario(Long idUsuario, Long idTurno) {
+		Usuario usuario= servicioLogin.consultarUsuarioPorID(idUsuario);
+		repositorioTurnos.tomarTurnoUsuario(usuario,idTurno);
+	}
+
 	@Override
 	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
-		List <Turno>lista=repositorioTurnos.buscarTurnosPorFecha(fecha);// esto tiene el problema
+
+
+		Calendar fecha2 = new GregorianCalendar(2022,7,14,00,00,00);
+		List <Turno>lista=repositorioTurnos.buscarTurnosPorFecha(fecha2);// esto tiene el problema
 		if (lista==null){
 			lista =new ArrayList<>();
 			return lista;

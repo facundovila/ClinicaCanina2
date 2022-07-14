@@ -26,4 +26,6 @@ public interface ServicioTurnos {
     boolean tomarTurno(long idMascota, long idUsuario, long idTurno);
 
     List<Turno> buscarProximosTurnos();
+
+    void tomarTurnoUsuario(Long idUsuario, Long idTurno);
 }

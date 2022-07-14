@@ -30,6 +30,7 @@ public class ControladorUsuarioHome {
         mapa.put("userID", request.getSession().getAttribute("userId"));
 
         List<Turno> listaTurnos= servicioTurnos.turnosDelUsuario((Long) request.getSession().getAttribute("userId"));
+
         mapa.put("listaTurnosUsuario",listaTurnos);
         return new ModelAndView("usuarioHome",mapa);
     }

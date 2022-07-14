@@ -11,10 +11,12 @@
 <main>
 
     <form:form action="irSoliciarTurnoPorFecha"  modelAttribute="datosSolicitarTurno" method="POST">
-        <input type="date" id="fecha" name="fecha">
-        <input type="submit">
+        <input type="date" id="fecha2" name="fecha2">
+        <button class="w3-btn w3-section w3-green w3-ripple w3-block"
+                Type="Submit">Consultar</button>
     </form:form>
 
+    <div class="w3-panel w3-red w3-padding-16">${mensaje2}</div>
     <c:if test="${not empty mensaje}">
         <div class="w3-panel w3-red w3-padding-16">${mensaje}</div>
     </c:if>
@@ -37,15 +39,25 @@
                         <h3> El turno es el <c:out value="${Turno.fechaTurno.time.date}"></c:out>/<c:out value="${Turno.fechaTurno.time.month+1}"></c:out>
                             a las <c:out value="${Turno.fechaTurno.time.hours}"></c:out> :<c:out value="${Turno.fechaTurno.time.minutes}" />
                         </h3>
+
                         <c:if test="${not empty listaMascotas}">
                         <p>Seleccione Su Mascota Para el Turno</p>
                         <form:form action="tomarTurno/${Turno.id}/${Mascota.id}" method="POST">
                                 <c:forEach var="Mascota" items="${listaMascotas}">
-                                    <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="tomarTurno/${Turno.id}/${Mascota.id}">Turno para: ${Mascota.nombre}</button>
+                                    <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="tomarTurno/${Turno.id}/${Mascota.id}">Turno para: </button>
                                 </c:forEach>
                         </form:form>
                         <button onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red">Cancelar</button>
                         </c:if>
+                        <c:if test="${empty listaMascotas}">
+                            <p>el dia <c:out value="${Turno.fechaTurno.time.date}"></c:out>/<c:out value="${Turno.fechaTurno.time.month+1}" />  a las <c:out value="${Turno.fechaTurno.time.hours}"></c:out> :<c:out value="${Turno.fechaTurno.time.minutes}" />
+                            <form:form action="tomarTurnoUsuario/${Turno.id}" method="POST">
+                             <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="tomarTurnoUsuario/${Turno.id}">Tomar Turno</button>
+                            </form:form>
+
+                            <button onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red">Cancelar</button>
+                        </c:if>
+
                     </div>
                 </div>
             </div>
