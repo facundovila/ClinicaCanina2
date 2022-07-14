@@ -72,8 +72,8 @@
                 </table>
 
                 <p>
-                    <a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
-                    <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit"><a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a></button>
+                    <a href="agregar-visita?idMascota=${mascota.id}" type="button" class="w3-text-blue">Agregar Visita</a>
+
                 </p>
 
             </div>
