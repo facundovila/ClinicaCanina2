@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import clinicacanina.modelo.DatosCrearMascota;
 import clinicacanina.modelo.DatosSolicitarTurno;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.servicios.ServicioLogin;
@@ -77,6 +78,7 @@ public class ControladorTurnos {
 			return new ModelAndView("redirect:/login");
 		}
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
+		mapa.addAttribute("datosCrearMascota",new DatosCrearMascota());
 
 		List<Mascota> mascotas= servicioLogin.listarMascotas((long)request.getSession().getAttribute("userId"));
 		mapa.put("listaMascotas",mascotas);

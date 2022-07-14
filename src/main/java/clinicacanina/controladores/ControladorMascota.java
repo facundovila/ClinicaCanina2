@@ -5,6 +5,7 @@ import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.VisitaClinica;
 import clinicacanina.servicios.ServicioMascota;
 import clinicacanina.servicios.ServicioMedico;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,7 +37,7 @@ public class ControladorMascota {
 
         ModelMap model= new ModelMap();
 
-        model.put("datosCrearMascota",new DatosCrearMascota());
+        model.addAttribute("datosCrearMascota",new DatosCrearMascota());
 
         if(session.getAttribute("userId") != null){
 
@@ -143,7 +144,7 @@ public class ControladorMascota {
 
 
     @RequestMapping(path = "/agregarMascota",  method = RequestMethod.POST)
-    public ModelAndView agregarMascota(HttpServletRequest request, @ModelAttribute DatosCrearMascota datosCrearMascota){
+    public ModelAndView agregarMascota(HttpServletRequest request, @ModelAttribute @NotNull DatosCrearMascota datosCrearMascota){
         ModelMap mapa= new ModelMap();
         Long idUsuario = (Long) request.getSession().getAttribute("userId");
        servicioMascota.crearNuevaMascota(datosCrearMascota.getNombre(),idUsuario);

@@ -44,10 +44,6 @@
         <h2>${sinMascotas}</h2>
 
     </div>
-    <form:form action="agregarMascota"  modelAttribute="datosCrearMascota" method="POST">
-        <input path="nombre" type="text" id="nombre" placeholder="Ingrese nombre"/>
-        <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="agregarMascota">Agregar Mascota</button>
-    </form:form>
 </main>
 <footer>
 </footer>
