@@ -31,5 +31,5 @@ public interface RepositorioTurnos {
 
     List<Turno> buscarTurnosPorFecha(Calendar calendario);
 
-    void tomarTurnoUsuario(Usuario idUsuario, Long idTurno);
+    boolean tomarTurnoUsuario(Usuario idUsuario, Long idTurno);
 }

@@ -30,7 +30,8 @@ public class ServicioValidacionDatosTest {
 	private final String DIRECCION_INVALIDA_3 = "C C";
 	private final String MOTIVO_VALIDO = "Fiebre y malestar general";
 	private final String MOTIVO_INVALIDO = "Malestar con dolor de cabeza y vomitos";
-	
+	private final Integer EDAD_VALIDA = 15;
+	private final Integer EDAD_INVALIDA = 156;
 	
 	@Before
 	public void init() {
@@ -153,6 +154,26 @@ public class ServicioValidacionDatosTest {
 		listaFechaHora.add(servicioValidacionDatos.validarHorario(fechaHoraD));
 		return listaFechaHora;
 		
+	}
+
+	@Test
+	public void queSePuedaValidarLaEdadCorrecta(){
+		boolean resultado = cuandoValidoLaEdad(EDAD_VALIDA);
+		entoncesObtengoUnaValidacionCorrecta(resultado);
+
+	}
+
+	@Test
+	public void queSePuedaValidarLaEdadIncorrecta(){
+		boolean resultado = cuandoValidoLaEdad(EDAD_INVALIDA);
+		entoncesObtengoUnaValidacionIncorrecta(resultado);
+
+	}
+
+
+
+	private boolean cuandoValidoLaEdad(Integer edad) {
+		return servicioValidacionDatos.validadEdad(edad);
 	}
 
 	private boolean cuandoValidoUnMotivo(String motivo) {

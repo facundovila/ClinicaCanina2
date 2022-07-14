@@ -14,21 +14,22 @@
 <main>
     <div class="w3-col s9 w3-center">
 
-        <form:form action="modificar-historia-clinica" method="POST"
-                   modelAttribute="visita" >
+        <form:form action="modificar-historia-clinica" method="POST" modelAttribute="visita" >
             <p class=" w3-margin-top">
                 <form:input path="mascotaAsignada.id" id="sintomas" type="hidden" class="w3-input" value="${mascota.id}"
                             placeholder=""  />
             </p>
             <p class=" w3-margin-top">
                 <label for="detalleTratamientos">edad Actual</label>
-                <form:input path="edad" type="text" id="detalleTratamientos"
+                <form:input path="edad" type="number" id="edad"
                             class="w3-input" placeholder="Ingrese la edad" />
+
             </p>
             <p class=" w3-margin-top">
                 <label for="detalleTratamientos">Peso Actual</label>
-                <form:input path="peso" type="text" id="detalleTratamientos"
+                <form:input path="peso" type="number" step="0.01" id="detalleTratamientos"
                             class="w3-input" placeholder="Ingrese el peso" />
+
             </p>
             <p class=" w3-margin-top">
                 <label for="sintomas">Sintomas</label>

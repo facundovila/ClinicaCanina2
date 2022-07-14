@@ -21,13 +21,15 @@ public class ServicioMascotaTest {
 	
 	private RepositorioMascota repositorioMascota;
 	private ServicioMascota servicioMascota;
+	private ServicioLogin servicioLogin;
 
 
 
 	@Before
 	public void init() {
 		repositorioMascota = mock(RepositorioMascota.class);
-		servicioMascota = new ServicioMascotaImpl(repositorioMascota);
+		servicioLogin=mock(ServicioLogin.class);
+		servicioMascota = new ServicioMascotaImpl(repositorioMascota,servicioLogin);
 
 	}
 	
@@ -89,7 +91,7 @@ public class ServicioMascotaTest {
 
 
 		when(repositorioMascota.guardarVisitaMedica(mascota.getId(),visitaClinica)).thenReturn(visitaClinica.getId());
-
+		when(repositorioMascota.buscarPorId(mascota.getId())).thenReturn(mascota);
 
 		servicioMascota.guardarVisitaMedicaDeMascota(mascota.getId(), visitaClinica);
 

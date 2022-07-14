@@ -91,7 +91,23 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 	}
 
 
-	
+
+	@Override
+	public boolean validadEdad(Integer edad) {
+
+		int contador = 0;
+			while (edad != 0) {
+				edad = edad / 10;
+				++contador;
+			}
+
+		if(contador <= 2 ){
+			return true;
+		}
+		return false;
+	}
+
+
 	private String convertirHorarioLlegadaMinuto(char[] arrayCaracteres) {
 		String horarioConvertido = "0";
 		for(int i = 0; i < arrayCaracteres.length; i++) {
@@ -116,6 +132,7 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 		
 		return horarioConvertido;
 	}
+
 
 	private String convertirHorarioSolicitudHoraYMinuto(char[] arrayCaracteres) {
 		String horarioConvertido = "";
@@ -190,3 +207,4 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 		return horarioConvertido += time[time.length -1];
 	}
 }
+

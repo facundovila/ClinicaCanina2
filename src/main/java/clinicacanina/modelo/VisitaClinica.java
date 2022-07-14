@@ -1,6 +1,8 @@
 package clinicacanina.modelo;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,12 +19,14 @@ public class VisitaClinica {
     private String tratamiento;
 
 
-
     private Integer edad;
+
     private Float peso;
 
 
-    private final LocalDateTime fechaActual = LocalDateTime.now();
+    private String fechaActual;
+
+
 
     @ManyToOne
     @JoinColumn(name ="mascota_id")
@@ -37,8 +41,15 @@ public class VisitaClinica {
         this.mascotaAsignada = mascotaAsignada;
     }
 
-    public LocalDateTime getFechaActual() {
+
+
+    public String getFechaActual() {
+
         return fechaActual;
+    }
+
+    public void setFechaActual(String fechaActual) {
+        this.fechaActual = fechaActual;
     }
 
 
@@ -74,4 +85,7 @@ public class VisitaClinica {
     public void setId(Long id) {
         this.id = id;
     }
+
+
+
 }

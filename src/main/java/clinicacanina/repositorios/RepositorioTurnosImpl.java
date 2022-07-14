@@ -180,35 +180,21 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		return results;
 */
 
-		//Turno turno = new Turno();
-		//turno.setFechaTurno(calendario);
-		//return sessionFactory.getCurrentSession().createCriteria(Turno.class).add(Restrictions.eq("fechaTurno",turno.getFechaTurno())).list();
 
+		///////////////////////
 		return sessionFactory.getCurrentSession().createQuery("select t from turno t where t.estado=true and t.fechaTurno >=:fechaActual")
-				.setParameter("fechaActual",calendario,TemporalType.TIMESTAMP).list();
-
-
-	//	final Session session = sessionFactory.getCurrentSession();
-	//	return session.createCriteria(Turno.class)
-		//		.add(Restrictions.like("fechaTurno", calendario.getTime()))
-//				.list();
-
-		//return sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true  and t.fechaTurno >=:fechaActual and t.fechaTurno <=:fechaFin")
-		//		.setParameter("fechaActual",fechaActual,TemporalType.TIMESTAMP).setParameter("fechaFin",fechaMaxima,TemporalType.TIMESTAMP).list();
-		//return sessionFactory.getCurrentSession().createQuery("select t from turno t where t.estado=true and t.fechaTurno =:fechaActual")
-		//		.setParameter("fechaActual",calendario,TemporalType.DATE).list();
-
-
+				.setParameter("fechaActual",calendario,TemporalType.TIMESTAMP).setMaxResults(10).list();
 
 	}
 
 	@Override
-	public void tomarTurnoUsuario(Usuario idUsuario, Long idTurno) {
+	public boolean tomarTurnoUsuario(Usuario idUsuario, Long idTurno) {
 		String hql = "update turno t set t.estado=false, t.usuario=:idUsuario  where t.id=:id";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("id",idTurno);
 		query.setParameter("idUsuario",idUsuario);
 		query.executeUpdate();
+		return true;
 	}
 
 

@@ -14,10 +14,7 @@ import java.util.List;
 
 @Repository
 public class RepositorioMascotaImpl implements RepositorioMascota {
-
     private SessionFactory sessionFactory;
-
-
     @Autowired
     public RepositorioMascotaImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -45,9 +42,9 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
 
 
+
     @Override
     public Long guardar(Mascota mascota){
-
         sessionFactory.getCurrentSession().save(mascota);
         return mascota.getId();
 
@@ -88,6 +85,20 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
         return mascota;
     }
+
+
+    @Override
+    public void guardarImagen(Long id, String originalFilename) {
+
+        Mascota mascota = buscarPorId(id);
+        mascota.setImagen(originalFilename);
+
+        sessionFactory.getCurrentSession().update(mascota);
+
+    }
+
+
+
 
     @Override
     public List<VisitaClinica> obtenerVisitaMedicaDeLaMascota(Mascota mascota) {

@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
+import java.util.List;
 
 @Entity
 @Table(name = "mascota")
@@ -13,8 +14,6 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-   //@Size(min = 3, message = "nombre invalido")
     private String nombre;
 
 
@@ -29,9 +28,16 @@ public class Mascota {
 
     private Integer edad;
 
+    private String imagen;
+
+
+
+
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
 
     public Mascota(HistoriaClinica historiaClinica){
         this.nombre = historiaClinica.getNombre();
@@ -74,8 +80,13 @@ public class Mascota {
         this.peso = peso;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
 
-
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
 
 

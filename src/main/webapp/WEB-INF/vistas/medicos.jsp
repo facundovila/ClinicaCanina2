@@ -18,7 +18,6 @@
     <h3 class="form-signin-heading">Enviar Medico</h3>
     <c:forEach items="${medico}" var="each">
      <form:form action="enviar-medico" method="POST" modelAttribute="datosMedicos">
-
                     <hr class="colorgraph"><br>
                     <h4>Dni : ${each.dni} </h4>
                     <h4>Nombre medico : ${each.nombre} </h4>

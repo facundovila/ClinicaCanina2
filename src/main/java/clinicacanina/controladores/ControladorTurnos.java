@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import clinicacanina.modelo.DatosCrearMascota;
 import clinicacanina.modelo.DatosSolicitarTurno;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.servicios.ServicioLogin;
@@ -77,6 +78,7 @@ public class ControladorTurnos {
 			return new ModelAndView("redirect:/login");
 		}
 		mapa.put("datosSolicitarTurno", new DatosSolicitarTurno());
+		mapa.addAttribute("datosCrearMascota",new DatosCrearMascota());
 
 		List<Mascota> mascotas= servicioLogin.listarMascotas((long)request.getSession().getAttribute("userId"));
 		mapa.put("listaMascotas",mascotas);
@@ -124,16 +126,7 @@ public class ControladorTurnos {
 		}
 		ModelMap mapa = new ModelMap();
 
-
-		Date date = null;
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitarTurno.getFecha2());
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
-		Calendar calender = Calendar.getInstance();
-		calender.setTime(date);
-		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(calender);
+		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(datosSolicitarTurno.getFecha2());
 		if(turnos.isEmpty()){
 			mapa.put("mensaje","Sin Turnos. Seleccione Otra Fecha");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);

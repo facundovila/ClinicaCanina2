@@ -2,13 +2,17 @@ package clinicacanina.servicios;
 
 
 import clinicacanina.controladores.HistoriaClinica;
+import clinicacanina.modelo.DatosCrearMascota;
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Usuario;
 import clinicacanina.modelo.VisitaClinica;
 import clinicacanina.repositorios.RepositorioMascota;
+import clinicacanina.repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,13 +20,15 @@ import java.util.List;
 public class ServicioMascotaImpl implements ServicioMascota {
 
     private RepositorioMascota repositorioMascota;
+    private ServicioLogin ServicioLogin;
+
 
 
 
     @Autowired
-    public ServicioMascotaImpl(RepositorioMascota repositorioMascota){
-
-        this.repositorioMascota = repositorioMascota;
+    public ServicioMascotaImpl(RepositorioMascota repositorioMascota,ServicioLogin ServicioLogin){
+     this.ServicioLogin=ServicioLogin;
+     this.repositorioMascota = repositorioMascota;
 
     }
 
@@ -87,16 +93,65 @@ public class ServicioMascotaImpl implements ServicioMascota {
     @Override
     public Long guardarVisitaMedicaDeMascota(Long idMascota, VisitaClinica visitaClinica){
 
-       return repositorioMascota.guardarVisitaMedica(idMascota,visitaClinica);
+        LocalDateTime horarioActual = LocalDateTime.now();
+
+        String HorarioActualParseado = parseHoraActual(horarioActual);
+
+        visitaClinica.setFechaActual(HorarioActualParseado);
+
+        Mascota mascotaBuscada = buscarMascotaPorId(idMascota);
+
+        if(mascotaBuscada.getId() != null){
+            return repositorioMascota.guardarVisitaMedica(mascotaBuscada.getId() ,visitaClinica);
+        }else{
+            throw new MascotaInexistenteException();
+        }
+
 
     }
 
     @Override
     public List<VisitaClinica> obtenerVisitasClinicasDeLaMascota(Mascota mascota){
 
-        return repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota);
+        if(mascota !=null){
+            return repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota);
+
+        }else{
+            throw new MascotaInexistenteException();
+        }
+
+    }
+
+    @Override
+    public void guardarImagen(Long id, String originalFilename) {
+        Mascota mascotaAModificar = buscarMascotaPorId(id);
+
+        repositorioMascota.guardarImagen(id, originalFilename);
 
     }
 
 
+    private String parseHoraActual(LocalDateTime horarioActual){
+
+        String horaActual = horarioActual.getYear() + "-" + horarioActual.getMonthValue() + "-"
+                + horarioActual.getDayOfMonth();
+
+
+        return horaActual;
+
+    }
+
+    @Override
+    public void crearNuevaMascota(String datosCrearMascota, Long idUsuario) {
+        Mascota mascota= new Mascota();
+        Usuario usuario= ServicioLogin.consultarUsuarioPorID(idUsuario);
+        mascota.setNombre(datosCrearMascota);
+        mascota.setUsuario(usuario);
+        repositorioMascota.guardar(mascota);
+    }
+
+
 }
+
+
+

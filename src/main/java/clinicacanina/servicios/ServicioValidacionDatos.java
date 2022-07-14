@@ -8,7 +8,11 @@ public interface ServicioValidacionDatos {
 	boolean validarMotivo(String motivo);
 	String quitarEspaciosEnBlanco(String cadena);
 	boolean validarPatente(String patente);
+
 	String validarHorario(String time);
 	
 
+
+
+    boolean validadEdad(Integer edad);
 }

@@ -1,6 +1,7 @@
 package clinicacanina.servicios;
 
 import clinicacanina.controladores.HistoriaClinica;
+import clinicacanina.modelo.DatosCrearMascota;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.VisitaClinica;
 
@@ -14,8 +15,6 @@ public interface ServicioMascota {
 
      Mascota crearMascota(HistoriaClinica historiaClinica);
 
-
-
      Mascota buscarMascotaPorId(Long id);
 
      List<Mascota> listarMascotas();
@@ -26,5 +25,10 @@ public interface ServicioMascota {
 
      List<VisitaClinica> obtenerVisitasClinicasDeLaMascota(Mascota mascota);
 
+
+
+     void guardarImagen(Long id, String originalFilename);
+
+    void crearNuevaMascota(String datosCrearMascota, Long idUsuario);
 
 }

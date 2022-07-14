@@ -331,3 +331,4 @@ UPDATE `db`.`turno` SET estado = false, mascota_id = 1, usuario_id = 1 where id 
 
 
 
+select * from visitaclinica;
