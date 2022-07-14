@@ -5,12 +5,12 @@ import java.util.Date;
 
 public class DatosSolicitarTurno {
     private Calendar fecha;
-    private Date fecha2;
-    public Date getFecha2() {
+    private String fecha2;
+    public String getFecha2() {
         return fecha2;
     }
 
-    public void setFecha2(Date fecha2) {
+    public void setFecha2(String fecha2) {
         this.fecha2 = fecha2;
     }
 

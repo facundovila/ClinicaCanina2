@@ -102,7 +102,6 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 	@Override
 	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
-
 		List <Turno>lista=repositorioTurnos.buscarTurnosPorFecha(fecha);// esto tiene el problema
 		if (lista==null){
 			lista =new ArrayList<>();

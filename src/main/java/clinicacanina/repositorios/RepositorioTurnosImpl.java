@@ -6,6 +6,7 @@ import java.util.*;
 
 import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Usuario;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +186,12 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 		return sessionFactory.getCurrentSession().createQuery("select t from turno t where t.estado=true and t.fechaTurno >=:fechaActual")
 				.setParameter("fechaActual",calendario,TemporalType.TIMESTAMP).list();
+
+
+	//	final Session session = sessionFactory.getCurrentSession();
+	//	return session.createCriteria(Turno.class)
+		//		.add(Restrictions.like("fechaTurno", calendario.getTime()))
+//				.list();
 
 		//return sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true  and t.fechaTurno >=:fechaActual and t.fechaTurno <=:fechaFin")
 		//		.setParameter("fechaActual",fechaActual,TemporalType.TIMESTAMP).setParameter("fechaFin",fechaMaxima,TemporalType.TIMESTAMP).list();

@@ -1,6 +1,7 @@
 package clinicacanina.controladores;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -102,7 +103,7 @@ public class ControladorTurnos {
 		servicioTurnos.tomarTurno(idMascota, idUsuario,idTurno);
 		return new ModelAndView("redirect:/usuarioHome", mapa);
 	}
-/*
+
 	@RequestMapping(path = "/tomarTurnoUsuario/{idTurno}", method = RequestMethod.POST)
 	public ModelAndView tomarTurnoUsuario(HttpServletRequest request, @PathVariable("idTurno") long idTurno) {
 		ModelMap mapa = new ModelMap();
@@ -113,7 +114,7 @@ public class ControladorTurnos {
 		servicioTurnos.tomarTurnoUsuario(idUsuario,idTurno);
 		return new ModelAndView("redirect:/usuarioHome", mapa);
 	}
-*/
+
 
 	@RequestMapping(path="/irSoliciarTurnoPorFecha", method = RequestMethod.POST)
 		public ModelAndView irSoliciarTurnoFecha( HttpServletRequest request, @ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno) {
@@ -123,11 +124,16 @@ public class ControladorTurnos {
 		}
 		ModelMap mapa = new ModelMap();
 
-		List<Mascota> mascotas= servicioLogin.listarMascotas((long)request.getSession().getAttribute("userId"));
-		mapa.put("listaMascotas",mascotas);
-		Calendar fecha=datosSolicitarTurno.getCalendario();
-		mapa.put("mensaje",fecha);
-		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(fecha);
+
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitarTurno.getFecha2());
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+		Calendar calender = Calendar.getInstance();
+		calender.setTime(date);
+		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(calender);
 		if(turnos.isEmpty()){
 			mapa.put("mensaje","Sin Turnos. Seleccione Otra Fecha");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);
