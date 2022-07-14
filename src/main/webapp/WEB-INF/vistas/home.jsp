@@ -6,23 +6,38 @@
 <head>
     <%@ include file="partials/head.jsp"%>
 </head>
+<body>
+<header>
+    <%@ include file="partials/usuarioMenu.jsp"%>
+
+</header>
+
 <main>
-
-    <section >
-
-
-
-            </div>
-        </div>
-
-
-
-    </section>
-
-
-</main>
+    <form:form action="validar-registro" method="POST"
+               modelAttribute="datosRegistro">
+    <p class="w3-center w3-margin-top">
+        <form:input path="email" id="email" type="email" class="w3-input"
+                    placeholder="Email" />
+    </p>
+    <p class="w3-center w3-margin-top">
+        <form:input path="contrasenia" type="password" id="contrasenia"
+                    class="w3-input" placeholder="Contraseña" />
+    </p>
+    <p class="w3-center w3-margin-top">
+        <form:input path="repetirContrasenia" type="password"
+                    id="repetirContrasenia" class="w3-input"
+                    placeholder="Repetir Contraseña" />
+    </p>
+    <c:if test="${not empty error}">
+    <div class="w3-panel w3-red w3-padding-16">${error}</div>
+    </c:if>
+    <p>
+        <button class="w3-btn w3-section w3-green w3-ripple w3-block"
+                Type="Submit">Registarme</button>
+    </p>
+    <a href="login" class="w3-text-white">Login</a>
+    </form:form>
 <footer>
-
 </footer>
 
 </body>

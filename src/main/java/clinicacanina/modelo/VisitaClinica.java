@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 
 
 @Entity
@@ -22,8 +24,9 @@ public class VisitaClinica {
     private Float peso;
 
 
-
     private String fechaActual;
+
+
 
     @ManyToOne
     @JoinColumn(name ="mascota_id")
@@ -39,7 +42,9 @@ public class VisitaClinica {
     }
 
 
+
     public String getFechaActual() {
+
         return fechaActual;
     }
 

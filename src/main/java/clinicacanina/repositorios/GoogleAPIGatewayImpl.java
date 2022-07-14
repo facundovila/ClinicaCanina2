@@ -12,7 +12,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class GoogleAPIGatewayImpl implements GoogleAPIGateway {
-	private static final String API_KEY = "AIzaSyBpjkjbKC2aQvK0Vy1OMlWmLtwSOqd_o9w";
+	private static final String API_KEY = "AIzaSyCDh2CzrRsSLv6D4Dd2Zj6bhGubnODsdYo";
 	private final String origen = "FlorencioVarela1903SanJusto";
 
 	@Override

@@ -18,10 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class ServicioNavegacionImpl implements ServicioNavegacion {
 
 	private RepositorioNavegacion repositorioNavegacion;
+	private ServicioValidacionDatos servicioValidacionDatos;
 
 	@Autowired
 	public ServicioNavegacionImpl(RepositorioNavegacion repositorioNavegacion) {
 		this.repositorioNavegacion = repositorioNavegacion;
+		this.servicioValidacionDatos = new ServicioValidacionDatosImpl();
 	}
 
 	@Override
@@ -33,9 +35,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
 	@Override
 	public LocalDateTime calcularHorarioDeLlegada(String patente) {
 		LocalDateTime horarioSolicitud;
-		// String horarioActualString = horarioActual.getYear() +
-		// "-"+horarioActual.getMonthValue()+"-"+horarioActual.getDayOfMonth()+"
-		// "+horarioActual.getHour()+":"+horarioActual.getMinute();
+		
 		Navegador navegador = buscarNavegacion(patente);
 		String tiempoEstimado = navegador.getTiempoEstimado();
 		Integer tiempoEstimadoNumber = parseTiempoEstimadoDeLlegada(tiempoEstimado);
@@ -48,7 +48,6 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
 				+ horarioLlegada.getDayOfMonth() + " " + horarioLlegada.getHour() + ":" + horarioLlegada.getMinute();
 
 		navegador.setHorarioDeLlegada(horarioLLegadaString);
-		// navegador.setHorarioDeSolicitud(horarioActualString);
 		// ---------Se actualizan los datos del Navegador en la BD -------------------
 		actualizarNavegacion(navegador);
 		return horarioLlegada;
@@ -91,7 +90,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
 		navegador.setLocalidadDestino(trayecto.getLocalidadDestino());
 		navegador.setDistancia(trayecto.getDistancia());
 		navegador.setTiempoEstimado(trayecto.getTiempo());
-		navegador.setHorarioDeSolicitud(horarioActualString);
+		navegador.setHorarioDeSolicitud(servicioValidacionDatos.validarHorario(horarioActualString));
 		repositorioNavegacion.guardarNavegacion(navegador);
 
 		return navegador.getReserva().getAmbulancia().getPatente();

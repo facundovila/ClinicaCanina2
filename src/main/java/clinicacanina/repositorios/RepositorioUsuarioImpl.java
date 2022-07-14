@@ -1,5 +1,7 @@
 package clinicacanina.repositorios;
 
+import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Turno;
 import clinicacanina.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,7 +9,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("repositorioUsuario")
+
+import java.util.List;
+
+@Repository
 public class RepositorioUsuarioImpl implements RepositorioUsuario{
 
     // Maneja acciones de persistencia, normalmente estara inyectado el session factory de hibernate
@@ -47,6 +52,18 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
     @Override
     public void modificar(Usuario usuario) {
         sessionFactory.getCurrentSession().update(usuario);
+    }
+
+    @Override
+    public Usuario consultarUsuarioPorID(long id) {
+        //return (Usuario) sessionFactory.getCurrentSession().createQuery("from usuario u where u.id >= :id" ).setLong("id",id).uniqueResult();
+        return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class).add(Restrictions.eq("id",id)).uniqueResult();
+    }
+
+    @Override
+    public List<Mascota> listarMascotasPropias(long idUsuario) {
+        return sessionFactory.getCurrentSession().createQuery("from Mascota m where m.usuario.id >= :id" ).setLong("id",idUsuario).list();
+
     }
 
 }

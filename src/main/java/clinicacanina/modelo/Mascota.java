@@ -14,11 +14,15 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
-
-   //@Size(min = 3, message = "nombre invalido")
     private String nombre;
+
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
     private Float peso;
 
@@ -30,12 +34,16 @@ public class Mascota {
 
 
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+
     public Mascota(HistoriaClinica historiaClinica){
         this.nombre = historiaClinica.getNombre();
         this.peso = historiaClinica.getPeso();
         this.edad = historiaClinica.getEdad();
     }
-
 
     public Mascota() {}
 
@@ -54,7 +62,6 @@ public class Mascota {
     public void setId(Long id) {
         this.id = id;
     }
-
 
 
     public String getNombre() {

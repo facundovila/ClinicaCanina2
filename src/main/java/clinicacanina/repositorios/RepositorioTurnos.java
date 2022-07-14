@@ -3,7 +3,9 @@ package clinicacanina.repositorios;
 import java.util.Calendar;
 import java.util.List;
 
+import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Turno;
+import clinicacanina.modelo.Usuario;
 
 public interface RepositorioTurnos {
 
@@ -22,4 +24,12 @@ public interface RepositorioTurnos {
 	Boolean cancelarTurnoPorId(Long id);
 
 	List<Turno> mostarTurnosDisponiblesFechaHoy();
+
+    boolean tomarTurno(Mascota idMascota, Usuario idUsuario, long idTurno);
+
+    Turno buscarProximoTurnoLibre();
+
+    List<Turno> buscarTurnosPorFecha(Calendar calendario);
+
+    boolean tomarTurnoUsuario(Usuario idUsuario, Long idTurno);
 }

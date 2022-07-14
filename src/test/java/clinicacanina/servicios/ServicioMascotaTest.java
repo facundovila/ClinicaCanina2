@@ -21,13 +21,15 @@ public class ServicioMascotaTest {
 	
 	private RepositorioMascota repositorioMascota;
 	private ServicioMascota servicioMascota;
+	private ServicioLogin servicioLogin;
 
 
 
 	@Before
 	public void init() {
 		repositorioMascota = mock(RepositorioMascota.class);
-		servicioMascota = new ServicioMascotaImpl(repositorioMascota);
+		servicioLogin=mock(ServicioLogin.class);
+		servicioMascota = new ServicioMascotaImpl(repositorioMascota,servicioLogin);
 
 	}
 	

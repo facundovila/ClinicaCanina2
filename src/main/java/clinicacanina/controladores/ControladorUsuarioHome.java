@@ -17,7 +17,6 @@ public class ControladorUsuarioHome {
     private ServicioTurnos servicioTurnos;
     @Autowired
     public ControladorUsuarioHome(ServicioTurnos servicioTurnos){
-
         this.servicioTurnos=servicioTurnos;
     }
 
@@ -27,9 +26,10 @@ public class ControladorUsuarioHome {
         if (request.getSession().getAttribute("userId") == null) {
             return new ModelAndView("redirect:/login");
         }
-
         mapa.put("userID", request.getSession().getAttribute("userId"));
-        List<Turno> listaTurnos= servicioTurnos.turnosDelUsuario(1L);
+
+        List<Turno> listaTurnos= servicioTurnos.turnosDelUsuario((Long) request.getSession().getAttribute("userId"));
+
         mapa.put("listaTurnosUsuario",listaTurnos);
         return new ModelAndView("usuarioHome",mapa);
     }
