@@ -146,9 +146,14 @@ public class ControladorAmbulancia {
 		datosNavegacion.add(navegador.getTiempoEstimado());
 	    datosNavegacion.add(servicioValidacionDatos.validarHorario(horarioLlegadaString));
 	    datosNavegacion.add(tiempoRestante);
-	    if(Integer.parseInt(tiempoRestante) > 0) {
+	    if(Integer.parseInt(tiempoRestante) > 1) {
 	    	model.put("DatosNavegacion", datosNavegacion);
-	    }else {
+	    }
+	    if(Integer.parseInt(tiempoRestante) == 1) {
+	    	model.put("DatosNavegacion", datosNavegacion);
+	    	model.put("Cerca", "La Ambulancia esta cerca...");
+	    	}
+	    if(Integer.parseInt(tiempoRestante) <= 0){
 	    	model.put("Llegada", "La Ambulancia con patente <strong>" + navegador.getPatente() + "</strong> se encuentra en la puerta de su domicilio.");
 	    }
 	   

@@ -30,8 +30,18 @@
               <span> Restan : ${DatosNavegacion.get(3)} minutos para que arrive la ambulancia</span>
              <br>
               <br>
-           
+           <div id="actualizar">
+           <a href="http://localhost:8080/ClinicaCanina2/detalle-seguimiento">Actualizar</a>
+           </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <c:if test="${not empty Cerca }">
+        <div id="cercania">
+          <p>${Cerca}</p>
+        </div>
+        </c:if>
  </c:if>
  <c:if test="${not empty Llegada}">
         <div id="now">
