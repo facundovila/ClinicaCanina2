@@ -10,20 +10,23 @@
     <%@ include file="partials/usuarioMenu.jsp"%>
 <main>
 
-        <section>
+        <section >
             <article>
                 <c:if test="${not empty listaMascotas}">
-                <div class="container">
+                <div >
                     <h2 class="mb-3 ">Mis Mascotas</h2>
                     <div style="display: inline-flex">
                         <c:forEach var="Mascota" items="${listaMascotas}">
-                        <div class="card border-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header"><h4>${Mascota.nombre}</h4></div>
-                                <div class="card-body text-dark">
-                                <p class="card-text">edad: ${Mascota.edad}</p>
-                                    <p class="card-text">peso: ${Mascota.peso}</p>
+                            <div  class="row justify-content-center aling-items-center">
+                                <div class="card border-dark mb-3" style="max-width: 24rem;">
+                                    <div class="card-header"><h4>${Mascota.nombre}</h4></div>
+                                    <div class="card-body text-dark">
+                                        <p class="card-text">edad: ${Mascota.edad}</p>
+                                        <p class="card-text">peso: ${Mascota.peso}</p>
+                                    </div>
                                 </div>
-                         </div>
+                            </div>
+
                         </c:forEach>
                     </div>
                 </div>
