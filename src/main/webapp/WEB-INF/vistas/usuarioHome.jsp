@@ -10,22 +10,22 @@
     <%@ include file="partials/usuarioMenu.jsp"%>
 <main>
 
-        <section >
+        <section>
             <article>
                 <c:if test="${not empty listaMascotas}">
-                <div >
+                <div>
                     <h2 class="mb-3 ">Mis Mascotas</h2>
                     <div style="display: inline-flex">
                         <c:forEach var="Mascota" items="${listaMascotas}">
-                            <div  class="row justify-content-center aling-items-center">
-                                <div class="card border-dark mb-3" style="max-width: 24rem;">
+
+                                <div class="card border-dark mb-3" style="min-width: 18rem;">
                                     <div class="card-header"><h4>${Mascota.nombre}</h4></div>
                                     <div class="card-body text-dark">
                                         <p class="card-text">edad: ${Mascota.edad}</p>
                                         <p class="card-text">peso: ${Mascota.peso}</p>
                                     </div>
                                 </div>
-                            </div>
+
 
                         </c:forEach>
                     </div>
@@ -45,7 +45,7 @@
                                     <form:input path="nombre" type="imput" id="nombre" placeholder="Ingrese nombre"/>
                                     <button class="w3-button w3-green w3-round w3-small w3-border" type="submit" formaction="agregarMascota">Agregar Mascota</button>
                                     </form:form>
-                                    <button onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red">Cancelar</button>
+                                    <button onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-red">Cancelar</button>
 
                             </div>
                         </div>
