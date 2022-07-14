@@ -185,7 +185,7 @@ public class ControladorMascota {
         Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(mascota.getId());
 
         if (!imagen.isEmpty()) {
-            Path directorioImagenes = Paths.get("src//main//resources//static//images");
+            Path directorioImagenes = Paths.get("src//main//resources//static/images");
             String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 
             try {

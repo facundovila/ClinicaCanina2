@@ -4,14 +4,14 @@
 <head>
     <%@ include file="partials/head.jsp"%>
 </head>
-<body>
+<body  class="fondo2">
 
 <header>
     <%@ include file="partials/usuarioMenu.jsp"%>
 
 </header>
 
-<main  class="fondo2">
+<main >
     <br>
     <br>
 

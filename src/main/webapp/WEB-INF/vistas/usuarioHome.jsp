@@ -6,9 +6,9 @@
 <head>
     <%@ include file="partials/head.jsp"%>
 </head>
-<body>
+<body  class="fondo2">
     <%@ include file="partials/usuarioMenu.jsp"%>
-<main class="fondo2">
+<main>
 
         <section>
             <article>

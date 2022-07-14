@@ -6,13 +6,13 @@
 <head>
     <%@ include file="partials/head.jsp"%>
 </head>
-<body>
+<body class="fondo2">
 <header>
     <%@ include file="partials/usuarioMenu.jsp"%>
 
 </header>
 
-<main class="fondo2">
+<main >
     <div class="container">
         <c:if test="${empty sinMascotas}">
             <h4 class="mb-3 text-center">Lista De Mascotas</h4>

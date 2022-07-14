@@ -95,6 +95,7 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 	@Override
 	public boolean validadEdad(Integer edad) {
 
+
 		int contador = 0;
 			while (edad != 0) {
 				edad = edad / 10;
