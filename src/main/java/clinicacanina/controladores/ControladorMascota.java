@@ -143,31 +143,21 @@ public class ControladorMascota {
 
 
         if (session.getAttribute("userId") != null && mascotaBuscada != null) {
-
             Boolean esValidaLaEdad = servicioValidacionDatos.validadEdad(visitaClinica.getEdad());
-
             if (esValidaLaEdad == false) {
-
                 model.put("error", "Edad invalida.");
-
                 return new ModelAndView("error", model);
             }
-
             try {
                 servicioMascota.modificarMascota(mascotaBuscada.getId(), visitaClinica.getEdad(),
                         visitaClinica.getPeso());
 
                 servicioMascota.guardarVisitaMedicaDeMascota(mascotaBuscada.getId(),
                         visitaClinica);
-
             } catch (Exception e) {
-
                 model.put("Error", "Ocurrio un error inesperado al intentar agregar la visita medica.");
-
             }
-
             return new ModelAndView("redirect:/historia-clinica?idMascota=" + mascotaBuscada.getId(), model);
-
         } else {
             model.put("error", "no se encuentra mascota");
 
