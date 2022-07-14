@@ -12,41 +12,50 @@
 </header>
 
 <main>
-    <div class="w3-col s9 w3-center">
+    <br>
+    <br>
 
-        <form:form action="modificar-historia-clinica" method="POST" modelAttribute="visita" >
-            <p class=" w3-margin-top">
-                <form:input path="mascotaAsignada.id" id="sintomas" type="hidden" class="w3-input" value="${mascota.id}"
-                            placeholder=""  />
-            </p>
-            <p class=" w3-margin-top">
-                <label for="detalleTratamientos">edad Actual</label>
-                <form:input path="edad" type="number" id="edad"
-                            class="w3-input" placeholder="Ingrese la edad" />
+    <div class="row justify-content-center aling-items-center">
+        <div class="card text-center"  style="max-width: 50rem;">
+            <div class="card-header"><h4>Nueva visita medica</h4></div>
+            <div class="card-body text-center">
 
-            </p>
-            <p class=" w3-margin-top">
-                <label for="detalleTratamientos">Peso Actual</label>
-                <form:input path="peso" type="number" step="0.01" id="detalleTratamientos"
-                            class="w3-input" placeholder="Ingrese el peso" />
+                <form:form action="modificar-historia-clinica" method="POST" modelAttribute="visita" >
+                    <p class=" w3-margin-top">
+                        <form:input path="mascotaAsignada.id" id="sintomas" type="hidden" class="form-control" value="${mascota.id}"
+                                    placeholder=""  />
+                    </p>
+                    <div class="form-row">
+                        <div class="form-group ">
+                            <label for="edad">edad Actual</label>
+                            <form:input path="edad" type="number" id="edad"
+                                        class="form-control" placeholder="Ingrese la edad" />
+                        </div>
+                        <div class="form-group ">
+                            <label for="peso">Peso Actual</label>
+                            <form:input path="peso" type="number" step="0.01" id="peso"
+                                        class="form-control" placeholder="Ingrese el peso" />
+                        </div>
+                    </div>
 
-            </p>
-            <p class=" w3-margin-top">
-                <label for="sintomas">Sintomas</label>
-                <form:input path="sintomas" id="sintomas" type="text" class="w3-input"
-                            placeholder="Sintomas:" />
-            </p>
-            <p class=" w3-margin-top">
-                <label for="detalleTratamientos">Detalle del tratamiento</label>
-                <form:input path="tratamiento" type="text" id="detalleTratamientos"
-                            class="w3-input" placeholder="Tratamiento dado:" />
-            </p>
+                    <div class="form-group " >
+                        <label for="sintomas">Sintomas</label>
+                        <form:input path="sintomas" id="sintomas" type="text" class="form-control"
+                                    placeholder="Sintomas:" />
+                    </div>
+                    <div class="form-group ">
+                        <label for="detalleTratamientos">Detalle del tratamiento</label>
+                        <form:textarea path="tratamiento"  id="detalleTratamientos" cols="60" rows="10" class="form-control"></form:textarea>
+                    </div>
 
 
-                <form:button type="submit" class="btn btn-primary mt-2">modificar</form:button>
-            </p>
+                    <form:button type="submit" class="btn btn-primary mt-2">modificar</form:button>
+                    </p>
 
-        </form:form>
+                </form:form>
+            </div>
+        </div>
+
 
 
     </div>

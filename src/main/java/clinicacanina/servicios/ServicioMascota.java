@@ -30,5 +30,6 @@ public interface ServicioMascota {
      void guardarImagen(Long id, String originalFilename);
 
     void crearNuevaMascota(String datosCrearMascota, Long idUsuario);
+     List<Mascota> listarMascotasPorUsuario(Long idUsuario);
 
 }

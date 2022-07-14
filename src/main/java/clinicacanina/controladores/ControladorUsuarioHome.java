@@ -1,6 +1,9 @@
 package clinicacanina.controladores;
 
+import clinicacanina.modelo.DatosCrearMascota;
+import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Turno;
+import clinicacanina.servicios.ServicioMascota;
 import clinicacanina.servicios.ServicioTurnos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +18,11 @@ import java.util.List;
 @Controller
 public class ControladorUsuarioHome {
     private ServicioTurnos servicioTurnos;
+    private ServicioMascota servicioMascota;
     @Autowired
-    public ControladorUsuarioHome(ServicioTurnos servicioTurnos){
+    public ControladorUsuarioHome(ServicioTurnos servicioTurnos,ServicioMascota servicioMascota){
         this.servicioTurnos=servicioTurnos;
+        this.servicioMascota=servicioMascota;
     }
 
     @RequestMapping("/usuarioHome")
@@ -27,10 +32,12 @@ public class ControladorUsuarioHome {
             return new ModelAndView("redirect:/login");
         }
         mapa.put("userID", request.getSession().getAttribute("userId"));
-
+        mapa.addAttribute("datosCrearMascota",new DatosCrearMascota());
+        List<Mascota> listaMascotas= servicioMascota.listarMascotasPorUsuario((Long) request.getSession().getAttribute("userId"));
         List<Turno> listaTurnos= servicioTurnos.turnosDelUsuario((Long) request.getSession().getAttribute("userId"));
 
         mapa.put("listaTurnosUsuario",listaTurnos);
+        mapa.put("listaMascotas",listaMascotas);
         return new ModelAndView("usuarioHome",mapa);
     }
 }

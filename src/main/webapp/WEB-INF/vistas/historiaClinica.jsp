@@ -16,14 +16,12 @@
     <%@ include file="partials/usuarioMenu.jsp"%>
 </header>
 <main class="fondo">
-
-    
     <section>
-
      <article>
         <div class="container">
 
-            <h2 class="mb-3 ">Historia Clinica</h2>
+
+            <h2 class="mb-3 text-center">Historia Clinica</h2>
 
             <div>
 
@@ -36,6 +34,19 @@
                     </div>
                 </div>
 
+
+                   <c:if test="${empty visitas}" >
+
+                       <h4> La mascota aun no tiene visitas</h4>
+
+                       <p>
+                           <a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
+                       </p>
+
+                   </c:if>
+
+                <c:if test="${not empty visitas}" >
+
                 <table class="table table-bordered table-light centrar">
                     <h4>Visitas realizadas</h4>
                     <thead>
@@ -46,41 +57,35 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${visitas}" var="visita">
-                    <tr>
-                        <td class="text-center" >${visita.fechaActual}</td>
-                        <td class="text-center">${visita.sintomas}</td>
-                        <td class="text-center">${visita.tratamiento}</td>
+                    <c:forEach items="${visitas}" var="visita">
+                        <tr>
+                            <td class="text-center" >${visita.fechaActual}</td>
+                            <td class="text-center">${visita.sintomas}</td>
+                            <td class="text-center">${visita.tratamiento}</td>
 
 
-                        </a>
-                        </td>
-                    </tr>
-                        </c:forEach>
+                            </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
 
-
+                <p>
+                    <a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
+                    <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit"><a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a></button>
+                </p>
 
             </div>
         </div>
-         <div>
-             <p>
-                 <a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
-             </p>
-         </div>
+
+
+                </c:if>
+
         </article>
 
 
-        <article>
-
-
-
-
-
-
-
-
+<%--        <article>--%>
 
 <%--            <form:form action="guardar-imagen" method="POST"  modelAttribute="mascota" enctype="multipart/form-data">--%>
 
@@ -100,7 +105,7 @@
 
 <%--                </div>--%>
 <%--            </form:form>--%>
-        </article>
+<%--        </article>--%>
 
     </section>
 
@@ -112,10 +117,6 @@
 </main>
 
 <footer>
-    <div class="link">
-        <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
-        <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
-    </div>
 </footer>
 </body>
 </html>

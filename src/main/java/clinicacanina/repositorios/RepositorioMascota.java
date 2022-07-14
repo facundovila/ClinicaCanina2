@@ -28,4 +28,6 @@ public interface RepositorioMascota {
 
 
     void guardarImagen(Long id, String originalFilename);
+
+    List<Mascota> listarMascotasPorUsuario(Long idUsuario);
 }

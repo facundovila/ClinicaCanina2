@@ -185,7 +185,7 @@ public class ControladorMascota {
         Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(mascota.getId());
 
         if (!imagen.isEmpty()) {
-            Path directorioImagenes = Paths.get("src//main//resources//static/images");
+            Path directorioImagenes = Paths.get("src//main//resources//static//images");
             String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 
             try {
@@ -214,7 +214,7 @@ public class ControladorMascota {
         ModelMap mapa= new ModelMap();
         Long idUsuario = (Long) request.getSession().getAttribute("userId");
        servicioMascota.crearNuevaMascota(datosCrearMascota.getNombre(),idUsuario);
-    return new ModelAndView("redirect:/listar-mascotas",mapa);
+    return new ModelAndView("redirect:/usuarioHome",mapa);
       }
 
 

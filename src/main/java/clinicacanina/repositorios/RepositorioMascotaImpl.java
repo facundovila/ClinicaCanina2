@@ -1,6 +1,7 @@
 package clinicacanina.repositorios;
 
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Turno;
 import clinicacanina.modelo.VisitaClinica;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -97,7 +98,11 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
     }
 
-
+    @Override
+    public List<Mascota> listarMascotasPorUsuario(Long idUsuario) {
+        return sessionFactory.getCurrentSession().createCriteria(Mascota.class).createAlias("usuario","u")
+                .add(Restrictions.eq("u.id",idUsuario)).list();
+    }
 
 
     @Override

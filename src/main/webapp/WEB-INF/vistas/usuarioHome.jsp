@@ -9,6 +9,55 @@
 <body>
     <%@ include file="partials/usuarioMenu.jsp"%>
 <main>
+
+        <section >
+            <article>
+                <c:if test="${not empty listaMascotas}">
+                <div >
+                    <h2 class="mb-3 ">Mis Mascotas</h2>
+                    <div style="display: inline-flex">
+                        <c:forEach var="Mascota" items="${listaMascotas}">
+                            <div  class="row justify-content-center aling-items-center">
+                                <div class="card border-dark mb-3" style="max-width: 24rem;">
+                                    <div class="card-header"><h4>${Mascota.nombre}</h4></div>
+                                    <div class="card-body text-dark">
+                                        <p class="card-text">edad: ${Mascota.edad}</p>
+                                        <p class="card-text">peso: ${Mascota.peso}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </c:forEach>
+                    </div>
+                </div>
+                </c:if>
+
+                <div class="w3-row w3-panel">
+                    <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-blue">Agregar Mascota</button>
+                    <div id="id01" class="w3-modal">
+                        <div class="w3-modal-content">
+                            <header class="w3-container w3-blue">
+                                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                <h2> Ingrese Una Mascota</h2>
+                            </header>
+                            <div class="w3-container">
+                                     <div></div><form:form action="agregarMascota" modelAttribute="datosCrearMascota" method="POST">
+                                    <form:input path="nombre" type="imput" id="nombre" placeholder="Ingrese nombre"/>
+                                    <button class="w3-button w3-green w3-round w3-small w3-border" type="submit" formaction="agregarMascota">Agregar Mascota</button>
+                                    </form:form>
+                                    <button onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red">Cancelar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+        </section>
+
+        <br>
+        <br>
+    <h2 class="mb-3 ">Mis Turnos</h2>
     <c:forEach var="Turno" items="${listaTurnosUsuario}">
         <div class="w3-row w3-panel w3-border-top w3-border-bottom w3-border-blue">
             <div class="w3-col m8 l9">
@@ -38,7 +87,6 @@
                         </div>
                     </div>
                 </div>
-
 
             </div>
         <p></p>
