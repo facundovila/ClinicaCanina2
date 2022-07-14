@@ -16,12 +16,10 @@
     <%@ include file="partials/usuarioMenu.jsp"%>
 </header>
 <main class="fondo">
-
-    
     <section>
-
      <article>
         <div class="container">
+
 
             <h2 class="mb-3 text-center">Historia Clinica</h2>
 
@@ -75,10 +73,12 @@
 
                 <p>
                     <a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a>
+                    <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit"><a href="agregar-visita?idMascota=${mascota.id}" class="w3-text-blue">Agregar Visita</a></button>
                 </p>
 
             </div>
         </div>
+
 
                 </c:if>
 
@@ -117,10 +117,6 @@
 </main>
 
 <footer>
-    <div class="link">
-        <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
-        <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
-    </div>
 </footer>
 </body>
 </html>

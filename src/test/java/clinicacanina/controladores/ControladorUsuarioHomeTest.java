@@ -2,6 +2,7 @@ package clinicacanina.controladores;
 
 import clinicacanina.modelo.Turno;
 import clinicacanina.modelo.Usuario;
+import clinicacanina.servicios.ServicioMascota;
 import clinicacanina.servicios.ServicioTurnos;
 import org.dom4j.rule.Mode;
 import org.junit.Before;
@@ -28,6 +29,7 @@ public class ControladorUsuarioHomeTest {
 
     HttpServletRequest request;
     HttpSession session;
+    private ServicioMascota servicioMascota;
 
     /* para mockear la session y obtener el id se usan las dos lineas de arriba y se agregan estos mock en los test
         when(request.getSession()).thenReturn(session);
@@ -39,7 +41,8 @@ public class ControladorUsuarioHomeTest {
         session = mock(HttpSession.class);
         request = mock(HttpServletRequest.class);
         servicioTurnos = mock(ServicioTurnos.class);
-        controladorUsuarioHome = new ControladorUsuarioHome(servicioTurnos);
+        servicioMascota = mock(ServicioMascota.class);
+        controladorUsuarioHome = new ControladorUsuarioHome(servicioTurnos,servicioMascota);
 
     }
 
