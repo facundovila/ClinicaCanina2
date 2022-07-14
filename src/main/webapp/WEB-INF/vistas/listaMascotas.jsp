@@ -16,9 +16,7 @@
     <div class="container">
         <c:if test="${empty sinMascotas}">
             <h4 class="mb-3 text-center">Lista De Mascotas</h4>
-
             <div class="col-6 center-block centrar border rounded">
-
 
                 <table class="table table-bordered table-light  centrar">
                     <thead>
@@ -45,16 +43,13 @@
 
         <h2>${sinMascotas}</h2>
 
-
-
     </div>
-    <br><br><br><br>
+    <form:form action="agregarMascota"  modelAttribute="datosCrearMascota" method="POST">
+        <input path="nombre" type="text" id="nombre" placeholder="Ingrese nombre"/>
+        <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="agregarMascota">Agregar Mascota</button>
+    </form:form>
 </main>
 <footer>
-    <div class="link">
-        <button class="btn  btn-primary btn-lg active link" Type="Submit"/>
-        <a  href="cerrar-sesion" class="link-dark">Cerrar sesion</a></button>
-    </div>
 </footer>
 
 </body>

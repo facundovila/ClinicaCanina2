@@ -193,6 +193,14 @@ public class ControladorTurnosTest {
         ModelAndView modelo = controladorTurnos.tomarTurno(requestNull, 1L, 1L);
         assertThat(modelo.getViewName()).isEqualTo("redirect:/login");
     }
+    @Test
+    public void puedoTomarSoloUnTurnoPorLaFecha(){
+        ModelAndView modelo =controladorTurnos.tomarTurnoUsuario(request,1L);
+        getEntoncesMeLLevaAlHome(modelo);
+    }
 
+    private void getEntoncesMeLLevaAlHome(ModelAndView modelo) {
+        assertThat(modelo.getViewName()).isEqualTo("redirect:/usuarioHome");
+    }
 
 }

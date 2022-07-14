@@ -13,8 +13,6 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-   //@Size(min = 3, message = "nombre invalido")
     private String nombre;
 
 

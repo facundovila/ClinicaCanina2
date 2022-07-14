@@ -1,5 +1,6 @@
 package clinicacanina.controladores;
 
+import clinicacanina.modelo.DatosCrearMascota;
 import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.VisitaClinica;
 import clinicacanina.servicios.ServicioMascota;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -29,21 +31,14 @@ public class ControladorMascota {
         this.servicioMedico = servicioMedico;
 
     }
-
-
-
-
-
-
     @RequestMapping(path = "/listar-mascotas" , method = RequestMethod.GET)
     public ModelAndView listarMascotas(HttpSession session) {
 
         ModelMap model= new ModelMap();
 
-
+        model.put("datosCrearMascota",new DatosCrearMascota());
 
         if(session.getAttribute("userId") != null){
-
 
             List<Mascota> listaDeMascotas = servicioMascota.listarMascotas();
 
@@ -97,13 +92,10 @@ public class ControladorMascota {
 
     }
 
-
-
     @RequestMapping(path = "/agregar-visita", method = RequestMethod.GET)
     public ModelAndView agregarVisitas(@RequestParam("idMascota") Long idMascota, HttpSession session) {
 
         ModelMap model= new ModelMap();
-
 
         Mascota mascotaAModificar = servicioMascota.buscarMascotaPorId(idMascota);
 
@@ -128,8 +120,8 @@ public class ControladorMascota {
     @RequestMapping(path = "/modificar-historia-clinica",  method = RequestMethod.POST)
     public ModelAndView agregarVisitaMedica( @ModelAttribute VisitaClinica visitaClinica, HttpSession session){
 
-
         ModelMap model= new ModelMap();
+
         Mascota mascotaBuscada = servicioMascota.buscarMascotaPorId(visitaClinica.getMascotaAsignada().getId());
 
         servicioMascota.modificarMascota(mascotaBuscada.getId(), visitaClinica.getEdad() , visitaClinica.getPeso());
@@ -138,7 +130,7 @@ public class ControladorMascota {
 
                 servicioMascota.guardarVisitaMedicaDeMascota(mascotaBuscada.getId(), visitaClinica);
 
-                return new ModelAndView("redirect:/historia-clinica?idMascota="+mascotaBuscada.getId());
+                return new ModelAndView("redirect:/historia-clinica?idMascota="+mascotaBuscada.getId(),model);
 
         }else{
             model.put("error", "no se encuentra mascota");
@@ -147,13 +139,16 @@ public class ControladorMascota {
 
         }
 
+            }
 
 
-
-
-
-    }
-
+    @RequestMapping(path = "/agregarMascota",  method = RequestMethod.POST)
+    public ModelAndView agregarMascota(HttpServletRequest request, @ModelAttribute DatosCrearMascota datosCrearMascota){
+        ModelMap mapa= new ModelMap();
+        Long idUsuario = (Long) request.getSession().getAttribute("userId");
+       servicioMascota.crearNuevaMascota(datosCrearMascota.getNombre(),idUsuario);
+    return new ModelAndView("redirect:/listar-mascotas",mapa);
+      }
 
 
 }

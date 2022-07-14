@@ -188,12 +188,13 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 	}
 
 	@Override
-	public void tomarTurnoUsuario(Usuario idUsuario, Long idTurno) {
+	public boolean tomarTurnoUsuario(Usuario idUsuario, Long idTurno) {
 		String hql = "update turno t set t.estado=false, t.usuario=:idUsuario  where t.id=:id";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("id",idTurno);
 		query.setParameter("idUsuario",idUsuario);
 		query.executeUpdate();
+		return true;
 	}
 
 

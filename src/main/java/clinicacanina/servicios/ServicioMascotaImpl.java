@@ -2,9 +2,12 @@ package clinicacanina.servicios;
 
 
 import clinicacanina.controladores.HistoriaClinica;
+import clinicacanina.modelo.DatosCrearMascota;
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Usuario;
 import clinicacanina.modelo.VisitaClinica;
 import clinicacanina.repositorios.RepositorioMascota;
+import clinicacanina.repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +19,15 @@ import java.util.List;
 public class ServicioMascotaImpl implements ServicioMascota {
 
     private RepositorioMascota repositorioMascota;
+    private ServicioLogin ServicioLogin;
+
 
 
 
     @Autowired
-    public ServicioMascotaImpl(RepositorioMascota repositorioMascota){
-
-        this.repositorioMascota = repositorioMascota;
+    public ServicioMascotaImpl(RepositorioMascota repositorioMascota,ServicioLogin ServicioLogin){
+     this.ServicioLogin=ServicioLogin;
+     this.repositorioMascota = repositorioMascota;
 
     }
 
@@ -96,6 +101,15 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
         return repositorioMascota.obtenerVisitaMedicaDeLaMascota(mascota);
 
+    }
+
+    @Override
+    public void crearNuevaMascota(String datosCrearMascota, Long idUsuario) {
+        Mascota mascota= new Mascota();
+        Usuario usuario= ServicioLogin.consultarUsuarioPorID(idUsuario);
+        mascota.setNombre(datosCrearMascota);
+        mascota.setUsuario(usuario);
+        repositorioMascota.guardar(mascota);
     }
 
 
