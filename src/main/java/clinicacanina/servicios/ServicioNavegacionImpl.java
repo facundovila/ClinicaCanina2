@@ -35,20 +35,25 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
 	@Override
 	public LocalDateTime calcularHorarioDeLlegada(String patente) {
 		LocalDateTime horarioSolicitud;
-		
+		// Tomo el objeto navegador.
 		Navegador navegador = buscarNavegacion(patente);
+		// Tomo el tiempo estimado de llegada que tiene seteado.
 		String tiempoEstimado = navegador.getTiempoEstimado();
+		// Transformo el tiempo estimado en un integer para poder realizar operaciones matematicas.
 		Integer tiempoEstimadoNumber = parseTiempoEstimadoDeLlegada(tiempoEstimado);
+		//Tomo el horario de la solicitud y lo parseo a localdatetime.
 		horarioSolicitud = parseLocalDateTime(navegador.getHorarioDeSolicitud());
+		// Realizo el calculo de la hora de llegada sumando a la hora de solicitud el tiempo estimado de viaje.
 		LocalDateTime horarioLlegada = sumarTiempoEstimadoAHoraActual(tiempoEstimadoNumber, horarioSolicitud);
 		
 		// Formato de guardado : "2022-7-10 16:11"
-		
+		// Me armo el string para guardar la hora de llegada en el modelo.
 		String horarioLLegadaString = horarioLlegada.getYear() + "-" + horarioLlegada.getMonthValue() + "-"
 				+ horarioLlegada.getDayOfMonth() + " " + horarioLlegada.getHour() + ":" + horarioLlegada.getMinute();
-
+        // La guardo en el modelo del navegador.
 		navegador.setHorarioDeLlegada(horarioLLegadaString);
 		// ---------Se actualizan los datos del Navegador en la BD -------------------
+		//Actualizo el objeto navegador en la base de datos.
 		actualizarNavegacion(navegador);
 		return horarioLlegada;
 

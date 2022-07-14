@@ -152,8 +152,7 @@ public class ServicioValidacionDatosImpl implements ServicioValidacionDatos {
 				horarioConvertido += arrayCaracteres[i];
 			}
 		}
-		//datosRestantes = arrayCaracteres[arrayCaracteres.length -3] +arrayCaracteres[arrayCaracteres.length -2]+"0"+arrayCaracteres[arrayCaracteres.length -1];
-		//return horarioConvertido += datosRestantes;
+		
 		return horarioConvertido;
 	}
 
