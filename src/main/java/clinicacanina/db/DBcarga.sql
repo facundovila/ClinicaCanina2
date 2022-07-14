@@ -1,17 +1,8 @@
 
 
-use db;
+INSERT INTO `db`.`usuario` (`id`, `email`, `password`) VALUES ('1', 'usuario@usuario.com', '1');
+INSERT INTO `db`.`mascota` (`edad`, `nombre`, `peso`, `usuario_id`) VALUES (1, 'toto', 3, 1),(1, "mostaza", 3,1);
 
-INSERT INTO `db`.`usuario` (`id`,  `email`, `password`) VALUES ('1', 'usuario@usuario.com', '1');
-
-
-insert into visitaclinica(sintomas,tratamiento, fecha) values ('sintomas', 'tratamientoje', '2021-10-07');
-insert into visitaclinica(sintomas,tratamiento, fecha) values ('sintomas', 'tratamiento22','2021-10-10');
-
-insert into mascota(peso, nombre, edad,usuario_id)values(15, 'hachi',1),(8,'firu', 8,1);
-update visitaclinica set `mascota_id` = 1 where id =1;
-update visitaclinica set `mascota_id` = 2 where id =2;
-update visitaclinica set `fecha` = CURDATE() where id =2;
 
 -- MEDICOS
 insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre, dni, contrasenia) VALUE (true, 10,15,'carlos',10, 'admin');
@@ -262,7 +253,7 @@ INSERT INTO `db`.`turno` (`estado`, `fechaTurno`, `medico_id`) VALUES (1, '2022-
                                                                     ,(1,'2022-7-23 18:00:00','1')
                                                                     ,(1,'2022-7-23 19:00:00','1')
                                                                     ,(1,'2022-7-23 20:00:00','1')
-                                                                    ,(1,'2022-7-23 21:00:00','1')
+                                                                    ,(1,'2022-7-23 23:59:00','1')
                                                                     ,(1,'2022-7-24 11:00:00','1')
                                                                     ,(1,'2022-7-24 12:00:00','1')
                                                                     ,(1,'2022-7-24 13:00:00','1')
@@ -329,11 +320,14 @@ INSERT INTO `db`.`turno` (`estado`, `fechaTurno`, `medico_id`) VALUES (1, '2022-
                                                                     ,(1,'2022-7-30 19:00:00','1')
                                                                     ,(1,'2022-7-30 20:00:00','1')
                                                                     ,(1,'2022-7-30 21:00:00','1');
+
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '1');
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '4');
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '5');
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '6');
 UPDATE `db`.`turno` SET `mascota_id` = '1', `usuario_id` = '1' WHERE (`id` = '31');
+UPDATE `db`.`turno` SET estado = false, mascota_id = 1, usuario_id = 1 where id = 135;
+UPDATE `db`.`turno` SET estado = false, mascota_id = 1, usuario_id = 1 where id = 160;
 
 
 

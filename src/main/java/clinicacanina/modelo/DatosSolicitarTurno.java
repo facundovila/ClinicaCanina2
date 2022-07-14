@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class DatosSolicitarTurno {
     private Calendar fecha;
-
     private Date fecha2;
     public Date getFecha2() {
         return fecha2;

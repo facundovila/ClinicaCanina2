@@ -17,7 +17,6 @@ public class ControladorUsuarioHome {
     private ServicioTurnos servicioTurnos;
     @Autowired
     public ControladorUsuarioHome(ServicioTurnos servicioTurnos){
-
         this.servicioTurnos=servicioTurnos;
     }
 

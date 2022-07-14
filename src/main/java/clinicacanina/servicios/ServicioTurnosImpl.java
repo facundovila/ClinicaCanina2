@@ -57,18 +57,9 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	}
 	
 	public Boolean cancelarTurnoPorId(Long id) {
-		//esto tira error
-		//org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : [clinicacanina.modelo.Turno#1]
-/*
-		Turno turnoEsperado = repositorioTurnos.buscarTurnoPorId(id);
 
-		if(turnoEsperado == null) {
-			return false;}
-		repositorioTurnos.cancelarTurnoPorId(id);
-		return true;
-*/
-		//return repositorioTurnos.cancelarTurnoPorId(id);
-		return true;
+		return repositorioTurnos.cancelarTurnoPorId(id);
+
 		}
 
 
@@ -88,12 +79,6 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 
 	@Override
 	public List<Turno> buscarProximosTurnos() {
-		/*
-		Turno turno=repositorioTurnos.buscarProximoTurnoLibre();
-		List<Turno> lista =repositorioTurnos.buscarTurnosPorFecha(turno.getFechaTurno());// esto tiene el problema
-		//List<Turno> lista =new ArrayList<>();
-		//lista.add(turno);
-		* */
 
 		List<Turno> lista =new ArrayList<>();
 		Turno turno=repositorioTurnos.buscarProximoTurnoLibre();
@@ -101,7 +86,6 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 			lista =new ArrayList<>();
 			return lista;
 		}
-
 		lista=repositorioTurnos.buscarTurnosPorFecha(turno.getFechaTurno());// esto tiene el problema
 		if (lista==null){
 			lista =new ArrayList<>();
@@ -119,16 +103,13 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	@Override
 	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
 
-
-		Calendar fecha2 = new GregorianCalendar(2022,7,14,00,00,00);
-		List <Turno>lista=repositorioTurnos.buscarTurnosPorFecha(fecha2);// esto tiene el problema
+		List <Turno>lista=repositorioTurnos.buscarTurnosPorFecha(fecha);// esto tiene el problema
 		if (lista==null){
 			lista =new ArrayList<>();
 			return lista;
 		}
 		return lista;
 	}
-
 
 	@Override
 	public Turno buscarTurnoPorId(Long id) {

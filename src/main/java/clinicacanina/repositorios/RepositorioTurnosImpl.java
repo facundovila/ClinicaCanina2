@@ -54,13 +54,12 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 	@Override
 
 	public List<Turno> mostrarTurnoUsuarioDesdeHoy(long usuarioId) {
-		Calendar fechaActual= Calendar.getInstance();
+
 		return  sessionFactory.getCurrentSession().createQuery("from turno t where t.fechaTurno >= :fecha and t.usuario.id= :usu" )
 				.setDate("fecha",new java.util.Date()).setLong("usu",usuarioId).list();
 	}
 	@Override
 	public List<Turno> mostarTodosTurnosDelUsuario(long usuarioId) {
-
 		return sessionFactory.getCurrentSession().createCriteria(Turno.class).createAlias("usuario","u")
 				.add(Restrictions.eq("u.id",usuarioId)).list();
 	}
@@ -74,21 +73,20 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 
 	@Override
 	public Boolean cancelarTurnoPorId(Long id) {
+		/* problema que al cancelar el turno resta 2 horas
 		Turno turnoNuevo= buscarTurnoPorId(id);
 		turnoNuevo.setEstado(true);
 		turnoNuevo.setUsuario(null);
 		turnoNuevo.setMascota(null);
 		sessionFactory.getCurrentSession().update(turnoNuevo);
 		return turnoNuevo.getEstado();
-	/*
+	*/
 		String hql = "update turno t set t.estado=true,t.mascota=null, t.usuario=null  where t.id=:id";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("id",id);
 		query.executeUpdate();
+		return true;
 
-		System.out.println("\n******************TURNO BUSCADO : " + id+"**************************************\n");
-		System.out.println("\n******************TURNO BUSCADO : " + hql+"**************************************\n");
-		return true;*/
 	}
 	@Override
 	public List<Turno> mostarTurnosDisponiblesFechaHoy() {
@@ -181,12 +179,12 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		return results;
 */
 
-		Turno turno = new Turno();
-		turno.setFechaTurno(calendario);
-		return sessionFactory.getCurrentSession().createCriteria(Turno.class).add(Restrictions.eq("fechaTurno",turno.getFechaTurno())).list();
+		//Turno turno = new Turno();
+		//turno.setFechaTurno(calendario);
+		//return sessionFactory.getCurrentSession().createCriteria(Turno.class).add(Restrictions.eq("fechaTurno",turno.getFechaTurno())).list();
 
-		//return sessionFactory.getCurrentSession().createQuery("select t from turno t where t.estado=true and t.fechaTurno >=:fechaActual")
-		//		.setParameter("fechaActual",fechaActual,TemporalType.TIMESTAMP).list();
+		return sessionFactory.getCurrentSession().createQuery("select t from turno t where t.estado=true and t.fechaTurno >=:fechaActual")
+				.setParameter("fechaActual",calendario,TemporalType.TIMESTAMP).list();
 
 		//return sessionFactory.getCurrentSession().createQuery("from turno t where t.estado=true  and t.fechaTurno >=:fechaActual and t.fechaTurno <=:fechaFin")
 		//		.setParameter("fechaActual",fechaActual,TemporalType.TIMESTAMP).setParameter("fechaFin",fechaMaxima,TemporalType.TIMESTAMP).list();
@@ -204,7 +202,6 @@ public class RepositorioTurnosImpl implements RepositorioTurnos {
 		query.setParameter("id",idTurno);
 		query.setParameter("idUsuario",idUsuario);
 		query.executeUpdate();
-
 	}
 
 

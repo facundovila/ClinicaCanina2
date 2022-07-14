@@ -116,7 +116,7 @@ public class ControladorTurnos {
 */
 
 	@RequestMapping(path="/irSoliciarTurnoPorFecha", method = RequestMethod.POST)
-		public ModelAndView irSoliciarTurnoFecha(@ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno, HttpServletRequest request) {
+		public ModelAndView irSoliciarTurnoFecha( HttpServletRequest request, @ModelAttribute("datosSolicitarTurno") DatosSolicitarTurno datosSolicitarTurno) {
 
 		if (request.getSession().getAttribute("userId") == null) {
 			return new ModelAndView("redirect:/login");
