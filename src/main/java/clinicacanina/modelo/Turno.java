@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -17,13 +18,13 @@ public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+	private Boolean estado; // true = disponible
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date FechaTurno;
-	private Time HoraTurno;
-    private String fecha;
-    private Boolean estado; // true = disponible
+	private Calendar fechaTurno;
 
+    private String fecha;
+	private String hora;
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
@@ -80,14 +81,6 @@ public class Turno {
 
 
 
-	public Date   getFechaTurno() {
-		return FechaTurno;
-	}
-
-	public void setFechaTurno(Date   fechaTurno) {
-		FechaTurno = fechaTurno;
-	}
-
 	public Mascota getMascota() {
 		return mascota;
 	}
@@ -104,11 +97,20 @@ public class Turno {
 		this.medico = medico;
 	}
 
-	public Time getHoraTurno() {
-		return HoraTurno;
+	public Calendar getFechaTurno() {
+		return fechaTurno;
 	}
 
-	public void setHoraTurno(Time horaTurno) {
-		HoraTurno = horaTurno;
+	public void setFechaTurno(Calendar fechaTurno) {
+		this.fechaTurno = fechaTurno;
+	}
+
+	public String getHora() {
+		return hora;
+	}
+
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 }
+

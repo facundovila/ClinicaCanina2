@@ -1,19 +1,21 @@
 package clinicacanina.repositorios;
 
 import clinicacanina.modelo.Mascota;
+import clinicacanina.modelo.Turno;
+import clinicacanina.modelo.VisitaClinica;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
 @Repository
 public class RepositorioMascotaImpl implements RepositorioMascota {
-
     private SessionFactory sessionFactory;
-
     @Autowired
     public RepositorioMascotaImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -23,15 +25,15 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
     @Override
     public Mascota buscarPorId(Long id) {
-
-        Mascota mascota = sessionFactory.getCurrentSession()
-                .get(Mascota.class, id);
-
-        return mascota;
+        return (Mascota) sessionFactory.getCurrentSession()
+                .createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
 
 
     }
 
+    @Override
     public Mascota getById(Long idMascota) {
         return (Mascota) sessionFactory.getCurrentSession()
                 .createCriteria(Mascota.class)
@@ -41,9 +43,9 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
 
 
 
+
     @Override
     public Long guardar(Mascota mascota){
-
         sessionFactory.getCurrentSession().save(mascota);
         return mascota.getId();
 
@@ -75,19 +77,60 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
     }
 
     @Override
-    public Mascota modificarMascota(Long id, String detalleTratamientos, String sintomas, Integer peso, Integer edad, String nombre) {
+    public Mascota modificarMascota(Long id,  Float peso, Integer edad) {
 
         Mascota mascota = buscarPorId(id);
-        mascota.setSintomas(sintomas);
-        mascota.setDetalleTratamientos(detalleTratamientos);
         mascota.setEdad(edad);
         mascota.setPeso(peso);
-        mascota.setNombre(nombre);
-
         sessionFactory.getCurrentSession().update(mascota);
 
         return mascota;
     }
+
+
+    @Override
+    public void guardarImagen(Long id, String originalFilename) {
+
+        Mascota mascota = buscarPorId(id);
+        mascota.setImagen(originalFilename);
+
+        sessionFactory.getCurrentSession().update(mascota);
+
+    }
+
+    @Override
+    public List<Mascota> listarMascotasPorUsuario(Long idUsuario) {
+        return sessionFactory.getCurrentSession().createCriteria(Mascota.class).createAlias("usuario","u")
+                .add(Restrictions.eq("u.id",idUsuario)).list();
+    }
+
+
+    @Override
+    public List<VisitaClinica> obtenerVisitaMedicaDeLaMascota(Mascota mascota) {
+
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select distinct v from VisitaClinica v where mascotaAsignada =: mascota ")
+                .setParameter("mascota", mascota)
+                .list();
+
+
+    }
+
+    @Override
+    public Long guardarVisitaMedica(Long idMascota, VisitaClinica visita){
+
+        Mascota mascota = getById(idMascota);
+
+        visita.setMascotaAsignada(mascota);
+
+        sessionFactory.getCurrentSession().save(visita);
+
+        return visita.getId();
+
+
+    }
+
+
 
 
 }

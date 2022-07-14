@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.Estado;
+import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 
 @Repository
@@ -53,39 +54,16 @@ public class RepositorioAmbulanciaImpl implements RepositorioAmbulancia{
 		
 	}
 
+	//nuevo metodo review 3
+	@Override
+	public List<ReservaDeAmbulancia> buscarReservas() {
+		 final Session session = sessionFactory.getCurrentSession();
+	      List<ReservaDeAmbulancia> reservas = new LinkedList<ReservaDeAmbulancia>();
+	      reservas = (List<ReservaDeAmbulancia>) session.createCriteria(ReservaDeAmbulancia.class)
+					                               .list();
+		return reservas;
+	}
+
 	
-	/*
-	@Override
-	public void reservarAmbulancia(String patente) {
-		final Session session = sessionFactory.getCurrentSession();
-		Ambulancia ambulanciaAReservar = buscarPorPatente(patente);
-		
-		if(ambulanciaAReservar.getDisponible() == true && ambulanciaAReservar.getEstado().equals(Estado.EN_COCHERA)) {
-			ambulanciaAReservar.setDisponible(false);
-			ambulanciaAReservar.setEstado(Estado.EN_PREPARACION);
-			session.update(ambulanciaAReservar);
-		}
-		
-	}
 
-	@Override
-	public Ambulancia buscarPorPatente(String patente) {
-		final Session session = sessionFactory.getCurrentSession();
-		
-		return (Ambulancia) session.createCriteria(Ambulancia.class)
-				.add(Restrictions.eq("patente", patente))
-				.uniqueResult();
-	}
-
-	@Override
-	public void actualizarEstado(String patente) {
-		Ambulancia encontrada = buscarPorPatente(patente);
-		
-		//Esta validacion estaria de mas, ya que al reservar la ambulancia automaticamente el estado migraria a "EN_PREPARACION".
-		if(encontrada.getDisponible() == false && encontrada.getEstado().equals(Estado.EN_COCHERA)) {
-			encontrada.setEstado(Estado.EN_PREPARACION);
-		}
-		
-	}
-*/
 }

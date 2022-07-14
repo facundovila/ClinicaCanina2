@@ -10,8 +10,6 @@ public class Medico {
 	private Long id;
 	private String contrasenia;
 	private Integer dni;
-
-	
 	private String nombre;
 
 	private Integer horarioEntrada; 

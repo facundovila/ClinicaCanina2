@@ -22,7 +22,7 @@ public class RepositorioMedicoTest extends SpringTest{
 	@Rollback
 	public void poderTraerTodosLosMedicos() {
 		//preparacion
-		Medico medico = dadoQueExisteMedico("Marcelo", 8, 20); 
+		Medico medico = dadoQueExisteMedico("Marcelo", 8, 20);
 		dadoQueGuardoMedicos(medico);
 		//ejecucion
 		List<Medico> listaDeMedicos = cuandoObtengoTodosLosMedicos();
@@ -41,7 +41,7 @@ public class RepositorioMedicoTest extends SpringTest{
 
 
 	private void entoncesEncuentroMedicos(List<Medico> listaDeMedicos) {
-		assertThat(listaDeMedicos).isEmpty();
+		assertThat(listaDeMedicos.size()).isEqualTo(1);
 	}
 
 	private void dadoQueGuardoMedicos(Medico medico) {

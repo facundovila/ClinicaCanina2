@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
+import java.util.List;
 
 @Entity
 @Table(name = "mascota")
@@ -13,37 +14,36 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    @NotNull
-   //@Size(min = 3, message = "nombre invalido")
     private String nombre;
 
-    @Column(nullable = false)
-    @NotNull
-    private Integer peso;
 
-    @Column(nullable = false)
-    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    private Float peso;
+
     private Integer edad;
 
-    @Column(nullable = true)
-    private String sintomas;
-
-    @Column(nullable = true)
-    private String detalleTratamientos;
+    private String imagen;
 
 
+
+
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
 
     public Mascota(HistoriaClinica historiaClinica){
         this.nombre = historiaClinica.getNombre();
         this.peso = historiaClinica.getPeso();
         this.edad = historiaClinica.getEdad();
-        this.sintomas = historiaClinica.getSintomas();
-        this.detalleTratamientos = historiaClinica.getDetalleTratamientos();
     }
-
 
     public Mascota() {}
 
@@ -64,7 +64,6 @@ public class Mascota {
     }
 
 
-
     public String getNombre() {
         return nombre;
     }
@@ -73,26 +72,21 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public Integer getPeso() {
+    public Float getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Float peso) {
         this.peso = peso;
     }
 
-    public String getSintomas() {return sintomas;}
-
-    public Object setSintomas(String medicamentos) {this.sintomas = medicamentos;
-        return null;
+    public String getImagen() {
+        return imagen;
     }
 
-    public String getDetalleTratamientos() {return detalleTratamientos;}
-
-    public void setDetalleTratamientos(String detalleTratamientos) {this.detalleTratamientos = detalleTratamientos;}
-
-
-
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
 
 

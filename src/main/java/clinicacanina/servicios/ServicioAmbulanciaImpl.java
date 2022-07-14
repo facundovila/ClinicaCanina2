@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import clinicacanina.modelo.Ambulancia;
 import clinicacanina.modelo.ErrorDeReserva;
+import clinicacanina.modelo.Navegador;
 import clinicacanina.modelo.ReservaDeAmbulancia;
 import clinicacanina.repositorios.RepositorioAmbulancia;
+import clinicacanina.repositorios.Trayecto;
 
 @Service @Transactional
 public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
@@ -45,11 +47,13 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 	}
 
 	@Override
-	public void reservarAmbulancia(String direccion, Ambulancia ambulancia) {
+	public void reservarAmbulancia(String direccion, String telefono, String motivo, Ambulancia ambulancia) {
 		if((ambulancia !=null && ambulancia.getDisponibilidad() == true) && direccion != "") {
 			ambulancia.setDisponibilidad(false);
 			ReservaDeAmbulancia reservaDeAmbulancia = new ReservaDeAmbulancia();
 			reservaDeAmbulancia.setDireccion(direccion);
+			reservaDeAmbulancia.setTelefono(telefono);
+			reservaDeAmbulancia.setMotivo(motivo);
 			reservaDeAmbulancia.setAmbulancia(ambulancia);
 			repositorioAmbulancia.reservarAmbulancia(reservaDeAmbulancia, ambulancia);
 		}else {
@@ -58,5 +62,24 @@ public class ServicioAmbulanciaImpl implements ServicioAmbulancia{
 		
 		
 	}
+
+	// nuevo metodo review 3
+	@Override
+	public ReservaDeAmbulancia buscarReserva(Ambulancia ambulancia) {
+		List <ReservaDeAmbulancia> reservasAmbulancias = repositorioAmbulancia.buscarReservas();
+		if(reservasAmbulancias.isEmpty()) {
+			throw new ErrorDeReserva();
+		}
+		for (int i = 0; i < reservasAmbulancias.size(); i++) {
+			ReservaDeAmbulancia reserva = reservasAmbulancias.get(i);
+			if (reserva.getAmbulancia().getPatente().equals(ambulancia.getPatente())) {
+				return reserva;
+			}
+		}
+		return null;
+	}
+
+	
+
   
 }
