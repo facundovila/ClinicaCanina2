@@ -4,6 +4,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Before;
@@ -76,23 +77,81 @@ public class ServicioValidacionDatosTest {
 	
 	
 	@Test 
-	public void queSePuedaConvertirUnaFechaHora(){
-		String fechaHora = "2022-7-10 16:1";
+	public void queSePuedaConvertirElHorarioDeSolicitud(){
+		String fechaHoraA = "2022-7-10 16:1";
+		String fechaHoraB = "2022-7-10 1:17";
+		String fechaHoraC = "2022-7-10 0:0";
+		String fechaHoraD = "2022-7-10 11:11";
 		
-		String fechaHoraConvertida = cuandoValidoUnaFechaHora(fechaHora);
+		
+		List<String> fechaHoraConvertida = cuandoValidoUnaFechaHora(fechaHoraA,fechaHoraB,fechaHoraC,fechaHoraD);
 		obtengoLaFechaHoraConvertida(fechaHoraConvertida);
 	}
+	
+	@Test
+	public void queSePuedaConvertirElHorarioDeLlegada() {
+		String HoraA = "16:1";
+		String HoraB = "1:17";
+		String HoraC = "0:0";
+		String HoraD = "11:11";
+		
+		
+		List<String> HoraConvertida = cuandoValidoUnHorario(HoraA,HoraB,HoraC,HoraD);
+		obtengoLaHoraConvertida(HoraConvertida);
+	}
+	
 
-	private void obtengoLaFechaHoraConvertida(String fechaHoraConvertida) {
-		String formatoEsperado = "2022-7-10 16:01";
-		System.out.println(fechaHoraConvertida);
-		assertThat(fechaHoraConvertida).isEqualTo(formatoEsperado);
+	private void obtengoLaHoraConvertida(List<String> horaConvertida) {
+		String formatoEsperadoA = "16:01";
+		String formatoEsperadoB = "01:17";
+		String formatoEsperadoC = "00:00";
+		String formatoEsperadoD = "11:11";
+		System.out.println("\n*************** Hora Conversion*************\n");
+		System.out.println(horaConvertida.get(0));
+		System.out.println(horaConvertida.get(1));
+		System.out.println(horaConvertida.get(2));
+		System.out.println(horaConvertida.get(3));
+		assertThat(horaConvertida.get(0)).isEqualTo(formatoEsperadoA);
+		assertThat(horaConvertida.get(1)).isEqualTo(formatoEsperadoB);
+		assertThat(horaConvertida.get(2)).isEqualTo(formatoEsperadoC);
+		assertThat(horaConvertida.get(3)).isEqualTo(formatoEsperadoD);
+		
+	}
+
+	private List<String> cuandoValidoUnHorario(String horaA, String horaB, String horaC, String horaD) {
+		List<String> listaHora = new LinkedList<>();
+		listaHora.add(servicioValidacionDatos.validarHorario(horaA));
+		listaHora.add(servicioValidacionDatos.validarHorario(horaB));
+		listaHora.add(servicioValidacionDatos.validarHorario(horaC));
+		listaHora.add(servicioValidacionDatos.validarHorario(horaD));
+		return listaHora;
+		
+	}
+
+	private void obtengoLaFechaHoraConvertida(List<String> fechaHoraConvertida) {
+		String formatoEsperadoA = "2022-7-10 16:01";
+		String formatoEsperadoB = "2022-7-10 01:17";
+		String formatoEsperadoC = "2022-7-10 00:00";
+		String formatoEsperadoD = "2022-7-10 11:11";
+		System.out.println(fechaHoraConvertida.get(0));
+		System.out.println(fechaHoraConvertida.get(1));
+		System.out.println(fechaHoraConvertida.get(2));
+		System.out.println(fechaHoraConvertida.get(3));
+		assertThat(fechaHoraConvertida.get(0)).isEqualTo(formatoEsperadoA);
+		assertThat(fechaHoraConvertida.get(1)).isEqualTo(formatoEsperadoB);
+		assertThat(fechaHoraConvertida.get(2)).isEqualTo(formatoEsperadoC);
+		assertThat(fechaHoraConvertida.get(3)).isEqualTo(formatoEsperadoD);
 		
 		
 	}
 
-	private String cuandoValidoUnaFechaHora(String fechaHora) {
-		return servicioValidacionDatos.validarHorario(fechaHora);
+	private List<String> cuandoValidoUnaFechaHora(String fechaHoraA, String fechaHoraB, String fechaHoraC, String fechaHoraD) {
+		List<String> listaFechaHora = new LinkedList<>();
+		listaFechaHora.add(servicioValidacionDatos.validarHorario(fechaHoraA));
+		listaFechaHora.add(servicioValidacionDatos.validarHorario(fechaHoraB));
+		listaFechaHora.add(servicioValidacionDatos.validarHorario(fechaHoraC));
+		listaFechaHora.add(servicioValidacionDatos.validarHorario(fechaHoraD));
+		return listaFechaHora;
 		
 	}
 

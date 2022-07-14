@@ -18,10 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class ServicioNavegacionImpl implements ServicioNavegacion {
 
 	private RepositorioNavegacion repositorioNavegacion;
+	private ServicioValidacionDatos servicioValidacionDatos;
 
 	@Autowired
 	public ServicioNavegacionImpl(RepositorioNavegacion repositorioNavegacion) {
 		this.repositorioNavegacion = repositorioNavegacion;
+		this.servicioValidacionDatos = new ServicioValidacionDatosImpl();
 	}
 
 	@Override
@@ -88,7 +90,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
 		navegador.setLocalidadDestino(trayecto.getLocalidadDestino());
 		navegador.setDistancia(trayecto.getDistancia());
 		navegador.setTiempoEstimado(trayecto.getTiempo());
-		navegador.setHorarioDeSolicitud(horarioActualString);
+		navegador.setHorarioDeSolicitud(servicioValidacionDatos.validarHorario(horarioActualString));
 		repositorioNavegacion.guardarNavegacion(navegador);
 
 		return navegador.getReserva().getAmbulancia().getPatente();

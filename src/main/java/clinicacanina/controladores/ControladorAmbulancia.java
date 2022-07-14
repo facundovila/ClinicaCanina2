@@ -142,7 +142,7 @@ public class ControladorAmbulancia {
 		LocalDateTime horarioDeLlegada = servicioNavegacion.calcularHorarioDeLlegada(navegador.getPatente());
 		String tiempoRestante = servicioNavegacion.calcularTiempoRestanteDeLlegada(navegador.getPatente());
 		String horarioLlegadaString = horarioDeLlegada.getHour()+":"+horarioDeLlegada.getMinute();
-		datosNavegacion.add(servicioValidacionDatos.validarHorario(navegador.getHorarioDeSolicitud()));
+		datosNavegacion.add(navegador.getHorarioDeSolicitud());
 		datosNavegacion.add(navegador.getTiempoEstimado());
 	    datosNavegacion.add(servicioValidacionDatos.validarHorario(horarioLlegadaString));
 	    datosNavegacion.add(tiempoRestante);
