@@ -19,7 +19,7 @@ public interface ServicioTurnos {
 
 	Boolean cancelarTurnoPorId(Long idTurno);
 
-    List<Turno> buscarTurnoPorFecha(Calendar fecha);
+    List<Turno> buscarTurnoPorFecha(String fecha);
 
     List<Turno> buscarTurnoPorFechaDeHoy();
 

@@ -15,9 +15,7 @@
 <main class="fondo">
     <div class="container">
         <c:if test="${empty sinMascotas}">
-
             <h4 class="mb-3 text-center">Lista De Mascotas</h4>
-
 
             <div class="col-6 center-block centrar border rounded">
 

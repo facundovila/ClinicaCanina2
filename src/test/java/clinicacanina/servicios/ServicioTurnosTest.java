@@ -24,7 +24,7 @@ public class ServicioTurnosTest {
 	private RepositorioTurnos repositorioTurnos;
 	private ServicioTurnos servicioTurnos;
 	Calendar calendar;
-	private ServicioFechaYhora servicioFechaYhora;
+	private ServicioValidadorFecha servicioValidadorFecha;
 	private ServicioLogin servicioLogin;
 	private RepositorioUsuario repositorioUsuario;
 	private ServicioMascota servicioMascota;
@@ -35,12 +35,12 @@ public class ServicioTurnosTest {
 	public void init() {
 
 		calendar= Mockito.mock(Calendar.class);
-		servicioFechaYhora=mock(ServicioFechaYhora.class);
+		servicioValidadorFecha=mock(ServicioValidadorFecha.class);
 		servicioMascota=mock(ServicioMascota.class);
 		repositorioTurnos = mock(RepositorioTurnos.class);
 		repositorioUsuario= mock(RepositorioUsuario.class);
 		servicioLogin= new ServicioLoginImpl(repositorioUsuario);
-		servicioTurnos = new ServicioTurnosImpl(repositorioTurnos,servicioLogin,repositorioUsuario,servicioMascota);
+		servicioTurnos = new ServicioTurnosImpl(repositorioTurnos,servicioLogin,repositorioUsuario,servicioMascota,servicioValidadorFecha);
 
 	}
 	@Test

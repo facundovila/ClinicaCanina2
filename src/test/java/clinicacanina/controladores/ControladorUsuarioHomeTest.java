@@ -35,24 +35,25 @@ public class ControladorUsuarioHomeTest {
      */
 
     @Before
-    public void init(){
+    public void init() {
         session = mock(HttpSession.class);
         request = mock(HttpServletRequest.class);
-        servicioTurnos=mock(ServicioTurnos.class);
-        controladorUsuarioHome= new ControladorUsuarioHome(servicioTurnos);
+        servicioTurnos = mock(ServicioTurnos.class);
+        controladorUsuarioHome = new ControladorUsuarioHome(servicioTurnos);
 
     }
+
     @Test
-    public void CuadnoElUsuarioVaAlHomeLogeadoMELLevaALavistaUsuarioHome(){
+    public void CuadnoElUsuarioVaAlHomeLogeadoMELLevaALavistaUsuarioHome() {
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute("userId")).thenReturn(1L);
-        ModelAndView modelAndView= controladorUsuarioHome.usuarioHome(request);
+        ModelAndView modelAndView = controladorUsuarioHome.usuarioHome(request);
         assertThat(modelAndView.getViewName()).isEqualTo("usuarioHome");
     }
 
     @Test
-    public void CuandoIngresoAlHomeSeMuestranLosTurnosDelUsuario(){
-       // preparacion
+    public void CuandoIngresoAlHomeSeMuestranLosTurnosDelUsuario() {
+        // preparacion
         CuandoCargoUnUsuarioYLECArgoUnTurno();
         // ejecucion
         ModelAndView modelAndView = controladorUsuarioHome.usuarioHome(request);
@@ -65,10 +66,10 @@ public class ControladorUsuarioHomeTest {
     }
 
     private void CuandoCargoUnUsuarioYLECArgoUnTurno() {
-        Usuario usuari1= new Usuario();
+        Usuario usuari1 = new Usuario();
         usuari1.setId(1L);
-        List<Turno> listaTurnos= new ArrayList<>();
-        Turno turno=new Turno();
+        List<Turno> listaTurnos = new ArrayList<>();
+        Turno turno = new Turno();
         turno.setId(1L);
         listaTurnos.add(turno);
         when(request.getSession()).thenReturn(session);

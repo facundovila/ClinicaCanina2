@@ -124,16 +124,7 @@ public class ControladorTurnos {
 		}
 		ModelMap mapa = new ModelMap();
 
-
-		Date date = null;
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitarTurno.getFecha2());
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
-		Calendar calender = Calendar.getInstance();
-		calender.setTime(date);
-		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(calender);
+		List <Turno>turnos= servicioTurnos.buscarTurnoPorFecha(datosSolicitarTurno.getFecha2());
 		if(turnos.isEmpty()){
 			mapa.put("mensaje","Sin Turnos. Seleccione Otra Fecha");
 			return new ModelAndView("usuarioSolicitarTurno", mapa);

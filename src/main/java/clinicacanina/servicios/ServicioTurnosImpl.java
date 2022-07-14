@@ -1,11 +1,9 @@
 package clinicacanina.servicios;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 import clinicacanina.modelo.Mascota;
 import clinicacanina.modelo.Usuario;
@@ -25,15 +23,17 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	private RepositorioUsuario repositorioUsuario;
 	private ServicioLogin servicioLogin;
 	private ServicioMascota servicioMascota;
+	private  ServicioValidadorFecha servicioValidadorFecha;
 
 
 
     @Autowired
-    public ServicioTurnosImpl(RepositorioTurnos repositorioTurnos,ServicioLogin servicioLogin,RepositorioUsuario repositorioUsuario,ServicioMascota servicioMascota){
+    public ServicioTurnosImpl(RepositorioTurnos repositorioTurnos,ServicioLogin servicioLogin,RepositorioUsuario repositorioUsuario,ServicioMascota servicioMascota,ServicioValidadorFecha servicioValidadorFecha){
 		this.servicioMascota=servicioMascota;
 		this.repositorioUsuario=repositorioUsuario;
 			this.servicioLogin=servicioLogin;
 			this.setRepositorioTurnos(repositorioTurnos);
+			this.servicioValidadorFecha=servicioValidadorFecha;
     }
 
 	@Override
@@ -86,7 +86,7 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 			lista =new ArrayList<>();
 			return lista;
 		}
-		lista=repositorioTurnos.buscarTurnosPorFecha(turno.getFechaTurno());// esto tiene el problema
+		lista=repositorioTurnos.buscarTurnosPorFecha(turno.getFechaTurno());
 		if (lista==null){
 			lista =new ArrayList<>();
 			return lista;
@@ -101,12 +101,19 @@ public class ServicioTurnosImpl implements ServicioTurnos {
 	}
 
 	@Override
-	public List<Turno> buscarTurnoPorFecha(Calendar fecha) {
-		List <Turno>lista=repositorioTurnos.buscarTurnosPorFecha(fecha);// esto tiene el problema
+	public List<Turno> buscarTurnoPorFecha(String fecha) {
+		List <Turno>lista= new ArrayList<>();
+		if(servicioValidadorFecha.validarFecha(fecha)==false){
+			return lista;
+		}
+		Calendar calendar=servicioValidadorFecha.StringACalendar(fecha);
+		Calendar actual=Calendar.getInstance();
+		if(actual.compareTo(calendar)<1){
+		lista=repositorioTurnos.buscarTurnosPorFecha(calendar);
 		if (lista==null){
 			lista =new ArrayList<>();
 			return lista;
-		}
+		}}
 		return lista;
 	}
 
