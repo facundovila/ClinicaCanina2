@@ -33,11 +33,11 @@
                 </c:if>
 
                 <div class="w3-row w3-panel">
-                    <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-blue">Agregar Mascota</button>
-                    <div id="id01" class="w3-modal">
+                    <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-blue">Agregar Mascota</button>
+                    <div id="id02" class="w3-modal">
                         <div class="w3-modal-content">
                             <header class="w3-container w3-blue">
-                                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                                 <h2> Ingrese Una Mascota</h2>
                             </header>
                             <div class="w3-container">
