@@ -10,11 +10,13 @@
 </head>
 
 <body>
+<header>
+    <%@ include file="partials/usuarioMenu.jsp"%>
+
+</header>
 
 <main>
     <c:if test="${not empty AmbulanciaDisponible}">
-   
-    <h3 class="form-signin-heading">Reservar Ambulancia</h3>
    
      <form:form action="reservar-ambulancia" method="POST" modelAttribute="datosReservaAmbulancia" id="formulario">
 			    	
