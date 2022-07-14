@@ -42,7 +42,7 @@
        <br>
        <br>
        <div id="llegada">
-        <p>Imagen Ambulancia Llegando</p>
+       
        </div>
  </c:if>
  </main>
