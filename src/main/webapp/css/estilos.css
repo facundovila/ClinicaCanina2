@@ -19,8 +19,10 @@ main{
 
 
 .fondo{
-    background-image: url(../img/huellasYhuesos.jpg);
-    background-repeat: repeat;
+    /*background-image: url(../img/huellasYhuesos.jpg);*/
+    /*background-repeat: repeat;*/
+
+    background-color: #f8efc0;
 }
 
 .centrar{

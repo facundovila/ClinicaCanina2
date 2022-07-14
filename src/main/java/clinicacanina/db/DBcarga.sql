@@ -1,8 +1,9 @@
 
 
 INSERT INTO `db`.`usuario` (`id`, `email`, `password`) VALUES ('1', 'usuario@usuario.com', '1');
-INSERT INTO `db`.`mascota` (`edad`, `nombre`, `peso`, `usuario_id`) VALUES (1, 'toto', 3, 1),(1, "mostaza", 3,1);
+INSERT INTO `db`.`mascota` (`edad`, `nombre`, `peso` ) VALUES (1, 'toto', 3),(1, 'mostaza', 3);
 
+insert into  db.mascota  (`nombre`) VALUES ('jose');
 
 -- MEDICOS
 insert into medico(disponibilidad, horarioEntrada, horarioSalida, nombre, dni, contrasenia) VALUE (true, 10,15,'carlos',10, 'admin');
