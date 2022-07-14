@@ -37,10 +37,13 @@
         <div id="now">
             <span> ${Llegada}</span>
              <br>
-            
-           
         </div>
-        <img src="city-map-4320755.png" alt="MDN">
+       <br>
+       <br>
+       <br>
+       <div id="llegada">
+        <p>Imagen Ambulancia Llegando</p>
+       </div>
  </c:if>
  </main>
 

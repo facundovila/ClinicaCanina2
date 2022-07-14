@@ -19,3 +19,26 @@ body{
 	background-repeat: no-repeat;
     background-size: cover;
 }
+
+#llegada{
+	background-image : url("../img/ambulanciaLlega.jpg");
+	background-repeat: no-repeat;
+    background-size: cover;
+	background-color : white;
+	border : 2px solid green;
+	margin : 0 auto;
+	transition: transform 1s ease-in;
+	animation: left-to-right 1s ease-in;
+	animation-iteration-count: 1;
+	width : 50%;
+	height: 50vh;
+}
+
+@keyframes left-to-right {
+	0%{
+	transform: translateX(-60%);
+	}
+	100%{
+	transform: translateX(0);
+	}
+}
