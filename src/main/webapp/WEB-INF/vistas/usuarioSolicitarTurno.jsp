@@ -49,20 +49,15 @@
                         <button onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red">Cancelar</button>
                         </c:if>
 
-                        <c:if test="${empty listaMascotas}">
-                        <form:form action="agregarMascota" modelAttribute="datosCrearMascota" method="POST">
-                            <form:input path="nombre" type="imput" id="nombre" placeholder="Ingrese nombre"/>
-                            <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="agregarMascota">Agregar Mascota</button>
-                        </form:form>
-
-                            <p>el dia <c:out value="${Turno.fechaTurno.time.date}"></c:out>/<c:out value="${Turno.fechaTurno.time.month+1}" />  a las <c:out value="${Turno.fechaTurno.time.hours}"></c:out> :<c:out value="${Turno.fechaTurno.time.minutes}" />
-                            <form:form action="tomarTurnoUsuario/${Turno.id}" method="POST">
-                             <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="tomarTurnoUsuario/${Turno.id}">Tomar Sin Mascota</button>
+                        <c:if test="${not empty listaMascotas}">
+                            <p>Seleccione Su Mascota Para el Turno</p>
+                            <form:form action="tomarTurno/${Turno.id}/${Mascota.id}" method="POST">
+                                <c:forEach var="Mascota" items="${listaMascotas}">
+                                    <button class="w3-button w3-green w3-round w3-small w3-border w3-margin-top" type="submit" formaction="tomarTurno/${Turno.id}/${Mascota.id}">Turno para: ${Mascota.nombre}</button>
+                                </c:forEach>
                             </form:form>
-
                             <button onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red">Cancelar</button>
                         </c:if>
-
                     </div>
                 </div>
             </div>
